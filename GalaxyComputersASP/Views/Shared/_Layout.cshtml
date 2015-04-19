@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galaxy Computers</title>
+    <title>@ViewBag.Title</title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700,300' rel='stylesheet' type='text/css'>
@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="/Content/owl.carousel.css">
     <link rel="stylesheet" href="/Content/Site.css">
     <link rel="stylesheet" href="/Content/responsive.css">
+
+    <script src="/Scripts/jquery.min.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,10 +80,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active">@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Sản phẩm", "Index", "Products")</li>
-                        <li>@Html.ActionLink("Giỏ hàng", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Thông tin", "About", "Home")</li>
+                        <li class="active" id="nav-item-1">@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+                        <li id="nav-item-2">@Html.ActionLink("Sản phẩm", "Index", "Products")</li>
+                        <li id="nav-item-1">@Html.ActionLink("Giỏ hàng", "Index", "Home")</li>
+                        <li id="nav-item-3">@Html.ActionLink("Thông tin", "About", "Home")</li>
                     </ul>
                 </div>
             </div>
@@ -169,10 +171,8 @@
             </div>
         </div>
     </div> <!-- End footer bottom area -->
-    <!-- Latest jQuery form server -->
+
     <script src="/Scripts/jquery.min.js"></script>
-     
-    <!-- Bootstrap JS form CDN -->
     <script src="/Scripts/bootstrap.min.js"></script>
 
     <!-- jQuery sticky menu -->
@@ -184,5 +184,16 @@
 
     <!-- Main Script -->
     <script src="/Scripts/main.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = window.location;
+            $('.navbar .nav').find('.active').removeClass('active');
+            $('.navbar .nav li a').each(function () {
+                if (this.href == url) {
+                    $(this).parent().addClass('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
