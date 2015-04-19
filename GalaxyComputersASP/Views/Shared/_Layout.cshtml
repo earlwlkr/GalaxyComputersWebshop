@@ -184,16 +184,5 @@
 
     <!-- Main Script -->
     <script src="/Scripts/main.js"></script>
-    <script>
-        $(document).ready(function () {
-            var url = window.location;
-            $('.navbar .nav').find('.active').removeClass('active');
-            $('.navbar .nav li a').each(function () {
-                if (this.href == url) {
-                    $(this).parent().addClass('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
