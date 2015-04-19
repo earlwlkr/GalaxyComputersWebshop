@@ -1,31 +1,394 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang chủ";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<div class="slider-area">
+    <div class="zigzag-bottom"></div>
+    <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div class="slide-bulletz">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="carousel-indicators slide-indicators">
+                            <li data-target="#slide-list" data-slide-to="0" class="active"></li>
+                            <li data-target="#slide-list" data-slide-to="1"></li>
+                            <li data-target="#slide-list" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="single-slide">
+                    <div class="slide-bg slide-one"></div>
+                    <div class="slide-text-wrapper">
+                        <div class="slide-text">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-6">
+                                        <div class="slide-content">
+                                            <h2>We are awesome</h2>
+                                            <p>Đến với GalaxyComputers, chúng tôi sẽ đảm bảo bạn có được món hàng ưng ý nhất với giá cả hợp lý nhất.</p>
+                                            <a href="" class="readmore">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="single-slide">
+                    <div class="slide-bg slide-two"></div>
+                    <div class="slide-text-wrapper">
+                        <div class="slide-text">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-6">
+                                        <div class="slide-content">
+                                            <h2>We are great</h2>
+                                            <p>Hàng tháng luôn có chương trình khuyến mãi giảm giá cho tất cả sản phẩm vào những mốc nhất định. Ngoài ra, khách hàng thân quen sẽ được hưởng nhiều chế độ ưu đãi hấp dẫn.</p>
+                                            <a href="" class="readmore">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="single-slide">
+                    <div class="slide-bg slide-three"></div>
+                    <div class="slide-text-wrapper">
+                        <div class="slide-text">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-6">
+                                        <div class="slide-content">
+                                            <h2>We are superb</h2>
+                                            <p>Chế độ bảo hành ở Galaxy Computers được đánh giá là một trong những nơi tốt nhất. Khách hàng nội thành còn được giao hàng và hỗ trợ tận nơi nếu gặp phải bất kỳ khó khăn gì.</p>
+                                            <a href="" class="readmore">Chi tiết</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</div> <!-- End slider area -->
+
+<div class="promo-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="single-promo">
+                    <i class="fa fa-refresh"></i>
+                    <p>Một đổi một trong vòng 30 ngày</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="single-promo">
+                    <i class="fa fa-truck"></i>
+                    <p>Miễn phí giao hàng</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="single-promo">
+                    <i class="fa fa-lock"></i>
+                    <p>Giao dịch an toàn</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="single-promo">
+                    <i class="fa fa-usd"></i>
+                    <p>Giá cả hợp lý</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</div> <!-- End promo area -->
+
+<div class="maincontent-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="latest-product">
+                    <h2 class="section-title">Mới nhất</h2>
+                    <div class="product-carousel">
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/asus-b85m-g.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>ASUS B85M-G</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>1,689,996 VND</ins>
+                            </div>
+                        </div>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/asus-z97-a.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>ASUS Z97-A</a></h2>
+                            <div class="product-carousel-price">
+                                <ins>3,789,984 VND</ins> <del>3,959,000 VND</del>
+                            </div>
+                        </div>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/asus-z97-sabertooth.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>ASUS Z97 Sabertooth</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>3,999,996 VND</ins>
+                            </div>
+                        </div>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/i5-4460.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>Intel Core i5-4460 3.1GHz (3.4GHz Turbo Boost)</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>4,229,984 VND</ins>
+                            </div>
+                        </div>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/i5-4690.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>Intel Core i5-4690 3.5GHz (3.9GHz Turbo Boost)</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>5,119,994 VND</ins>
+                            </div>
+                        </div>
+                        <div class="single-product">
+                            <div class="product-f-image">
+                                <img src="/Images/i7-4790.jpg" alt="">
+                                <div class="product-hover">
+                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                    @Html.ActionLink("Chi tiết", "Details", "Products", new { @class = "view-details-link" })
+                                </div>
+                            </div>
+
+                            <h2><a href=@Url.Action("Details", "Products")>Intel Core i7-4790 3.6GHz (4.0GHz Turbo Boost)</a></h2>
+
+                            <div class="product-carousel-price">
+                                <ins>7,079,996 VND</ins>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</div> <!-- End main content area -->
+
+<div class="brands-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="brand-wrapper">
+                    <h2 class="section-title">Thương hiệu</h2>
+                    <div class="brand-list">
+                        <img src="/Images/intel.jpg" alt="">
+                        <img src="/Images/asus.jpg" alt="">
+                        <img src="/Images/gigabyte.jpg" alt="">
+                        <img src="/Images/western-digital.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End brands area -->
+
+<div class="product-widget-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="single-product-widget">
+                    <h2 class="product-wid-title">Bán chạy</h2>
+                    <a href="" class="wid-view-more">Xem tất cả</a>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/i5-4460.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>Intel Core i5-4460 3.1GHz (3.4GHz Turbo Boost)</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>4,229,984 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/asus-gtx-750ti.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>Asus Nvidia GTX 750 Ti Strix Edition 2GB (128 Bit) DDR5</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>3,599,992 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/asus-gtx-970.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>Asus Nvidia GTX 970 Strix Edition 4GB (256 Bit) DDR5</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>8,699,988 VND</ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="single-product-widget">
+                    <h2 class="product-wid-title">Xem gần đây</h2>
+                    <a href="#" class="wid-view-more">Xem tất cả</a>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/samsung-ssd-250gb.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>SSD Samsung 840 EVO 250GB - True Speed Sata 3</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>5,699,988 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/ss-kinzu-v2.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>SteelSeries Kinzu V2</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>400,000 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/aoc-i2360sd.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>AOC I2360SD LED - AH-IPS Full HD LCD</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>2,959,990 VND</ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="single-product-widget">
+                    <h2 class="product-wid-title">Mới nhất</h2>
+                    <a href="#" class="wid-view-more">Xem tất cả</a>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/i5-4460.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>Intel Core i5-4460 3.1GHz (3.4GHz Turbo Boost)</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>4,229,984 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/asus-z97-sabertooth.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>ASUS Z97 Sabertooth</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>3,999,996 VND</ins>
+                        </div>
+                    </div>
+                    <div class="single-wid-product">
+                        <a href=@Url.Action("Details", "Products")><img src="/Images/ss-kinzu-v2.jpg" alt="" class="product-thumb"></a>
+                        <h2><a href=@Url.Action("Details", "Products")>SteelSeries Kinzu V2</a></h2>
+                        <div class="product-wid-rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product-wid-price">
+                            <ins>400,000 VND</ins>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End product widget area -->
