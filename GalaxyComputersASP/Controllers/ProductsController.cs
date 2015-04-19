@@ -13,5 +13,10 @@ namespace GalaxyComputersASP.Controllers
         {
             return View();
         }
+        // GET: Products/Details
+        public ActionResult Details()
+        {
+            return View();
+        }
     }
 }
