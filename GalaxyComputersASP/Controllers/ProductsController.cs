@@ -58,21 +58,8 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
-            List<Category> categories = db.Categories.ToList();
-            var categoriesList = new List<SelectListItem>();
-            foreach (Category category in categories)
-            {
-                categoriesList.Add(new SelectListItem { Text = category.Name, Value = category.ID.ToString() });
-            }
-            this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
-
-            List<Manufacturer> manufacturers = db.Manufacturers.ToList();
-            var manufacturersList = new List<SelectListItem>();
-            foreach (Manufacturer manufacturer in manufacturers)
-            {
-                manufacturersList.Add(new SelectListItem { Text = manufacturer.Name, Value = manufacturer.ID.ToString() });
-            }
-            this.ViewBag.ManufacturersList = new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
+            this.ViewBag.CategoriesList = GetCategoriesList();
+            this.ViewBag.ManufacturersList = GetManufacturersList();
 
             return View();
         }
@@ -91,23 +78,33 @@ namespace GalaxyComputersASP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
+            this.ViewBag.CategoriesList = GetCategoriesList();
+            this.ViewBag.ManufacturersList = GetManufacturersList();
+
+            return View(product);
+        }
+
+        private SelectList GetCategoriesList()
+        {
             List<Category> categories = db.Categories.ToList();
             var categoriesList = new List<SelectListItem>();
             foreach (Category category in categories)
             {
                 categoriesList.Add(new SelectListItem { Text = category.Name, Value = category.ID.ToString() });
             }
-            this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
+            return new SelectList(categoriesList, "Value", "Text", categories[0].Name);
+        }
 
+        private SelectList GetManufacturersList()
+        {
             List<Manufacturer> manufacturers = db.Manufacturers.ToList();
             var manufacturersList = new List<SelectListItem>();
             foreach (Manufacturer manufacturer in manufacturers)
             {
                 manufacturersList.Add(new SelectListItem { Text = manufacturer.Name, Value = manufacturer.ID.ToString() });
             }
-            this.ViewBag.ManufacturersList = new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
-
-            return View(product);
+            return new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
         }
 
         // GET: Products/Edit/5
@@ -122,6 +119,8 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.CategoriesList = GetCategoriesList();
+            this.ViewBag.ManufacturersList = GetManufacturersList();
             return View(product);
         }
 
@@ -130,7 +129,7 @@ namespace GalaxyComputersASP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,PublishDate,Name,Price,Description,Category,Brand,ImagePath,Views,Sales")] Product product)
+        public ActionResult Edit([Bind(Include = "PublishDate,Name,Price,Description,Category,Brand,ImagePath,Views,Sales")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -138,6 +137,8 @@ namespace GalaxyComputersASP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            this.ViewBag.CategoriesList = GetCategoriesList();
+            this.ViewBag.ManufacturersList = GetManufacturersList();
             return View(product);
         }
 
