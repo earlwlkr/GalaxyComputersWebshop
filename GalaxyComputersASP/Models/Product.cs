@@ -18,6 +18,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Thông tin sản phẩm")]
         public string Description { get; set; }
         [Display(Name = "Ngày ra mắt")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime PublishDate { get; set; }
         [ForeignKey("Category")]
         [Display(Name = "Danh mục")]
