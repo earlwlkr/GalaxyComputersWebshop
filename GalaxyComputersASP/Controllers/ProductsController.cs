@@ -60,14 +60,23 @@ namespace GalaxyComputersASP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,PublishDate,Name,Price,Description,Category,Brand,ImagePath,Views,Sales")] Product product)
+        public ActionResult Create([Bind(Include = "Name,Price,Description,CategoryID,Brand,ImagePath")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.PublishDate = DateTime.Now;
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            List<Category> categories = db.Categories.ToList();
+            var categoriesList = new List<SelectListItem>();
+            foreach (Category category in categories)
+            {
+                categoriesList.Add(new SelectListItem { Text = category.Name, Value = category.ID.ToString() });
+            }
+            this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
+
 
             return View(product);
         }
