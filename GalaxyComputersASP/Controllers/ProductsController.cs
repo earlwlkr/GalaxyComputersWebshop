@@ -44,6 +44,14 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            List<Category> categories = db.Categories.ToList();
+            var categoriesList = new List<SelectListItem>();
+            foreach (Category category in categories)
+            {
+                categoriesList.Add(new SelectListItem { Text = category.Name, Value = category.ID.ToString() });
+            }
+            this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
+
             return View();
         }
 
