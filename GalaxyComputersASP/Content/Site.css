@@ -214,7 +214,7 @@ z-index: 9;
 }
 
 
-.readmore {
+.btn-page {
     background: none repeat scroll 0 0 #1abc9c;
     color: #fff;
     border: 1px solid #1abc9c;
@@ -223,10 +223,16 @@ z-index: 9;
     margin-top: 15px;
     padding: 10px 20px;
     text-transform: uppercase;
+    transition: .4s;
 }
 
 
-.readmore:hover {background: #222;text-decoration: none;color: #fff;border: 1px solid #fff}
+.btn-page:hover {
+    background: #222;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff
+}
 
 
 .promo-area {
@@ -299,7 +305,8 @@ z-index: 9;
     border: 1px solid #1abc9c;
     width: 80%;z-index: 99;transition: .4s;
 }
-.product-hover a:hover {
+
+.product-hover a:hover, .page-btn:hover {
   background: #000;
   text-decoration: none;border-color: #444;
 }
