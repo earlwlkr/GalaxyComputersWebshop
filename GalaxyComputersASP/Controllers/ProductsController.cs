@@ -32,7 +32,13 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            Category category = db.Categories.Find(product.CategoryID);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(new ProductDetailsViewModel { Product = product, Category = category });
         }
 
         // GET: Products/Create

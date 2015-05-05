@@ -1,7 +1,7 @@
-﻿@model GalaxyComputersASP.Models.Product
+﻿@model GalaxyComputersASP.Models.ProductDetailsViewModel
 
 @{
-    ViewBag.Title = @Html.DisplayFor(model => model.Name);
+    ViewBag.Title = @Html.DisplayFor(model => model.Product.Name);
 }
 
 <div class="product-big-title-area">
@@ -76,24 +76,24 @@
                 <div class="product-content-right">
                     <div class="product-breadcroumb">
                         <a href="/">Trang chủ</a>
-                        <a href="">@Html.DisplayFor(model => model.Category)</a>
-                        <a href="">@Html.DisplayFor(model => model.Name)</a>
+                        <a href="">@Html.DisplayFor(model => model.Category.Name)</a>
+                        <a href="">@Html.DisplayFor(model => model.Product.Name)</a>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="product-images">
                                 <div class="product-main-img">
-                                    <img src=@Html.DisplayFor(model => model.ImagePath) alt="">
+                                    <img src=@Html.DisplayFor(model => model.Product.ImagePath) alt="">
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-sm-6">
                             <div class="product-inner">
-                                <h2 class="product-name">@Html.DisplayFor(model => model.Name)</h2>
+                                <h2 class="product-name">@Html.DisplayFor(model => model.Product.Name)</h2>
                                 <div class="product-inner-price">
-                                    <ins>@Html.DisplayFor(model => model.Price) VND</ins>
+                                    <ins>@Html.DisplayFor(model => model.Product.Price) VND</ins>
                                 </div>
 
                                 <form action="" class="cart">
@@ -103,10 +103,6 @@
                                     <button class="add_to_cart_button" type="submit">Thêm vào giỏ hàng</button>
                                 </form>
 
-                                <div class="product-inner-category">
-                                    <p>Danh mục: <a href="">@Html.DisplayFor(model => model.Category)</a>. 
-                                </div>
-
                                 <div role="tabpanel">
                                     <ul class="product-tab" role="tablist">
                                         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Mô tả</a></li>
@@ -114,7 +110,7 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            @Html.DisplayFor(model => model.Description)
+                                            @Html.DisplayFor(model => model.Product.Description)
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Đánh giá</h2>
