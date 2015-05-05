@@ -154,7 +154,9 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
-            return View(product);
+            Category category = db.Categories.Find(product.CategoryID);
+            Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
+            return View(new ProductOverview { Product = product, Manufacturer = manufacturer, Category = category });
         }
 
         // POST: Products/Delete/5
