@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GalaxyComputersASP.Models.ProductOverview>
+
+@{
+    ViewBag.Title = "Quản lý Sản phẩm";
+}
+
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2><b>Quản lý</b></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <button class="btn-page"><i class="fa fa-plus-circle fa-1x"></i> Thêm</button>
+    <table class="table table-bordered">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Product.ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Manufacturer.Name)</td>
+                <td>
+                    <a href=@Url.Action("Edit/" + item.Product.ID, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                </td>
+                <td>
+                    <a href=@Url.Action("Delete/" + item.Product.ID, "Products") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<script>
+    $('.active').removeClass('active');
+    $('#nav-item-2').addClass('active');
+</script>
