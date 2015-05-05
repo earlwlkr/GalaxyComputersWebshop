@@ -1,244 +1,81 @@
-﻿
+﻿@model IEnumerable<GalaxyComputersASP.Models.Product>
+
 @{
-    ViewBag.Title = "Sản phẩm";
+    ViewBag.Title = "Index";
 }
 
-<div class="product-big-title-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-bit-title text-center">
-                    <h2><b>Sản phẩm</b></h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<h2>Index</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.PublishDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Views)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sales)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="single-product-area">
-    <div class="zigzag-bottom"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/asus-b85m-g.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImagePath)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Views)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sales)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
 
-                    <h2><a href="single-product.html">ASUS B85M-G</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>$700.001,689,996 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/asus-z97-a.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">ASUS Z97-A</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>3,789,984 VND</ins> <del>3,959,000 VND</del>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/asus-z97-sabertooth.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">ASUS Z97 Sabertooth</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>3,999,996 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/i5-4460.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">Intel Core i5-4460 3.1GHz (3.4GHz Turbo Boost)</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>4,229,984 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/i5-4690.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">Intel Core i5-4690 3.5GHz (3.9GHz Turbo Boost)</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>5,119,994 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/i7-4790.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">Intel Core i7-4790 3.6GHz (4.0GHz Turbo Boost)</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>7,079,996 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/asus-gtx-750ti.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">Asus Nvidia GTX 750 Ti Strix Edition 2GB (128 Bit) DDR5</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>3,599,992 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/asus-gtx-970.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">Asus Nvidia GTX 970 Strix Edition 4GB (256 Bit) DDR5</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>8,699,988 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/samsung-ssd-250gb.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">SSD Samsung 840 EVO 250GB - True Speed Sata 3</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>5,699,988 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/ss-kinzu-v2.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">SteelSeries Kinzu V2</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>400,000 VND</ins>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-                <div class="single-product">
-                    <div class="product-f-image">
-                        <img src="/Images/aoc-i2360sd.jpg" alt="">
-                        <div class="product-hover">
-                            <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                            <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                        </div>
-                    </div>
-
-                    <h2><a href="single-product.html">AOC I2360SD LED - AH-IPS Full HD LCD</a></h2>
-
-                    <div class="product-carousel-price">
-                        <ins>2,959,990 VND</ins>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-pagination text-center">
-                    <nav>
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Trước">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Tiếp">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $('.active').removeClass('active');
-    $('#nav-item-2').addClass('active');
-</script>
-
+</table>
