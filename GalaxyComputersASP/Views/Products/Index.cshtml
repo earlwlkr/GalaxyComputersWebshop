@@ -1,10 +1,21 @@
 ﻿@model IEnumerable<GalaxyComputersASP.Models.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Sản phẩm";
 }
 
-<h2>Index</h2>
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2><b>Sản phẩm</b></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="single-product-area">
     <div class="container">
         <div class="row">
@@ -13,14 +24,14 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="single-product">
                         <div class="product-f-image">
-                            <img src=@Html.DisplayFor(modelItem => item.ImagePath) alt="">
+                            <img src=@Html.DisplayFor(modelItem => item.ImagePath) alt=@Html.DisplayFor(modelItem => item.Name)>
                             <div class="product-hover">
                                 <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                                <a href=@Url.Action("Details", "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
+                                <a href=@Url.Action("Details/" + item.ID, "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
                             </div>
                         </div>
 
-                        <h2><a href="single-product.html">@Html.DisplayFor(modelItem => item.Name)</a></h2>
+                        <h2><a href=@Url.Action("Details/" + item.ID, "Products")>@Html.DisplayFor(modelItem => item.Name)</a></h2>
 
                         <div class="product-carousel-price">
                             <ins>@Html.DisplayFor(modelItem => item.Price)</ins>
@@ -31,3 +42,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.active').removeClass('active');
+    $('#nav-item-2').addClass('active');
+</script>

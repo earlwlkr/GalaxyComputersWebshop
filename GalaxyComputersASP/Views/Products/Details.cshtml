@@ -1,90 +1,187 @@
 ﻿@model GalaxyComputersASP.Models.Product
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Html.DisplayFor(model => model.Name);
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PublishDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PublishDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Brand)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Brand)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Views)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Views)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Sales)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Sales)
-        </dd>
-
-    </dl>
+<div class="product-big-title-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-bit-title text-center">
+                    <h2><b>Chi tiết sản phẩm</b></h2>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Tìm kiếm sản phẩm</h2>
+                    <form action="">
+                        <input type="text" placeholder="Nhập từ khóa...">
+                        <input type="submit" value="Tìm">
+                    </form>
+                </div>
+
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Sản phẩm</h2>
+                    <div class="thubmnail-recent">
+                        <img src="/Images/asus-z97-a.jpg" class="recent-thumb" alt="">
+                        <h2><a href="">ASUS Z97-A</a></h2>
+                        <div class="product-sidebar-price">
+                            <ins>3,789,984 VND</ins> <del>3,959,000 VND</del>
+                        </div>
+                    </div>
+                    <div class="thubmnail-recent">
+                        <img src="/Images/i5-4460.jpg" class="recent-thumb" alt="">
+                        <h2><a href="">Intel Core i5-4460 3.1GHz (3.4GHz Turbo Boost)</a></h2>
+                        <div class="product-sidebar-price">
+                            <ins>4,229,984 VND</ins>
+                        </div>
+                    </div>
+                    <div class="thubmnail-recent">
+                        <img src="/Images/asus-gtx-750ti.jpg" class="recent-thumb" alt="">
+                        <h2><a href="">Asus Nvidia GTX 750 Ti Strix Edition 2GB (128 Bit) DDR5</a></h2>
+                        <div class="product-sidebar-price">
+                            <ins>3,599,992 VND</ins>
+                        </div>
+                    </div>
+                    <div class="thubmnail-recent">
+                        <img src="/Images/asus-gtx-970.jpg" class="recent-thumb" alt="">
+                        <h2><a href="">Asus Nvidia GTX 970 Strix Edition 4GB (256 Bit) DDR5</a></h2>
+                        <div class="product-sidebar-price">
+                            <ins>8,699,988 VND</ins>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="single-sidebar">
+                    <h2 class="sidebar-title">Gần đây</h2>
+                    <ul>
+                        <li><a href="">SteelSeries Kinzu V2</a></li>
+                        <li><a href="">SSD Samsung 840 EVO 250GB - True Speed Sata 3</a></li>
+                        <li><a href="">AOC I2360SD LED - AH-IPS Full HD LCD</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="product-content-right">
+                    <div class="product-breadcroumb">
+                        <a href="/">Trang chủ</a>
+                        <a href="">@Html.DisplayFor(model => model.Category)</a>
+                        <a href="">@Html.DisplayFor(model => model.Name)</a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="product-images">
+                                <div class="product-main-img">
+                                    <img src=@Html.DisplayFor(model => model.ImagePath) alt="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="product-inner">
+                                <h2 class="product-name">@Html.DisplayFor(model => model.Name)</h2>
+                                <div class="product-inner-price">
+                                    <ins>@Html.DisplayFor(model => model.Price) VND</ins>
+                                </div>
+
+                                <form action="" class="cart">
+                                    <div class="quantity">
+                                        <input type="number" size="4" class="input-text qty text" title="Số lượng" value="1" name="quantity" min="1" step="1">
+                                    </div>
+                                    <button class="add_to_cart_button" type="submit">Thêm vào giỏ hàng</button>
+                                </form>
+
+                                <div class="product-inner-category">
+                                    <p>Danh mục: <a href="">@Html.DisplayFor(model => model.Category)</a>. 
+                                </div>
+
+                                <div role="tabpanel">
+                                    <ul class="product-tab" role="tablist">
+                                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Mô tả</a></li>
+                                        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Đánh giá</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="home">
+                                            @Html.DisplayFor(model => model.Description)
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="profile">
+                                            <h2>Đánh giá</h2>
+                                            <div class="submit-review">
+                                                <p><label for="name">Tên</label> <input name="name" type="text"></p>
+                                                <p><label for="email">Email</label> <input name="email" type="email"></p>
+                                                <div class="rating-chooser">
+                                                    <p>Đánh giá của bạn</p>
+
+                                                    <div class="rating-wrap-post">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                    </div>
+                                                </div>
+                                                <p><label for="review">Bình luận</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
+                                                <p><input type="submit" value="Gửi"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="related-products-wrapper">
+                        <h2 class="related-products-title">Related Products</h2>
+                        <div class="related-products-carousel">
+                            <div class="single-product">
+                                <div class="product-f-image">
+                                    <img src="/Images/razer-da.png" alt="">
+                                    <div class="product-hover">
+                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
+                                    </div>
+                                </div>
+
+                                <h2><a href="single-product.html">Razer DeathAdder 2013 Couter Logic - Gaming Optical Mouse</a></h2>
+
+                                <div class="product-carousel-price">
+                                    <ins>849,992 VND</ins>
+                                </div>
+                            </div>
+                            <div class="single-product">
+                                <div class="product-f-image">
+                                    <img src="/Images/razer-mamba.jpg" alt="">
+                                    <div class="product-hover">
+                                        <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+                                        <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> Chi tiết</a>
+                                    </div>
+                                </div>
+
+                                <h2><a href="single-product.html">Razer Mamba 4G 6400DPI Laser Gaming Mouse</a></h2>
+                                <div class="product-carousel-price">
+                                    <ins>2, 200, 000</ins>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
