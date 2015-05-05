@@ -20,6 +20,20 @@ namespace GalaxyComputersASP.Controllers
             return View(db.Products.ToList());
         }
 
+        // GET: Products/Manage
+        public ActionResult Manage()
+        {
+            IEnumerable<Product> products = db.Products.ToList();
+            List<ProductOverview> list = new List<ProductOverview>();
+            foreach (Product product in products)
+            {
+                Category category = db.Categories.Find(product.CategoryID);
+                Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
+                list.Add(new ProductOverview { Product = product, Category = category, Manufacturer = manufacturer });
+            }
+            return View(list.ToList());
+        }
+
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
