@@ -35,7 +35,7 @@ namespace GalaxyComputersASP.Migrations
                 new Category
                 {
                     ID = 1,
-                    Name = "ASUS B85M-G"
+                    Name = "Mainboard"
                 }
             );
             context.Manufacturers.AddOrUpdate(i => i.ID,
