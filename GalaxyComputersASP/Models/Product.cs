@@ -17,11 +17,13 @@ namespace GalaxyComputersASP.Models
         public DateTime PublishDate { get; set; }
         [ForeignKey("Category")]
         public int CategoryID { get; set; }
-        public string Brand { get; set; }
+        [ForeignKey("Manufacturer")]
+        public int ManufacturerID { get; set; }
         public string ImagePath { get; set; }
         public int Views { get; set; }
         public int Sales { get; set; }
 
         public virtual Category Category { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
     }
 }

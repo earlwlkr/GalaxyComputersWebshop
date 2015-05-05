@@ -19,7 +19,8 @@ namespace GalaxyComputersASP.Models
         {
         }
 
-        public System.Data.Entity.DbSet<GalaxyComputersASP.Models.Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
     }
 }
