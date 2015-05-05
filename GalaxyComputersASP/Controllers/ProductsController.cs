@@ -52,6 +52,14 @@ namespace GalaxyComputersASP.Controllers
             }
             this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
 
+            List<Manufacturer> manufacturers = db.Manufacturers.ToList();
+            var manufacturersList = new List<SelectListItem>();
+            foreach (Manufacturer manufacturer in manufacturers)
+            {
+                manufacturersList.Add(new SelectListItem { Text = manufacturer.Name, Value = manufacturer.ID.ToString() });
+            }
+            this.ViewBag.ManufacturersList = new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
+
             return View();
         }
 
@@ -77,6 +85,13 @@ namespace GalaxyComputersASP.Controllers
             }
             this.ViewBag.CategoriesList = new SelectList(categoriesList, "Value", "Text", categories[0].Name);
 
+            List<Manufacturer> manufacturers = db.Manufacturers.ToList();
+            var manufacturersList = new List<SelectListItem>();
+            foreach (Manufacturer manufacturer in manufacturers)
+            {
+                manufacturersList.Add(new SelectListItem { Text = manufacturer.Name, Value = manufacturer.ID.ToString() });
+            }
+            this.ViewBag.ManufacturersList = new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
 
             return View(product);
         }
