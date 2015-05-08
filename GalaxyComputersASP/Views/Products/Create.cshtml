@@ -72,7 +72,7 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Thêm" />
-                    <a href='@Url.Action("Index", "Products")' class="btn-blank">Quay về</a>
+                    <a href='@Url.Action("Manage", "Products")' class="btn-blank">Quay về</a>
                 </div>
             </div>
         </div>
@@ -88,24 +88,40 @@
                 <h4 class="modal-title">Thêm danh mục</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm())
-                {
-                    <div class="form-horizontal" id="formCreateCategory">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-horizontal" id="formCreateCategory">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Category.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Category.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Category.Name, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Category.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Category.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Category.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
-                        <button type="button" id="submitCreateCategory">Thêm</button>
-                    </div>
-                }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                    <button type="button" id="submitCreateCategory">Thêm</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modalCreateCategoryResult">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm danh mục</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" id="result">
+                   
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -128,13 +144,20 @@
                 'Category.Name': $('#Category_Name').val()
             },
             success: function (result) {
-                $('#Product_CategoryID').append($('<option>', {
-                    value: result.id,
-                    text: result.name
-                }));
-                $('#formCreateCategory').html('Thêm danh mục thành công!<br/>');
-                btn.hide();
-                $('#Product_CategoryID').val(result.id);
+                $('#modalCreateCategory').modal('hide');
+                if (result.success == false) {
+                    $('#result').html(result.message);
+                } else {
+                    $('#Product_CategoryID').append($('<option>', {
+                        value: result.id,
+                        text: result.name
+                    }));
+                    
+                    $('#Product_CategoryID').val(result.id);
+                    $('#result').html('Thêm danh mục thành công!<br/>');
+                }
+                btn.button('reset');
+                $('#modalCreateCategoryResult').modal();
             }
         });
     });

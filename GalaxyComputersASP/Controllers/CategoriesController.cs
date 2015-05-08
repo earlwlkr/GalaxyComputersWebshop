@@ -60,9 +60,14 @@ namespace GalaxyComputersASP.Controllers
 
         [HttpPost]
         public ActionResult DirectedCreate([Bind(Include = "Name")] Category category)
-        {
+        {         
             if (ModelState.IsValid)
             {
+                bool exists = db.Categories.FirstOrDefault(i => i.Name == category.Name) != null;
+                if (exists)
+                {
+                    return Json(new { success = false, message = "Đã có danh mục với tên này trong cơ sở dữ liệu!" });
+                }
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return Json(new { success = true, name = category.Name, id = category.ID });
