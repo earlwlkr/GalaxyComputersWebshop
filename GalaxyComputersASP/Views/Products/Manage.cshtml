@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GalaxyComputersASP.Models.ProductOverview>
+﻿@model GalaxyComputersASP.Models.ProductManageViewModel
 
 @{
     ViewBag.Title = "Quản lý Sản phẩm";
@@ -17,10 +17,32 @@
 </div>
 
 <div class="container main-body">
-    <button class="btn-page"><i class="fa fa-plus-circle fa-1x"></i> Thêm</button>
+    <h2>SẢN PHẨM</h2>
+    <button><i class="fa fa-plus-circle fa-1x"></i> Thêm</button>
     <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Product.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Product.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Category.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Manufacturer.Name)
+                </th>
+                <th>
+                    
+                </th>
+                <th>
 
-        @foreach (var item in Model)
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Products)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.Product.ID)</td>

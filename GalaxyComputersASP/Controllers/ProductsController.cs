@@ -31,7 +31,8 @@ namespace GalaxyComputersASP.Controllers
                 Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
                 list.Add(new ProductOverview { Product = product, Category = category, Manufacturer = manufacturer });
             }
-            return View(list.ToList());
+            return View(new ProductManageViewModel { Products = list.ToList(), Categories = db.Categories.ToList(),
+                                                     Manufacturers = db.Manufacturers.ToList() });
         }
 
         // GET: Products/Details/5
