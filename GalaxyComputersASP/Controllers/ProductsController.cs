@@ -122,7 +122,7 @@ namespace GalaxyComputersASP.Controllers
             }
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
-            return View(product);
+            return View(new ProductOverview { Product = product });
         }
 
         // POST: Products/Edit/5
