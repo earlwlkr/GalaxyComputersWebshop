@@ -46,13 +46,26 @@ namespace GalaxyComputersASP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name")] Category category)
+        public ActionResult Create([Bind(Include = "Name")] Category category)
         {
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        public ActionResult DirectedCreate([Bind(Include = "Name")] Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Categories.Add(category);
+                db.SaveChanges();
+                return Json(new { success = true, name = category.Name, id = category.ID });
             }
 
             return View(category);

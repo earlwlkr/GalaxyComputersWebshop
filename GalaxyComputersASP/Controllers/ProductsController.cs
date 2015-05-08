@@ -61,7 +61,7 @@ namespace GalaxyComputersASP.Controllers
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
 
-            return View();
+            return View(new ProductOverview());
         }
 
         // POST: Products/Create

@@ -1,8 +1,10 @@
-﻿@model GalaxyComputersASP.Models.Product
+﻿@model GalaxyComputersASP.Models.ProductOverview
 
 @{
     ViewBag.Title = "Thêm sản phẩm";
 }
+
+
 <div class="container">
     <h2>Create</h2>
 
@@ -16,78 +18,133 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Product.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Product.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-3">
                     <div class="input-group">
-                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon2" } })
+                        @Html.EditorFor(model => model.Product.Price, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon2" } })
                         <span class="input-group-addon" id="basic-addon2">VND</span>
                     </div>
-                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Product.Price, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    @Html.TextAreaFor(model => model.Product.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Product.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-2">
-                    @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.CategoriesList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.Product.CategoryID, (SelectList)ViewBag.CategoriesList, new { @class = "form-control" })
+                    <button type="button" id="btnCreateCategory">Thêm danh mục</button>
+                    @Html.ValidationMessageFor(model => model.Product.Category, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ManufacturerID, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.ManufacturerID, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-2">
-                    @Html.DropDownListFor(model => model.ManufacturerID, (SelectList)ViewBag.ManufacturersList, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Manufacturer, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.Product.ManufacturerID, (SelectList)ViewBag.ManufacturersList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Product.Manufacturer, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Product.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ImagePath, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Product.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Product.ImagePath, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Thêm" />
+                    <a href='@Url.Action("Index", "Products")' class="btn-blank">Quay về</a>
                 </div>
             </div>
         </div>
     }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </div>
+
+
+<div class="modal fade" id="modalCreateCategory">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm danh mục</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-horizontal" id="formCreateCategory">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Category.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Category.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Category.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                        <button type="button" id="submitCreateCategory">Thêm</button>
+                    </div>
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script src="/Scripts/tinymce/tinymce.min.js"></script>
 <script>
-tinymce.init({
-    selector: "textarea",
-    plugins: [
-        "advlist autolink lists link image charmap print preview anchor",
-        "searchreplace visualblocks code fullscreen",
-        "insertdatetime media table contextmenu paste"
-    ],
-    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-});
+    $('#submitCreateCategory').data('loading-text', 'Đang thực hiện...');
+    $('#btnCreateCategory').click(function () {
+        $('#modalCreateCategory').modal();
+    });
+    $('#submitCreateCategory').click(function (e) {
+        e.preventDefault();
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: '@Url.Action("DirectedCreate", "Categories")',
+            type: 'POST',
+            data: {
+                'Category.Name': $('#Category_Name').val()
+            },
+            success: function (result) {
+                $('#Product_CategoryID').append($('<option>', {
+                    value: result.id,
+                    text: result.name
+                }));
+                $('#formCreateCategory').html('Thêm danh mục thành công!<br/>');
+                btn.hide();
+                $('#Product_CategoryID').val(result.id);
+            }
+        });
+    });
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
 </script>
