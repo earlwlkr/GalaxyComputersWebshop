@@ -11,6 +11,12 @@ namespace GalaxyComputersASP.Models
         public Manufacturer Manufacturer { get; set; }
         public Product Product { get; set; }
     }
+    public class ProductManageViewModel
+    {
+        public IEnumerable<ProductOverview> Products;
+        public IEnumerable<Category> Categories;
+        public IEnumerable<Manufacturer> Manufacturers;
+    }
     public class ProductDetailsViewModel
     {
         public Category Category { get; set; }
