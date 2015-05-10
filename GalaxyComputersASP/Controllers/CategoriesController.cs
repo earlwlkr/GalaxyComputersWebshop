@@ -73,7 +73,7 @@ namespace GalaxyComputersASP.Controllers
                 return Json(new { success = true, name = category.Name, id = category.ID });
             }
 
-            return View(category);
+            return Json(new { success = false, message = "Dữ liệu nhập vào không hợp lệ!" });
         }
 
         // GET: Categories/Edit/5
