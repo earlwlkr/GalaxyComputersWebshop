@@ -4,69 +4,72 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<div class="container main-body">
+    <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Manufacturer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Manufacturer</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.WebPage)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.WebPage)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.WebPage)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.WebPage)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.ImagePath)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateFounded)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateFounded)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateFounded)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateFounded)
+            </dd>
 
-    </dl>
+        </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-group col-md-offset-2">
+                <input type="submit" value="Xóa" />
+                <a href='@Url.Action("Manage", "Products")' class="btn-blank">Quay về</a>
+            </div>
+        }
+    </div>
 </div>
