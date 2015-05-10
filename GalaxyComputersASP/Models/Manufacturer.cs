@@ -20,6 +20,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Quốc gia")]
         public string Country { get; set; }
         [Display(Name = "Ngày thành lập")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime DateFounded { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
