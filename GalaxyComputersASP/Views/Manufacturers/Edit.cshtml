@@ -5,14 +5,13 @@
 }
 
 <div class="container main-body">
-    <h2>Edit</h2>
+    <h2>Sửa thông tin nhà sản xuất</h2>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Manufacturer</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.ID)
