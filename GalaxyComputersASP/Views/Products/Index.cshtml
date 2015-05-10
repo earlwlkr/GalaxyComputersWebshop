@@ -17,52 +17,48 @@
 </div>
 
 <div class="container main-body">
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="sortItem">Sắp xếp theo: </label>
-            <select class="form-control" id="sortItem">
-                <option>Tên</option>
-                <option>Giá</option>
-            </select>
-        </div> | 
-        <div class="form-group">
-            <label for="sortOrder">Thứ tự: </label>
-            <select class="form-control" id="sortOrder">
-                <option>Tăng dần</option>
-                <option>Giảm dần</option>
-            </select> | 
-        </div>
-        <button>Cập nhật</button>
-    </form>
- 
-
-    <div class="single-product-area">
-        <div class="container">
-            <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-md-3 col-sm-6">
-                        <div class="single-product">
-                            <div class="product-f-image">
-                                <img src=@Html.DisplayFor(modelItem => item.ImagePath)>
-                                <div class="product-hover">
-                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
-                                    <a href=@Url.Action("Details/" + item.ID, "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
-                                </div>
-                            </div>
-
-                            <h2><a href=@Url.Action("Details/" + item.ID, "Products")>@Html.DisplayFor(modelItem => item.Name)</a></h2>
-
-                            <div class="product-carousel-price">
-                                <ins>@Html.DisplayFor(modelItem => item.Price)</ins>
-                            </div>
-                        </div>
-                    </div>
-                }
+    @using (Html.BeginForm("Index", "Products", FormMethod.Post))
+    {
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="sortItem">Sắp xếp theo: </label>
+                <select class="form-control" id="sortItem" name="sortItem">
+                    <option value="0">Tên</option>
+                    <option value="1">Giá</option>
+                </select>
+            </div> |
+            <div class="form-group">
+                <label for="sortOrder">Thứ tự: </label>
+                <select class="form-control" id="sortOrder" name="sortOrder">
+                    <option value="0">Tăng dần</option>
+                    <option value="1">Giảm dần</option>
+                </select> |
             </div>
+            <button type="button" id="btnUpdate">Cập nhật</button>
         </div>
+    }
+ 
+    <div id="products-view">
+        @Html.Partial("~/Views/Products/PartialIndex.cshtml", Model)
+        
     </div>
 </div>
+
+<script>
+    $('#btnUpdate').click(function (e) {
+        $.ajax({
+            url: '@Url.Action("PartialIndex", "Products")',
+            type: 'POST',
+            data: {
+                'sortItem': $('#sortItem').val(),
+                'sortOrder': $('#sortOrder').val()
+            },
+            success: function (result) {
+                $('#products-view').html(result);
+            }
+        })
+    });
+</script>
 
 <script>
     

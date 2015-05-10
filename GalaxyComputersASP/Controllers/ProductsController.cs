@@ -17,7 +17,42 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            DbSet<Product> list = db.Products;
+            return View(list.ToList());
+        }
+
+        // GET: Products
+        [HttpPost]
+        public ActionResult PartialIndex(FormCollection collection)
+        {
+            DbSet<Product> list = db.Products;
+            int sortItem = int.Parse(collection["sortItem"]);
+            int sortOrder = int.Parse(collection["sortOrder"]);
+
+            IOrderedQueryable<Product> orderedList;
+            if (sortItem == 0)
+            {
+                if (sortOrder == 0)
+                {
+                    orderedList = list.OrderBy(i => i.Name);
+                }
+                else
+                {
+                    orderedList = list.OrderByDescending(i => i.Name);
+                }
+            }
+            else
+            {
+                if (sortOrder == 0)
+                {
+                    orderedList = list.OrderBy(i => i.Price);
+                }
+                else
+                {
+                    orderedList = list.OrderByDescending(i => i.Price);
+                }
+            }
+            return PartialView(orderedList.ToList());
         }
 
         // GET: Products/Manage
