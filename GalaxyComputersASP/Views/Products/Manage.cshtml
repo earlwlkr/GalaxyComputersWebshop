@@ -86,7 +86,7 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td><a href="@Url.Action("Details/" + item.ID, "Categories")">@Html.DisplayFor(modelItem => item.Name)</a></td>
                 <td>
                     <a href=@Url.Action("Edit/" + item.ID, "Categories") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
                 </td>
@@ -121,7 +121,7 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                <td><a href="@Url.Action("Details/" + item.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.Name)</a></td>
                 <td>@Html.DisplayFor(modelItem => item.Country)</td>
                 <td>
                     <a href=@Url.Action("Edit/" + item.ID, "Manufacturers") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
