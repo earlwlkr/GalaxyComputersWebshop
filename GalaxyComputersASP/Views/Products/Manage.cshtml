@@ -29,6 +29,9 @@
                     @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Name)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ImagePath)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Price)
                 </th>
                 <th>
@@ -48,6 +51,7 @@
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.ID)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.Name)</td>
+                <td><img src="@Url.Content(item.ProductData.ImagePath)" class="image-preview" alt="Image" /></td>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProductCategory.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.ProductManufacturer.Name)</td>
