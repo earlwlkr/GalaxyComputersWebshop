@@ -53,8 +53,8 @@
                 <td>@Html.DisplayFor(modelItem => item.ProductData.Name)</td>
                 <td><img src="@Url.Content(item.ProductData.ImagePath)" class="image-preview" alt="Image" /></td>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProductCategory.Name)</td>
-                <td>@Html.DisplayFor(modelItem => item.ProductManufacturer.Name)</td>
+                <td><a href="@Url.Action("Details/" + item.ProductCategory.ID, "Categories")">@Html.DisplayFor(modelItem => item.ProductCategory.Name)</a></td>
+                <td><a href="@Url.Action("Details/" + item.ProductManufacturer.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.ProductManufacturer.Name)</a></td>
                 <td>
                     <a href=@Url.Action("Edit/" + item.ProductData.ID, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
                 </td>
