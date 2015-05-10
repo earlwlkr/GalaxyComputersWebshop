@@ -23,10 +23,13 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Product.ID)
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ID)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).Product.Name)
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Price)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Products.ElementAt(0).Category.Name)
@@ -43,8 +46,9 @@
         @foreach (var item in Model.Products)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Product.ID)</td>
-                <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProductData.ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProductData.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
                 <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
                 <td>@Html.DisplayFor(modelItem => item.Manufacturer.Name)</td>
                 <td>

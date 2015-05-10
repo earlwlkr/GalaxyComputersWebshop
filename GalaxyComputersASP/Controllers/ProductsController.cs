@@ -29,7 +29,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 Category category = db.Categories.Find(product.CategoryID);
                 Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
-                list.Add(new ProductOverview { Product = product, Category = category, Manufacturer = manufacturer });
+                list.Add(new ProductOverview { ProductData = product, ProductCategory = category, ProductManufacturer = manufacturer });
             }
             return View(new ProductManageViewModel { Products = list.ToList(), Categories = db.Categories.ToList(),
                                                      Manufacturers = db.Manufacturers.ToList() });
@@ -68,7 +68,7 @@ namespace GalaxyComputersASP.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,Price,Description,CategoryID,Brand,ImagePath")] Product product)
         {
@@ -122,21 +122,21 @@ namespace GalaxyComputersASP.Controllers
             }
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
-            return View(new ProductOverview { Product = product });
+            return View(new ProductOverview { ProductData = product });
         }
 
         // POST: Products/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PublishDate,Name,Price,Description,Category,Brand,ImagePath,Views,Sales")] Product product)
+        public ActionResult Edit(ProductOverview product)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
+                db.Entry(product.ProductData).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage");
             }
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
@@ -157,7 +157,7 @@ namespace GalaxyComputersASP.Controllers
             }
             Category category = db.Categories.Find(product.CategoryID);
             Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
-            return View(new ProductOverview { Product = product, Manufacturer = manufacturer, Category = category });
+            return View(new ProductOverview { ProductData = product, ProductManufacturer = manufacturer, ProductCategory = category });
         }
 
         // POST: Products/Delete/5

@@ -7,9 +7,9 @@ namespace GalaxyComputersASP.Models
 {
     public class ProductOverview
     {
-        public Category Category { get; set; }
-        public Manufacturer Manufacturer { get; set; }
-        public Product Product { get; set; }
+        public Category ProductCategory { get; set; }
+        public Manufacturer ProductManufacturer { get; set; }
+        public Product ProductData { get; set; }
     }
     public class ProductManageViewModel
     {
