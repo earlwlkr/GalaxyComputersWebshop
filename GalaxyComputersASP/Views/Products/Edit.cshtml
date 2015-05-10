@@ -72,8 +72,11 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.ProductData.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ProductData.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ProductData.ImagePath, "", new { @class = "text-danger" })
+                    <img src="@Url.Content(Model.ProductData.ImagePath)" id="imgPreview" class="image-preview" alt="Image" />
+                    <form enctype="multipart/form-data">
+                        <input type="file" name="Image" />
+                    </form>
+                    @Html.HiddenFor(model => model.ProductData.ImagePath)
                 </div>
             </div>
 
@@ -185,6 +188,38 @@
             }
         });
     });
+
+    $('input[type=file]').on('change', prepareUpload);
+
+    // Grab the files and set them to our variable
+    function prepareUpload(event) {
+        var files = event.target.files;
+        console.log(files);
+        var data = new FormData();
+        if (files.length > 0) {
+            data.append("UploadedImage", files[0]);
+        }
+        $.ajax({
+            url: '@Url.Action("UploadImage")',
+            type: "POST",             // Type of request to be send, called as method
+            data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false,        // To send DOMDocument or non processed data file it is set to false
+            success: function (result) {
+                if (result.success) {
+                    $('#ProductData_ImagePath').val(result.path);
+                    $('#imgPreview').attr('src', result.path);
+                } else {
+                    $('#result').html(result.message);
+                    $('#modalCreateCategoryResult').modal();
+                }
+            }
+        });
+    }
+
+
+
     tinymce.init({
         selector: "textarea",
         plugins: [

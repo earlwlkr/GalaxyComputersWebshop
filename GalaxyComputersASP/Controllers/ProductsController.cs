@@ -108,6 +108,21 @@ namespace GalaxyComputersASP.Controllers
             return new SelectList(manufacturersList, "Value", "Text", manufacturers[0].Name);
         }
 
+        [HttpPost]
+        public ActionResult UploadImage()
+        {
+            var httpPostedFile = Request.Files["UploadedImage"];
+            if (httpPostedFile != null)
+            {
+                string path = @"~\Images\" + httpPostedFile.FileName;
+                string returnPath = @"/Images/" + httpPostedFile.FileName;
+                httpPostedFile.SaveAs(Server.MapPath(path));
+
+                return Json(new { success = true, path = returnPath });
+            }
+            return Json(new { success = false, message = "Lỗi khi upload file." });
+        }
+
         // GET: Products/Edit/5
         public ActionResult Edit(int? id)
         {
