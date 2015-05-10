@@ -1046,3 +1046,13 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .table {
     margin-top: 20px;
 }
+
+.table>tbody>tr>td, .table th {
+   text-align: center;   
+   vertical-align: middle;
+}
+
+.image-preview {
+    max-height: 100px;
+    width: auto;
+}
