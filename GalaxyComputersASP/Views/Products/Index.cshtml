@@ -24,7 +24,7 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="single-product">
                         <div class="product-f-image">
-                            <img src=@Html.DisplayFor(modelItem => item.ImagePath) alt=@Html.DisplayFor(modelItem => item.Name)>
+                            <img src=@Html.DisplayFor(modelItem => item.ImagePath)>
                             <div class="product-hover">
                                 <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
                                 <a href=@Url.Action("Details/" + item.ID, "Products") class="view-details-link"><i class="fa fa-search"></i> Chi tiết</a>
