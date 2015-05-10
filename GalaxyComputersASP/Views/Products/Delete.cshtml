@@ -4,84 +4,83 @@
     ViewBag.Title = "Xóa sản phẩm";
 }
 
-<div class="container">
+<div class="container main-body">
     <h2>Xóa sản phẩm</h2>
 
     <h3>Bạn có chắc chắn muốn xóa sản phẩm này?</h3>
     <div>
-        <h4>Product</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Product.PublishDate)
+                @Html.DisplayNameFor(model => model.ProductData.PublishDate)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.PublishDate)
+                @Html.DisplayFor(model => model.ProductData.PublishDate)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.Name)
+                @Html.DisplayNameFor(model => model.ProductData.Name)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.Name)
+                @Html.DisplayFor(model => model.ProductData.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.Price)
+                @Html.DisplayNameFor(model => model.ProductData.Price)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.Price)
+                @Html.DisplayFor(model => model.ProductData.Price)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.Description)
+                @Html.DisplayNameFor(model => model.ProductData.Description)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.Description)
+                @Html.DisplayFor(model => model.ProductData.Description)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.CategoryID)
+                @Html.DisplayNameFor(model => model.ProductData.CategoryID)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Category.Name)
+                @Html.DisplayFor(model => model.ProductCategory.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.ManufacturerID)
+                @Html.DisplayNameFor(model => model.ProductData.ManufacturerID)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Manufacturer.Name)
+                @Html.DisplayFor(model => model.ProductManufacturer.Name)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.ImagePath)
+                @Html.DisplayNameFor(model => model.ProductData.ImagePath)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.ImagePath)
+                @Html.DisplayFor(model => model.ProductData.ImagePath)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.Views)
+                @Html.DisplayNameFor(model => model.ProductData.Views)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.Views)
+                @Html.DisplayFor(model => model.ProductData.Views)
             </dd>
 
             <dt>
-                @Html.DisplayNameFor(model => model.Product.Sales)
+                @Html.DisplayNameFor(model => model.ProductData.Sales)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Product.Sales)
+                @Html.DisplayFor(model => model.ProductData.Sales)
             </dd>
 
         </dl>
@@ -90,15 +89,10 @@
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Xóa" />
-                </div>
+            <div class="form-group col-md-offset-2">
+                <input type="submit" value="Xóa" />
+                <a href='@Url.Action("Manage", "Products")' class="btn-blank">Quay về</a>
             </div>
         }
-
-        <div>
-            @Html.ActionLink("Back to List", "Index")
-        </div>
     </div>
 </div>
