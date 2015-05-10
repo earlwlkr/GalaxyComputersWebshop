@@ -599,15 +599,17 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     border: 1px solid #ddd;
     padding: 10px;
 }
-input[type="submit"], button[type=submit], button {
+input[type="submit"], button[type=submit], button, a.btn-main {
     background: none repeat scroll 0 0 #1abc9c;
     border: medium none;
     border-radius: 2px;
     color: #fff;
     padding: 11px 20px;
+    text-decoration: none;
     text-transform: uppercase;
+    display: inline-block;
 }
-input[type="submit"]:hover, button[type=submit]:hover, button:hover {
+input[type="submit"]:hover, button[type=submit]:hover, button:hover, a.btn-main:hover {
     background-color: #222;
 }
 
@@ -619,6 +621,7 @@ input[type="submit"]:hover, button[type=submit]:hover, button:hover {
     text-decoration: none;
     text-transform: uppercase;
     padding: 10px 15px;
+    display: inline-block;
 }
 
 .btn-blank:hover {
