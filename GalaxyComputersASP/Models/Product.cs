@@ -26,7 +26,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Nhà sản xuất")]
         [ForeignKey("Manufacturer")]
         public int ManufacturerID { get; set; }
-        [Display(Name = "Đường dẫn hình ảnh")]
+        [Display(Name = "Hình đại diện")]
         public string ImagePath { get; set; }
         [Display(Name = "Lượt xem")]
         public int Views { get; set; }

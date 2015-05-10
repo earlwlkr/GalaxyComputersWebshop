@@ -15,7 +15,7 @@ namespace GalaxyComputersASP.Models
         public string Description { get; set; }
         [Display(Name = "Trang chủ")]
         public string WebPage { get; set; }
-        [Display(Name = "Đường dẫn hình ảnh")]
+        [Display(Name = "Hình đại diện")]
         public string ImagePath { get; set; }
         [Display(Name = "Quốc gia")]
         public string Country { get; set; }
