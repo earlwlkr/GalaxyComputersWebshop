@@ -52,7 +52,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage", "Products");
             }
 
             return View(category);
@@ -102,7 +102,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage", "Products");
             }
             return View(category);
         }
@@ -130,7 +130,7 @@ namespace GalaxyComputersASP.Controllers
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Manage", "Products");
         }
 
         protected override void Dispose(bool disposing)
