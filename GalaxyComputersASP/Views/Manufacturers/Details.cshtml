@@ -4,63 +4,64 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="container main-body">
+    <h2>Details</h2>
 
-<div>
-    <h4>Manufacturer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div>
+        <h4>Manufacturer</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Description))
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.WebPage)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.WebPage)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.WebPage)
-        </dd>
+            <dd>
+                <a href=@Html.DisplayFor(model => model.WebPage)>@Html.DisplayFor(model => model.WebPage)</a>
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImagePath)
-        </dd>
+            <dd>
+                <img src="@Url.Content(Model.ImagePath)" class="image-preview" alt="Image" />
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateFounded)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateFounded)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateFounded)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateFounded)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <div class="col-md-offset-1 col-md-10">
+        <a href='@Url.Action("Manage", "Products")' class="btn-blank">Quay về</a>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
