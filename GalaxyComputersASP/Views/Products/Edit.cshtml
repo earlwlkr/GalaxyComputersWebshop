@@ -189,12 +189,8 @@
         });
     });
 
-    $('input[type=file]').on('change', prepareUpload);
-
-    // Grab the files and set them to our variable
-    function prepareUpload(event) {
-        var files = event.target.files;
-        console.log(files);
+    $('input[type=file]').on('change', function (e) {
+        var files = e.target.files;
         var data = new FormData();
         if (files.length > 0) {
             data.append("UploadedImage", files[0]);
@@ -216,9 +212,7 @@
                 }
             }
         });
-    }
-
-
+    });
 
     tinymce.init({
         selector: "textarea",
