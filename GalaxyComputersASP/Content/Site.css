@@ -1056,3 +1056,8 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     max-height: 100px;
     width: auto;
 }
+
+.img-product {
+    width: auto;
+    height: 240px;
+}
