@@ -62,7 +62,7 @@ namespace GalaxyComputersASP.Controllers
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
 
-            return View(new ProductOverview());
+            return View(new ProductOverview { ProductData = new Product { ImagePath = "/Images/placeholder.jpg" } });
         }
 
         // POST: Products/Create
@@ -70,12 +70,12 @@ namespace GalaxyComputersASP.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost, ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Name,Price,Description,CategoryID,Brand,ImagePath")] Product product)
+        public ActionResult Create(ProductOverview product)
         {
             if (ModelState.IsValid)
             {
-                product.PublishDate = DateTime.Now;
-                db.Products.Add(product);
+                product.ProductData.PublishDate = DateTime.Now;
+                db.Products.Add(product.ProductData);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
