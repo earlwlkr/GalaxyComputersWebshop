@@ -52,7 +52,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Manufacturers.Add(manufacturer);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage", "Products");
             }
 
             return View(manufacturer);
@@ -84,7 +84,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Entry(manufacturer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage", "Products");
             }
             return View(manufacturer);
         }
@@ -112,7 +112,7 @@ namespace GalaxyComputersASP.Controllers
             Manufacturer manufacturer = db.Manufacturers.Find(id);
             db.Manufacturers.Remove(manufacturer);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Manage", "Products");
         }
 
         protected override void Dispose(bool disposing)
