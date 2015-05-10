@@ -143,7 +143,7 @@
                 <h4 class="modal-title">Thêm danh mục</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal" id="result">
+                <div class="form-horizontal" id="resultCreateCategory">
 
                 </div>
                 <div class="modal-footer">
@@ -184,10 +184,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ProductManufacturer.WebPage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon1">http://</span>
-                                @Html.EditorFor(model => model.ProductManufacturer.WebPage, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon1" } })
-                            </div>
+                            @Html.EditorFor(model => model.ProductManufacturer.WebPage, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon1" } })
                             @Html.ValidationMessageFor(model => model.ProductManufacturer.WebPage, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -237,7 +234,7 @@
                 <h4 class="modal-title">Thêm nhà sản xuất</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal" id="result">
+                <div class="form-horizontal" id="resultCreateManufacturer">
 
                 </div>
                 <div class="modal-footer">
@@ -267,7 +264,7 @@
             success: function (result) {
                 $('#modalCreateCategory').modal('hide');
                 if (result.success == false) {
-                    $('#result').html(result.message);
+                    $('#resultCreateCategory').html(result.message);
                 } else {
                     $('#ProductData_CategoryID').append($('<option>', {
                         value: result.id,
@@ -275,7 +272,7 @@
                     }));
 
                     $('#ProductData_CategoryID').val(result.id);
-                    $('#result').html('Thêm danh mục thành công!<br/>');
+                    $('#resultCreateCategory').html('Thêm danh mục thành công!<br/>');
                 }
                 btn.button('reset');
                 $('#modalCreateCategoryResult').modal();
@@ -305,7 +302,7 @@
             success: function (result) {
                 $('#modalCreateManufacturer').modal('hide');
                 if (result.success == false) {
-                    $('#result').html(result.message);
+                    $('#resultCreateManufacturer').html(result.message);
                 } else {
                     $('#ProductData_ManufacturerID').append($('<option>', {
                         value: result.id,
@@ -313,7 +310,7 @@
                     }));
 
                     $('#ProductData_ManufacturerID').val(result.id);
-                    $('#result').html('Thêm nhà sản xuất thành công!<br/>');
+                    $('#resultCreateManufacturer').html('Thêm nhà sản xuất thành công!<br/>');
                 }
                 btn.button('reset');
                 $('#modalCreateManufacturerResult').modal();

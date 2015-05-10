@@ -64,8 +64,9 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.ProductData.ManufacturerID, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-2">
+                <div class="col-md-3">
                     @Html.DropDownListFor(model => model.ProductData.ManufacturerID, (SelectList)ViewBag.ManufacturersList, new { @class = "form-control" })
+                    <button type="button" id="btnCreateManufacturer">Thêm nhà sản xuất</button>
                     @Html.ValidationMessageFor(model => model.ProductData.Manufacturer, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -128,8 +129,99 @@
                 <h4 class="modal-title">Thêm danh mục</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal" id="result">
-                   
+                <div class="form-horizontal" id="resultCreateCategory">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modalCreateManufacturer">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm nhà sản xuất</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductManufacturer.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductManufacturer.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.ProductManufacturer.Description, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductManufacturer.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.WebPage, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductManufacturer.WebPage, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon1" } })
+                            @Html.ValidationMessageFor(model => model.ProductManufacturer.WebPage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <img src="@Url.Content(Model.ProductManufacturer.ImagePath)" id="imgPreviewManufacturer" class="image-preview" alt="Image" />
+                            <form enctype="multipart/form-data">
+                                <input type="file" name="Image" id="manufacturerImg" />
+                            </form>
+                            @Html.HiddenFor(model => model.ProductManufacturer.ImagePath)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductManufacturer.Country, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductManufacturer.Country, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProductManufacturer.DateFounded, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ProductManufacturer.DateFounded, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ProductManufacturer.DateFounded, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                    <button type="button" id="submitCreateManufacturer">Thêm</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="modalCreateManufacturerResult">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm nhà sản xuất</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" id="resultCreateManufacturer">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
@@ -153,20 +245,20 @@
             url: '@Url.Action("DirectedCreate", "Categories")',
             type: 'POST',
             data: {
-                'Category.Name': $('#Category_Name').val()
+                'Category.Name': $('#ProductCategory_Name').val()
             },
             success: function (result) {
                 $('#modalCreateCategory').modal('hide');
                 if (result.success == false) {
-                    $('#result').html(result.message);
+                    $('#resultCreateCategory').html(result.message);
                 } else {
-                    $('#Product_CategoryID').append($('<option>', {
+                    $('#ProductData_CategoryID').append($('<option>', {
                         value: result.id,
                         text: result.name
                     }));
 
-                    $('#Product_CategoryID').val(result.id);
-                    $('#result').html('Thêm danh mục thành công!<br/>');
+                    $('#ProductData_CategoryID').val(result.id);
+                    $('#resultCreateCategory').html('Thêm danh mục thành công!<br/>');
                 }
                 btn.button('reset');
                 $('#modalCreateCategoryResult').modal();
@@ -189,12 +281,55 @@
             processData: false,        // To send DOMDocument or non processed data file it is set to false
             success: function (result) {
                 if (result.success) {
-                    $('#ProductData_ImagePath').val(result.path);
-                    $('#imgPreview').attr('src', result.path);
+                    if (input.attr('id') == 'manufacturerImg') {
+                        $('#ProductManufacturer_ImagePath').val(result.path);
+                        $('#imgPreviewManufacturer').attr('src', result.path);
+                    } else {
+                        $('#ProductData_ImagePath').val(result.path);
+                        $('#imgPreview').attr('src', result.path);
+                    }
                 } else {
                     $('#result').html(result.message);
                     $('#modalCreateCategoryResult').modal();
                 }
+            }
+        });
+    });
+
+    $('#submitCreateManufacturer').data('loading-text', 'Đang thực hiện...');
+    $('#btnCreateManufacturer').click(function () {
+        $('#modalCreateManufacturer').modal();
+    });
+    $('#submitCreateManufacturer').click(function (e) {
+        e.preventDefault();
+        var btn = $(this);
+        btn.button('loading');
+        $.ajax({
+            url: '@Url.Action("DirectedCreate", "Manufacturers")',
+            type: 'POST',
+            data: {
+                'Manufacturer.Name': $('#ProductManufacturer_Name').val(),
+                'Manufacturer.Description': $('#ProductManufacturer_Description').val(),
+                'Manufacturer.WebPage': $('#ProductManufacturer_WebPage').val(),
+                'Manufacturer.ImagePath': $('#ProductManufacturer_ImagePath').val(),
+                'Manufacturer.Country': $('#ProductManufacturer_Country').val(),
+                'Manufacturer.DateFounded': $('#ProductManufacturer_DateFounded').val()
+            },
+            success: function (result) {
+                $('#modalCreateManufacturer').modal('hide');
+                if (result.success == false) {
+                    $('#resultCreateManufacturer').html(result.message);
+                } else {
+                    $('#ProductData_ManufacturerID').append($('<option>', {
+                        value: result.id,
+                        text: result.name
+                    }));
+
+                    $('#ProductData_ManufacturerID').val(result.id);
+                    $('#resultCreateManufacturer').html('Thêm nhà sản xuất thành công!<br/>');
+                }
+                btn.button('reset');
+                $('#modalCreateManufacturerResult').modal();
             }
         });
     });
