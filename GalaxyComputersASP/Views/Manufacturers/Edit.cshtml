@@ -1,20 +1,18 @@
 ﻿@model GalaxyComputersASP.Models.Manufacturer
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Sửa thông tin nhà sản xuất";
 }
 
 <div class="container main-body">
-    <h2>Sửa thông tin nhà sản xuất</h2>
+    <h2>Sửa thông tin nhà sán xuất</h2>
 
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.ID)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -27,7 +25,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -35,16 +33,18 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.WebPage, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.WebPage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.WebPage, new { htmlAttributes = new { @class = "form-control", aria_describedby = "basic-addon1" } })
                     @Html.ValidationMessageFor(model => model.WebPage, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ImagePath, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ImagePath, "", new { @class = "text-danger" })
+                    <img src="@Url.Content(Model.ImagePath)" id="imgPreviewManufacturer" class="image-preview" alt="Image" />
+                    <form enctype="multipart/form-data">
+                        <input type="file" name="Image" id="manufacturerImg" />
+                    </form>
+                    @Html.HiddenFor(model => model.ImagePath)
                 </div>
             </div>
 
@@ -64,6 +64,7 @@
                 </div>
             </div>
 
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Lưu" />
@@ -73,3 +74,42 @@
         </div>
     }
 </div>
+
+<script src="/Scripts/tinymce/tinymce.min.js"></script>
+<script>
+    $('input[type=file]').on('change', function (e) {
+        var files = e.target.files;
+        var input = $(this);
+        var data = new FormData();
+        if (files.length > 0) {
+            data.append("UploadedImage", files[0]);
+        }
+        $.ajax({
+            url: '@Url.Action("UploadImage", "Products")',
+            type: "POST",             // Type of request to be send, called as method
+            data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false,        // To send DOMDocument or non processed data file it is set to false
+            success: function (result) {
+                if (result.success) {
+                    $('#ImagePath').val(result.path);
+                    $('#imgPreviewManufacturer').attr('src', result.path);
+                } else {
+                    $('#result').html(result.message);
+                    $('#modalCreateCategoryResult').modal();
+                }
+            }
+        });
+    });
+
+    tinymce.init({
+        selector: "textarea",
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    });
+</script>

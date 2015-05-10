@@ -1,11 +1,11 @@
 ﻿@model GalaxyComputersASP.Models.Manufacturer
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Thêm nhà sản xuất";
 }
 
 <div class="container main-body">
-    <h2>Create</h2>
+    <h2>Thêm nhà sản xuất</h2>
 
     @using (Html.BeginForm())
     {
@@ -77,6 +77,32 @@
 
 <script src="/Scripts/tinymce/tinymce.min.js"></script>
 <script>
+    $('input[type=file]').on('change', function (e) {
+        var files = e.target.files;
+        var input = $(this);
+        var data = new FormData();
+        if (files.length > 0) {
+            data.append("UploadedImage", files[0]);
+        }
+        $.ajax({
+            url: '@Url.Action("UploadImage", "Products")',
+            type: "POST",             // Type of request to be send, called as method
+            data: data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+            contentType: false,       // The content type used when sending data to the server.
+            cache: false,             // To unable request pages to be cached
+            processData: false,        // To send DOMDocument or non processed data file it is set to false
+            success: function (result) {
+                if (result.success) {
+                    $('#ImagePath').val(result.path);
+                    $('#imgPreviewManufacturer').attr('src', result.path);
+                } else {
+                    $('#result').html(result.message);
+                    $('#modalCreateCategoryResult').modal();
+                }
+            }
+        });
+    });
+
     tinymce.init({
         selector: "textarea",
         plugins: [
