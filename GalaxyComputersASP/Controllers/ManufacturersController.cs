@@ -41,6 +41,24 @@ namespace GalaxyComputersASP.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult DirectedCreate(Manufacturer manufacturer)
+        {
+            if (ModelState.IsValid)
+            {
+                bool exists = db.Manufacturers.FirstOrDefault(i => i.Name == manufacturer.Name) != null;
+                if (exists)
+                {
+                    return Json(new { success = false, message = "Đã có danh mục với tên này trong cơ sở dữ liệu!" });
+                }
+                db.Manufacturers.Add(manufacturer);
+                db.SaveChanges();
+                return Json(new { success = true, name = manufacturer.Name, id = manufacturer.ID });
+            }
+
+            return Json(new { success = false, message = "Dữ liệu nhập vào không hợp lệ!" });
+        }
+
         // POST: Manufacturers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
