@@ -62,7 +62,7 @@ namespace GalaxyComputersASP.Controllers
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
 
-            return View(new ProductOverview { ProductData = new Product { ImagePath = "/Images/placeholder.jpg" } });
+            return View(new ProductOverview { ProductData = new Product { PublishDate = DateTime.Now, ImagePath = "/Images/placeholder.jpg" } });
         }
 
         // POST: Products/Create
