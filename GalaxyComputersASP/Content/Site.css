@@ -1370,3 +1370,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
     display: none;
   }
 }
+
+.single-product-area .row {
+    margin-bottom: 20px;
+}
