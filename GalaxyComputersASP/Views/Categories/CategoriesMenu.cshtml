@@ -2,6 +2,6 @@
 
 @foreach (var item in Model)
 {
-    <li>@Html.ActionLink(item.Name, "Details/" + item.ID)</li>
+    <li>@Html.ActionLink(item.Name, "Index?CategoryID=" + item.ID, "Products")</li>
 }
 

@@ -15,30 +15,43 @@ namespace GalaxyComputersASP.Controllers
         private GalaxyComputersASPContext db = new GalaxyComputersASPContext();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? CategoryID)
         {
-            DbSet<Product> list = db.Products;
-            return View(list.ToList());
+            if (CategoryID.HasValue)
+            {
+                List<Product> list = db.Products.Where(i => i.CategoryID == CategoryID).ToList();
+                return View(list);
+            }
+            return View(db.Products.ToList());
         }
 
         // GET: Products
         [HttpPost]
-        public ActionResult PartialIndex(FormCollection collection)
+        public ActionResult PartialIndex(int? CategoryID, FormCollection collection)
         {
             DbSet<Product> list = db.Products;
+            
             int sortItem = int.Parse(collection["sortItem"]);
             int sortOrder = int.Parse(collection["sortOrder"]);
 
-            IOrderedQueryable<Product> orderedList;
+            IQueryable<Product> orderedList;
             if (sortItem == 0)
             {
                 if (sortOrder == 0)
                 {
                     orderedList = list.OrderBy(i => i.Name);
+                    if (CategoryID.HasValue)
+                    {
+                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
+                    }
                 }
                 else
                 {
                     orderedList = list.OrderByDescending(i => i.Name);
+                    if (CategoryID.HasValue)
+                    {
+                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
+                    }
                 }
             }
             else
@@ -46,10 +59,18 @@ namespace GalaxyComputersASP.Controllers
                 if (sortOrder == 0)
                 {
                     orderedList = list.OrderBy(i => i.Price);
+                    if (CategoryID.HasValue)
+                    {
+                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
+                    }
                 }
                 else
                 {
                     orderedList = list.OrderByDescending(i => i.Price);
+                    if (CategoryID.HasValue)
+                    {
+                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
+                    }
                 }
             }
             return PartialView(orderedList.ToList());
