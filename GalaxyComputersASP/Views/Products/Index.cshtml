@@ -42,9 +42,20 @@
 </div>
 
 <script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    var catId = getParameterByName('CategoryID');
+    var action = "PartialIndex";
+    if (catId != null) {
+        action += "?CategoryID=" + catId;
+    }
     $('#btnUpdate').click(function (e) {
         $.ajax({
-            url: '@Url.Action("PartialIndex", "Products")',
+            url: '/Products/' + action,
             type: 'POST',
             data: {
                 'sortItem': $('#sortItem').val(),
