@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GalaxyComputersASP.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -44,16 +45,23 @@ namespace GalaxyComputersASP.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult DirectedCreate(Manufacturer manufacturer)
         {
-            if (ModelState.IsValid)
+            try
             {
-                bool exists = db.Manufacturers.FirstOrDefault(i => i.Name == manufacturer.Name) != null;
-                if (exists)
+                if (ModelState.IsValid)
                 {
-                    return Json(new { success = false, message = "Đã có danh mục với tên này trong cơ sở dữ liệu!" });
+                    bool exists = db.Manufacturers.FirstOrDefault(i => i.Name == manufacturer.Name) != null;
+                    if (exists)
+                    {
+                        return Json(new { success = false, message = "Đã có danh mục với tên này trong cơ sở dữ liệu!" });
+                    }
+                    db.Manufacturers.Add(manufacturer);
+                    db.SaveChanges();
+                    return Json(new { success = true, name = manufacturer.Name, id = manufacturer.ID });
                 }
-                db.Manufacturers.Add(manufacturer);
-                db.SaveChanges();
-                return Json(new { success = true, name = manufacturer.Name, id = manufacturer.ID });
+            }
+            catch (DbUpdateException)
+            {
+                return Json(new { success = false, message = "Dữ liệu nhập vào không hợp lệ!" });
             }
 
             return Json(new { success = false, message = "Dữ liệu nhập vào không hợp lệ!" });
