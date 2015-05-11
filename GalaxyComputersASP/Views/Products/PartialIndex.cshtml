@@ -1,10 +1,19 @@
 ﻿@model IEnumerable<GalaxyComputersASP.Models.Product>
 
+@{
+    var count = 0;
+}
+
 <div class="single-product-area">
     <div class="container">
         <div class="row">
             @foreach (var item in Model)
             {
+                if (count++ % 4 == 0)
+                {
+                    @:</div>
+                    @:<div class="row">
+                }
                 <div class="col-md-3 col-sm-6">
                     <div class="single-product">
                         <div class="product-f-image">
@@ -23,6 +32,6 @@
                     </div>
                 </div>
             }
-        </div>
+</div>
     </div>
 </div>
