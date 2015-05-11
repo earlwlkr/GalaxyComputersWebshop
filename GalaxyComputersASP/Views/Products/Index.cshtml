@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GalaxyComputersASP.Models.Product>
+﻿@model GalaxyComputersASP.Models.PartialIndexViewModel
 
 @{
     ViewBag.Title = "Sản phẩm";
@@ -22,12 +22,13 @@
             <label for="sortItem">Số sản phẩm 1 trang: </label>
             <select class="form-control" id="itemsPerPage" name="itemsPerPage">
                 <option value="5">5</option>
-                <option value="10">10</option>
+                <option selected value="10">10</option>
             </select>
         </div> |
         <div class="form-group">
             <label for="sortItem">Sắp xếp theo: </label>
             <select class="form-control" id="sortItem" name="sortItem">
+                <option value="-1">Chọn</option>
                 <option value="0">Tên</option>
                 <option value="1">Giá</option>
             </select>
@@ -44,7 +45,6 @@
  
     <div id="products-view">
         @Html.Partial("~/Views/Products/PartialIndex.cshtml", Model)
-        
     </div>
 </div>
 

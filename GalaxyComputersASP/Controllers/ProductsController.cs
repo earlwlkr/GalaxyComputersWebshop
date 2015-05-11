@@ -17,12 +17,25 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products
         public ActionResult Index(int? CategoryID)
         {
+            List<Product> returnList = new List<Product>();
             if (CategoryID.HasValue)
             {
-                List<Product> list = db.Products.Where(i => i.CategoryID == CategoryID).ToList();
-                return View(list);
+                returnList = db.Products.Where(i => i.CategoryID == CategoryID).ToList();
             }
-            return View(db.Products.ToList());
+            else
+            {
+                returnList = db.Products.ToList();
+            }
+
+            int count = returnList.Count;
+            return View(new PartialIndexViewModel
+                {
+                    Products = returnList, 
+                    CurrentPage = 1,
+                    CategoryID = CategoryID,
+                    ItemsPerPage = 10,
+                    TotalPages = count / 10 
+                });
         }
 
         // GET: Products
@@ -79,11 +92,29 @@ namespace GalaxyComputersASP.Controllers
             }
 
             List<Product> returnList = new List<Product>();
-            int end = (int)(Page * ItemsPerPage), start = (int)((Page - 1) * ItemsPerPage);
+            int start = (int)((Page - 1) * ItemsPerPage);
+            int count = orderedList.Count();
             if (start >= orderedList.Count())
-                return PartialView(orderedList.ToList());
-            
-            return PartialView(orderedList.ToList().GetRange(start, (int)ItemsPerPage));
+                returnList = orderedList.ToList();
+            else
+            {
+                int end = (int)(Page * ItemsPerPage);
+                if (end > count)
+                    end = count;
+                for (int i = start; i != end; i++)
+                {
+                    returnList.Add(orderedList.ToList().ElementAt(i));
+                }
+            }
+            int pages = (int)Math.Ceiling((double)(count / (double)ItemsPerPage));
+            return PartialView(new PartialIndexViewModel 
+                { 
+                    Products = returnList, 
+                    CurrentPage = (int)Page, 
+                    CategoryID = CategoryID,
+                    ItemsPerPage = (int)ItemsPerPage,
+                    TotalPages = pages
+                });
         }
 
         // GET: Products/Manage
