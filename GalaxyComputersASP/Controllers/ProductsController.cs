@@ -27,14 +27,18 @@ namespace GalaxyComputersASP.Controllers
 
         // GET: Products
         [HttpPost]
-        public ActionResult PartialIndex(int? CategoryID, FormCollection collection)
+        public ActionResult PartialIndex(int? CategoryID, int? Page, int? ItemsPerPage,
+                                            FormCollection collection)
         {
             DbSet<Product> list = db.Products;
             
             int sortItem = int.Parse(collection["sortItem"]);
             int sortOrder = int.Parse(collection["sortOrder"]);
 
-            IQueryable<Product> orderedList;
+            if (!Page.HasValue) Page = 1;
+            if (!ItemsPerPage.HasValue) ItemsPerPage = 10;
+
+            IQueryable<Product> orderedList = list;
             if (sortItem == 0)
             {
                 if (sortOrder == 0)
@@ -45,7 +49,7 @@ namespace GalaxyComputersASP.Controllers
                         orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
                     }
                 }
-                else
+                else if (sortOrder == 1)
                 {
                     orderedList = list.OrderByDescending(i => i.Name);
                     if (CategoryID.HasValue)
@@ -54,7 +58,7 @@ namespace GalaxyComputersASP.Controllers
                     }
                 }
             }
-            else
+            else if (sortItem == 1)
             {
                 if (sortOrder == 0)
                 {
@@ -64,7 +68,7 @@ namespace GalaxyComputersASP.Controllers
                         orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
                     }
                 }
-                else
+                else if (sortOrder == 1)
                 {
                     orderedList = list.OrderByDescending(i => i.Price);
                     if (CategoryID.HasValue)
@@ -73,7 +77,13 @@ namespace GalaxyComputersASP.Controllers
                     }
                 }
             }
-            return PartialView(orderedList.ToList());
+
+            List<Product> returnList = new List<Product>();
+            int end = (int)(Page * ItemsPerPage), start = (int)((Page - 1) * ItemsPerPage);
+            if (start >= orderedList.Count())
+                return PartialView(orderedList.ToList());
+            
+            return PartialView(orderedList.ToList().GetRange(start, (int)ItemsPerPage));
         }
 
         // GET: Products/Manage
