@@ -84,10 +84,7 @@
                         <li id="nav-item-2">
                             @Html.ActionLink("Sản phẩm", "Index", "Products")
                             <ul>
-                                <li><a href="#">Mainboard</a></li>
-                                <li><a href="#">CPU</a></li>
-                                <li><a href="#">VGA</a></li>
-                                <li><a href="#">RAM</a></li>
+                                @Html.Action("CategoriesMenu", "Categories")
                             </ul>
                         </li>
                         <li id="nav-item-1">@Html.ActionLink("Giỏ hàng", "Index", "Home")</li>

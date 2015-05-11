@@ -1,0 +1,7 @@
+﻿@model IEnumerable<GalaxyComputersASP.Models.Category>
+
+@foreach (var item in Model)
+{
+    <li>@Html.ActionLink(item.Name, "Details/" + item.ID)</li>
+}
+
