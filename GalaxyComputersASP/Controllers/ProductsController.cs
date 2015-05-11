@@ -134,7 +134,7 @@ namespace GalaxyComputersASP.Controllers
                 product.ProductData.PublishDate = DateTime.Now;
                 db.Products.Add(product.ProductData);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Manage");
             }
 
             this.ViewBag.CategoriesList = GetCategoriesList();
