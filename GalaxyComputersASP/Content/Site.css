@@ -1101,7 +1101,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
   top: 0;
   left: 0;
   height: 3px;
-  background: #009ae1;
+  background: red;
   -webkit-transition: all 0.25s ease-out;
   -moz-transition: all 0.25s ease-out;
   -ms-transition: all 0.25s ease-out;
