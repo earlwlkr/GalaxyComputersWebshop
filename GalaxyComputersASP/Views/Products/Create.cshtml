@@ -268,6 +268,7 @@
 
     $('input[type=file]').on('change', function (e) {
         var files = e.target.files;
+        var input = $(this);
         var data = new FormData();
         if (files.length > 0) {
             data.append("UploadedImage", files[0]);
