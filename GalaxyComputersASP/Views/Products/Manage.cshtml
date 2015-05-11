@@ -50,7 +50,7 @@
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.ID)</td>
-                <td><a href="@Url.Action("Details/" + item.ProductData.ID, "Categories")">@Html.DisplayFor(modelItem => item.ProductData.Name)</a></td>
+                <td><a href="@Url.Action("Details/" + item.ProductData.ID, "Products")">@Html.DisplayFor(modelItem => item.ProductData.Name)</a></td>
                 <td><img src="@Url.Content(item.ProductData.ImagePath)" class="image-preview" alt="Image" /></td>
                 <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
                 <td><a href="@Url.Action("Details/" + item.ProductCategory.ID, "Categories")">@Html.DisplayFor(modelItem => item.ProductCategory.Name)</a></td>
