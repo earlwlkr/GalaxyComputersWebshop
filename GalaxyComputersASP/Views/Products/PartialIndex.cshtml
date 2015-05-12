@@ -71,6 +71,8 @@
 <script>
     $('.pagination li a').click(function (e) {
         e.preventDefault();
+        $('#products-view').hide();
+        $('.spinner').show();
         var catId = getParameterByName('CategoryID');
         var action = "PartialIndex";
         if (catId != null) {
@@ -84,6 +86,8 @@
                 'sortOrder': $('#sortOrder').val()
             },
             success: function (result) {
+                $('#products-view').show();
+                $('.spinner').hide();
                 $('#products-view').html(result);
             }
         })
