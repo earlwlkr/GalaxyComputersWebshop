@@ -17,17 +17,26 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products
         public ActionResult Index(int? CategoryID)
         {
-            List<Product> returnList = new List<Product>();
+            List<Product> orderedList = new List<Product>();
             if (CategoryID.HasValue)
             {
-                returnList = db.Products.Where(i => i.CategoryID == CategoryID).ToList();
+                orderedList = db.Products.Where(i => i.CategoryID == CategoryID).ToList();
             }
             else
             {
-                returnList = db.Products.ToList();
+                orderedList = db.Products.ToList();
             }
 
-            int count = returnList.Count;
+            int end = 10;
+            List<Product> returnList = new List<Product>();
+            int count = orderedList.Count;
+            if (end > count)
+                end = count;
+            for (int i = 0; i != end; i++)
+            {
+                returnList.Add(orderedList.ElementAt(i));
+            }
+
             return View(new PartialIndexViewModel
                 {
                     Products = returnList, 
