@@ -43,12 +43,23 @@
         <button type="button" id="btnUpdate">Cập nhật</button>
     </div>
  
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+
     <div id="products-view">
         @Html.Partial("~/Views/Products/PartialIndex.cshtml", Model)
     </div>
 </div>
 
 <script>
+    $(document).ready(function () {
+        $('.spinner').hide();
+    })
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -57,6 +68,8 @@
     }
     
     $('#btnUpdate').click(function (e) {
+        $('#products-view').hide();
+        $('.spinner').show();
         var catId = getParameterByName('CategoryID');
         var action = "PartialIndex";
         if (catId != null) {
@@ -70,6 +83,8 @@
                 'sortOrder': $('#sortOrder').val()
             },
             success: function (result) {
+                $('#products-view').show();
+                $('.spinner').hide();
                 $('#products-view').html(result);
             }
         })
