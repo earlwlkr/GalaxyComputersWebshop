@@ -34,7 +34,7 @@ namespace GalaxyComputersASP.Controllers
                     CurrentPage = 1,
                     CategoryID = CategoryID,
                     ItemsPerPage = 10,
-                    TotalPages = count / 10 
+                    TotalPages = (int)Math.Ceiling((double)(count / (double)10))
                 });
         }
 
@@ -57,18 +57,10 @@ namespace GalaxyComputersASP.Controllers
                 if (sortOrder == 0)
                 {
                     orderedList = list.OrderBy(i => i.Name);
-                    if (CategoryID.HasValue)
-                    {
-                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
-                    }
                 }
                 else if (sortOrder == 1)
                 {
                     orderedList = list.OrderByDescending(i => i.Name);
-                    if (CategoryID.HasValue)
-                    {
-                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
-                    }
                 }
             }
             else if (sortItem == 1)
@@ -76,19 +68,15 @@ namespace GalaxyComputersASP.Controllers
                 if (sortOrder == 0)
                 {
                     orderedList = list.OrderBy(i => i.Price);
-                    if (CategoryID.HasValue)
-                    {
-                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
-                    }
                 }
                 else if (sortOrder == 1)
                 {
                     orderedList = list.OrderByDescending(i => i.Price);
-                    if (CategoryID.HasValue)
-                    {
-                        orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
-                    }
                 }
+            }
+            if (CategoryID.HasValue)
+            {
+                orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
             }
 
             List<Product> returnList = new List<Product>();
@@ -99,11 +87,12 @@ namespace GalaxyComputersASP.Controllers
             else
             {
                 int end = (int)(Page * ItemsPerPage);
+                List<Product> temp = orderedList.ToList();
                 if (end > count)
                     end = count;
                 for (int i = start; i != end; i++)
                 {
-                    returnList.Add(orderedList.ToList().ElementAt(i));
+                    returnList.Add(temp.ElementAt(i));
                 }
             }
             int pages = (int)Math.Ceiling((double)(count / (double)ItemsPerPage));
