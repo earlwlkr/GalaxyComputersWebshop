@@ -4,6 +4,17 @@
     ViewBag.Title = "Quản lý Sản phẩm";
 }
 
+<!-- DataTables -->
+<script charset="utf8" src="/Scripts/jquery.dataTables.min.js"></script>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="/Content/dataTables.bootstrap.css">
+
+<!-- DataTables -->
+<script charset="utf8" src="/Scripts/dataTables.bootstrap.js"></script>
+
+
+
 <div class="product-big-title-area">
     <div class="container">
         <div class="row">
@@ -19,7 +30,7 @@
 <div class="container main-body">
     <h2>SẢN PHẨM</h2>
     <a class="btn-main" href=@Url.Action("Create", "Products")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="manageTable">
         <thead>
             <tr>
                 <th>
@@ -67,7 +78,7 @@
 
     <h2>DANH MỤC</h2>
     <a class="btn-main" href=@Url.Action("Create", "Categories")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="manageTable">
         <thead>
             <tr>
                 <th>
@@ -99,7 +110,7 @@
 
     <h2>NHÀ SẢN XUẤT</h2>
     <a class="btn-main" href=@Url.Action("Create", "Manufacturers")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="manageTable">
         <thead>
             <tr>
                 <th>
@@ -138,6 +149,28 @@
     </table>
 </div>
 
+
+<script>
+    $('[id=manageTable]').dataTable({
+        language: {
+            "sProcessing": "Đang xử lý...",
+            "sLengthMenu": "Xem _MENU_ mục",
+            "sZeroRecords": "Không tìm thấy dòng nào phù hợp",
+            "sInfo": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ mục",
+            "sInfoEmpty": "Đang xem 0 đến 0 trong tổng số 0 mục",
+            "sInfoFiltered": "(được lọc từ _MAX_ mục)",
+            "sInfoPostFix": "",
+            "sSearch": "Tìm:",
+            "sUrl": "",
+            "oPaginate": {
+                "sFirst": "Đầu",
+                "sPrevious": "Trước",
+                "sNext": "Tiếp",
+                "sLast": "Cuối"
+            }
+        }
+    });
+</script>
 
 <script>
     
