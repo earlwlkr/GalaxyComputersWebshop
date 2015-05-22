@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace GalaxyComputersASP.Models
 {
-    public class GalaxyComputersASPContext : DbContext
+    public class GalaxyComputersASPContext : IdentityDbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
