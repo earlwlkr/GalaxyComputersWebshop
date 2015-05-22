@@ -21,7 +21,7 @@ namespace GalaxyComputersASP.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("GalaxyComputersASPContext", throwIfV1Schema: false)
         {
         }
 
