@@ -41,7 +41,7 @@
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> Giỏ hàng</a></li>
                             <li><a href="checkout.html"><i class="fa fa-user"></i> Thanh toán</a></li>
-                            <li><a href="#"><i class="fa fa-user"></i> Đăng nhập</a></li>
+                            <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Đăng nhập</a></li>
                         </ul>
                     </div>
                 </div>
@@ -181,5 +181,7 @@
     <script src="/Scripts/jquery.easing.1.3.min.js"></script>
     <!-- Main Script -->
     <script src="/Scripts/main.js"></script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
