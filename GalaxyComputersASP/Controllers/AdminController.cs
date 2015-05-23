@@ -13,15 +13,31 @@ namespace GalaxyComputersASP.Controllers
     public class AdminController : Controller
     {
         private GalaxyComputersASPContext db = new GalaxyComputersASPContext();
+        public UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+        RoleManager<IdentityRole> RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new GalaxyComputersASPContext()));
+
+        [HttpPost]
+        public ActionResult UpdateRole(string userId, string role)
+        {
+            ApplicationUser user = UserManager.FindById(userId);
+            List<IdentityRole> roles = RoleManager.Roles.ToList();
+            foreach (IdentityRole roleItem in roles)
+            {
+                if (UserManager.IsInRole(userId, roleItem.Name))
+                {
+                    UserManager.RemoveFromRole(userId, roleItem.Name);
+                    UserManager.AddToRole(userId, role);
+                    break;
+                }
+            }
+            return Json(new { success = true } );
+        }
 
         // GET: /Admin
         public ActionResult Index()
         {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
-            List<ApplicationUser> users = userManager.Users.ToList();
-
-            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new GalaxyComputersASPContext()));
-            List<IdentityRole> allRoles = roleManager.Roles.ToList();
+            List<ApplicationUser> users = UserManager.Users.ToList();
+            List<IdentityRole> allRoles = RoleManager.Roles.ToList();
             var rolesList = new List<SelectListItem>();
             foreach (IdentityRole role in allRoles)
             {
@@ -37,7 +53,7 @@ namespace GalaxyComputersASP.Controllers
                 foreach (SelectListItem roleItem in rolesList)
                 {
                     string role = roleItem.Text;
-                    if (userManager.IsInRole(user.Id, role))
+                    if (UserManager.IsInRole(user.Id, role))
                     {
                         userRoles.Add(role);
                         break;

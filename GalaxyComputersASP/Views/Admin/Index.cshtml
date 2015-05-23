@@ -72,7 +72,8 @@
                             roleItems.Add(listItem);
                         }
                     }
-                    @Html.DropDownList("UserRole", roleItems, new { @class = "form-control" })
+                    @Html.DropDownList("UserRole", roleItems, new { @class = "form-control user-role", item_id = item.Id })
+                    <button class="save-role" item-id="@item.Id" role-value="Unset">Lưu</button>
                 </td>
             </tr>
         }
@@ -199,6 +200,24 @@
     </table>
 </div>
 
+<div class="modal fade" id="modelUpdateRoleResult">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cập nhật quyền hạn</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal" id="resultUpdateRole">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script>
     $('[id=manageTable]').dataTable({
@@ -219,6 +238,38 @@
                 "sLast": "Cuối"
             }
         }
+    });
+    $('.user-role').change(function (e) {
+        var selectList = $(this);
+        var button = selectList.next();
+        button.attr('role-value', selectList.val());
+    });
+    $('.save-role').click(function (e) {
+        var button = $(this);
+        var roleValue = button.attr('role-value');
+        if (roleValue == "Unset")
+        {
+            $('#resultUpdateRole').html('Bạn chưa thay đổi quyền hạn!<br/>');
+            $('#modelUpdateRoleResult').modal();
+            return;
+        }
+        $.ajax({
+            url: '@Url.Action("UpdateRole", "Admin")',
+            type: 'POST',
+            data: {
+                'userId': button.attr('item-id'),
+                'role': roleValue
+            },
+            success: function (result) {
+                if (result.success == false) {
+                    $('#resultUpdateRole').html(result.message);
+                } else {
+                    button.attr('role-value', 'Unset');
+                    $('#resultUpdateRole').html('Cập nhật quyền hạn thành công!<br/>');
+                }
+                $('#modelUpdateRoleResult').modal();
+            }
+        });
     });
 </script>
 
