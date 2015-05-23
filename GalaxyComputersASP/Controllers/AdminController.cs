@@ -13,15 +13,26 @@ namespace GalaxyComputersASP.Controllers
     {
         private GalaxyComputersASPContext db = new GalaxyComputersASPContext();
 
-        // GET: Admin
+        // GET: /Admin
         public ActionResult Index()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
             IEnumerable<ApplicationUser> users = userManager.Users;
 
+            RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new GalaxyComputersASPContext()));
+            List<IdentityRole> allRoles = roleManager.Roles.ToList();
+            var rolesList = new List<SelectListItem>();
+            foreach (IdentityRole role in allRoles)
+            {
+                string roleName = role.Name;
+                rolesList.Add(new SelectListItem { Text = roleName, Value = roleName });
+            }
+            SelectList roles = new SelectList(rolesList, "Value", "Text", rolesList[0].Text);
+            //var str = roleManager.Create(new IdentityRole(roleName));
+
             IEnumerable<Product> products = db.Products.ToList();
             List<ProductOverview> list = new List<ProductOverview>();
-
+            
             foreach (Product product in products)
             {
                 Category category = db.Categories.Find(product.CategoryID);
@@ -31,6 +42,7 @@ namespace GalaxyComputersASP.Controllers
             return View(new AdminViewModel
             {
                 Users = users.ToList(),
+                Roles = roles,
                 Products = list.ToList(),
                 Categories = db.Categories.ToList(),
                 Manufacturers = db.Manufacturers.ToList()
