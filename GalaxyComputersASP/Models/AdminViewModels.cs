@@ -9,6 +9,7 @@ namespace GalaxyComputersASP.Models
     public class AdminViewModel
     {
         public IEnumerable<ApplicationUser> Users;
+        public List<String> UserRoles;
         public SelectList Roles;
         public IEnumerable<ProductOverview> Products;
         public IEnumerable<Category> Categories;
