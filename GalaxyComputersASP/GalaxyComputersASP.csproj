@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201505230239535_AddressPhoneNumber.Designer.cs">
       <DependentUpon>201505230239535_AddressPhoneNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505230256512_Gender.cs" />
+    <Compile Include="Migrations\201505230256512_Gender.Designer.cs">
+      <DependentUpon>201505230256512_Gender.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -505,6 +509,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505230239535_AddressPhoneNumber.resx">
       <DependentUpon>201505230239535_AddressPhoneNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230256512_Gender.resx">
+      <DependentUpon>201505230256512_Gender.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
