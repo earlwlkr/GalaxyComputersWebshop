@@ -44,6 +44,18 @@
                                     <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                                     <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-dollar"></i> Thanh toán</a></li>
+                                }
+                            }   
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-md-offset-1">
+                    <div class="user-menu">
+                        <ul>
+                            @{
+                                if (Request.IsAuthenticated)
+                                {
+                                    @:Xin chào, @this.User.Identity.Name
                                     <li>
                                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                         {
@@ -57,7 +69,7 @@
                                     <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
                                     <li><a href="@Url.Action("Register", "Account")"><i class="fa fa-plus-circle"></i> Đăng ký</a></li>
                                 }
-}
+                            }
                         </ul>
                     </div>
                 </div>
