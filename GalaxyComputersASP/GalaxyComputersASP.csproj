@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201505221303101_IdentityMerge.Designer.cs">
       <DependentUpon>201505221303101_IdentityMerge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505230149196_SimpleProfile.cs" />
+    <Compile Include="Migrations\201505230149196_SimpleProfile.Designer.cs">
+      <DependentUpon>201505230149196_SimpleProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -491,6 +495,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505221303101_IdentityMerge.resx">
       <DependentUpon>201505221303101_IdentityMerge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505230149196_SimpleProfile.resx">
+      <DependentUpon>201505230149196_SimpleProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
