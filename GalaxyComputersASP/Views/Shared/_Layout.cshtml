@@ -37,11 +37,27 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                            <li><a href="cart.html"><i class="fa fa-user"></i> Giỏ hàng</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-user"></i> Thanh toán</a></li>
-                            <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-user"></i> Đăng nhập</a></li>
+                            @{
+                                if (Request.IsAuthenticated)
+                                {
+                                    <li><a href="@Url.Action("Edit", "Account")"><i class="fa fa-cog"></i> Sửa lý lịch</a></li>
+                                    <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
+                                    <li><a href="cart.html"><i class="fa fa-user"></i> Giỏ hàng</a></li>
+                                    <li><a href="checkout.html"><i class="fa fa-user"></i> Thanh toán</a></li>
+                                    <li>
+                                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                        }
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in"></i> Đăng nhập</a></li>
+                                    <li><a href="@Url.Action("Register", "Account")"><i class="fa fa-plus-circle"></i> Đăng ký</a></li>
+                                }
+}
                         </ul>
                     </div>
                 </div>
