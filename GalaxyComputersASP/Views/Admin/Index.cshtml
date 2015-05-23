@@ -46,6 +46,7 @@
                     @Html.DisplayNameFor(model => model.Users.ElementAt(0).PhoneNumber)
                 </th>
                 <th>
+                    Phân quyền
                 </th>
             </tr>
         </thead>
@@ -58,7 +59,7 @@
                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                 
                 <td>
-                    <a href=@Url.Action("Edit/" + item.Id, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                    @Html.DropDownList("UserRole", Model.Roles, new { @class = "form-control" })
                 </td>
             </tr>
         }
