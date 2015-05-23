@@ -135,6 +135,8 @@ namespace GalaxyComputersASP.Controllers
         {
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
+            // Remove all products of this manufacturer.
+            db.Products.RemoveRange(db.Products.Where(i => i.CategoryID == id));
             db.SaveChanges();
             return RedirectToAction("Manage", "Products");
         }
