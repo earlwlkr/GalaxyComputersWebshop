@@ -28,6 +28,47 @@
 </div>
 
 <div class="container main-body">
+    <h2>NGƯỜI DÙNG</h2>
+    <a class="btn-main" href=@Url.Action("Create", "Account")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
+    <table class="table table-bordered" id="manageTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).PhoneNumber)
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                
+                <td>
+                    <a href=@Url.Action("Edit/" + item.Id, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                </td>
+                <td>
+                    <a href=@Url.Action("Delete/" + item.Id, "Products") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+
     <h2>SẢN PHẨM</h2>
     <a class="btn-main" href=@Url.Action("Create", "Products")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
     <table class="table table-bordered" id="manageTable">

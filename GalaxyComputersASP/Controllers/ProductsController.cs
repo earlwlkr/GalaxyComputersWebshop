@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GalaxyComputersASP.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -118,16 +120,23 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products/Manage
         public ActionResult Manage()
         {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            IEnumerable<ApplicationUser> users = userManager.Users;
+            
             IEnumerable<Product> products = db.Products.ToList();
             List<ProductOverview> list = new List<ProductOverview>();
+            
             foreach (Product product in products)
             {
                 Category category = db.Categories.Find(product.CategoryID);
                 Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
                 list.Add(new ProductOverview { ProductData = product, ProductCategory = category, ProductManufacturer = manufacturer });
             }
-            return View(new ProductManageViewModel { Products = list.ToList(), Categories = db.Categories.ToList(),
-                                                     Manufacturers = db.Manufacturers.ToList() });
+            return View(new ProductManageViewModel { 
+                                                    Users = users.ToList(),
+                                                    Products = list.ToList(), 
+                                                    Categories = db.Categories.ToList(),
+                                                    Manufacturers = db.Manufacturers.ToList() });
         }
 
         // GET: Products/Details/5

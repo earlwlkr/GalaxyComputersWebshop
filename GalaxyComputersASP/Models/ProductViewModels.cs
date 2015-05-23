@@ -21,6 +21,7 @@ namespace GalaxyComputersASP.Models
     }
     public class ProductManageViewModel
     {
+        public IEnumerable<ApplicationUser> Users;
         public IEnumerable<ProductOverview> Products;
         public IEnumerable<Category> Categories;
         public IEnumerable<Manufacturer> Manufacturers;
