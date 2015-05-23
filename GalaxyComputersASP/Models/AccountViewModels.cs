@@ -91,6 +91,10 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
+        [Required]
+        [Display(Name = "Giới tính")]
+        public string Gender { get; set; }
+
         [Required(ErrorMessage = "Bạn chưa nhập địa chỉ!")]
         [Display(Name = "Địa chỉ")]
         public string Address { get; set; }
