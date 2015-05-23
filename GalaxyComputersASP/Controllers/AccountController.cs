@@ -137,6 +137,55 @@ namespace GalaxyComputersASP.Controllers
             }
         }
 
+        // GET: /Account/Edit
+        public ActionResult Edit()
+        {
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            return View(new EditViewModel
+                {
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Gender = user.Gender,
+                    Address = user.Address,
+                    Birthdate = user.Birthdate,
+                    PhoneNumber = user.PhoneNumber 
+                });
+        }
+
+        // POST: /Account/Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+                user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.Birthdate = model.Birthdate;
+                user.PhoneNumber = model.PhoneNumber;
+                var result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+            return View(model);
+        }
+
         //
         // GET: /Account/Register
         [AllowAnonymous]

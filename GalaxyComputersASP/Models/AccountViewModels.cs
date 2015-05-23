@@ -62,6 +62,40 @@ namespace GalaxyComputersASP.Models
         public bool RememberMe { get; set; }
     }
 
+    public class EditViewModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Họ")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Tên")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Giới tính")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Bạn chưa nhập địa chỉ!")]
+        [Display(Name = "Địa chỉ")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "Bạn chưa nhập số điện thoại!")]
+        [RegularExpression(@"09\d{8}|01\d{9}", ErrorMessage = "Số điện thoại không hợp lệ!")]
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Ngày sinh")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        public DateTime Birthdate { get; set; }
+    }
+
     public class RegisterViewModel
     {
         [Required]
@@ -106,6 +140,7 @@ namespace GalaxyComputersASP.Models
 
         [Required]
         [Display(Name = "Ngày sinh")]
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
         public DateTime Birthdate { get; set; }
     }
