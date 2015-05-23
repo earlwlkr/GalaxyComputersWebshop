@@ -97,7 +97,12 @@
                         </li>
                         <li id="nav-item-1">@Html.ActionLink("Giỏ hàng", "Index", "Home")</li>
                         <li id="nav-item-3">@Html.ActionLink("Thông tin", "About", "Home")</li>
-                        <li id="nav-item-4">@Html.ActionLink("Quản lý", "Manage", "Products")</li>
+                        @{
+                            if (this.User.IsInRole("Admin"))
+                            {
+                                <li id="nav-item-4">@Html.ActionLink("Quản lý", "Manage", "Products")</li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
