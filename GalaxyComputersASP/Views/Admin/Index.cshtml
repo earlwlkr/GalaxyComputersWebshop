@@ -50,6 +50,7 @@
                 </th>
             </tr>
         </thead>
+        @{ var i = 0; }
         @foreach (var item in Model.Users)
         {
             <tr>
@@ -58,8 +59,20 @@
                 <td>@Html.DisplayFor(modelItem => item.Address)</td>
                 <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                 
-                <td>
-                    @Html.DropDownList("UserRole", Model.Roles, new { @class = "form-control" })
+                <td>@{
+                        List<SelectListItem> roleItems = new List<SelectListItem>();
+                        string role = Model.UserRoles.ElementAt(i++);
+                        foreach (SelectListItem roleItem in Model.Roles.Items)
+                        {
+                            var listItem = new SelectListItem { Text = roleItem.Text, Value = roleItem.Value };
+                            if (roleItem.Text == role)
+                            {
+                                listItem.Selected = true;
+                            }
+                            roleItems.Add(listItem);
+                        }
+                    }
+                    @Html.DropDownList("UserRole", roleItems, new { @class = "form-control" })
                 </td>
             </tr>
         }

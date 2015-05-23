@@ -18,7 +18,7 @@ namespace GalaxyComputersASP.Controllers
         public ActionResult Index()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
-            IEnumerable<ApplicationUser> users = userManager.Users;
+            List<ApplicationUser> users = userManager.Users.ToList();
 
             RoleManager<IdentityRole> roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new GalaxyComputersASPContext()));
             List<IdentityRole> allRoles = roleManager.Roles.ToList();
@@ -28,8 +28,22 @@ namespace GalaxyComputersASP.Controllers
                 string roleName = role.Name;
                 rolesList.Add(new SelectListItem { Text = roleName, Value = roleName });
             }
-            SelectList roles = new SelectList(rolesList, "Value", "Text", rolesList[0].Text);
+            SelectList roles = new SelectList(rolesList);
             //var str = roleManager.Create(new IdentityRole(roleName));
+
+            List<String> userRoles = new List<string>();
+            foreach (ApplicationUser user in users)
+            {
+                foreach (SelectListItem roleItem in rolesList)
+                {
+                    string role = roleItem.Text;
+                    if (userManager.IsInRole(user.Id, role))
+                    {
+                        userRoles.Add(role);
+                        break;
+                    }
+                }
+            }
 
             IEnumerable<Product> products = db.Products.ToList();
             List<ProductOverview> list = new List<ProductOverview>();
@@ -43,6 +57,7 @@ namespace GalaxyComputersASP.Controllers
             return View(new AdminViewModel
             {
                 Users = users.ToList(),
+                UserRoles = userRoles,
                 Roles = roles,
                 Products = list.ToList(),
                 Categories = db.Categories.ToList(),
