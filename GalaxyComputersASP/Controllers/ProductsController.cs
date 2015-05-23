@@ -117,29 +117,6 @@ namespace GalaxyComputersASP.Controllers
                 });
         }
 
-        // GET: Products/Manage
-        [Authorize(Roles="Admin")]
-        public ActionResult Manage()
-        {
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
-            IEnumerable<ApplicationUser> users = userManager.Users;
-            
-            IEnumerable<Product> products = db.Products.ToList();
-            List<ProductOverview> list = new List<ProductOverview>();
-            
-            foreach (Product product in products)
-            {
-                Category category = db.Categories.Find(product.CategoryID);
-                Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
-                list.Add(new ProductOverview { ProductData = product, ProductCategory = category, ProductManufacturer = manufacturer });
-            }
-            return View(new ProductManageViewModel { 
-                                                    Users = users.ToList(),
-                                                    Products = list.ToList(), 
-                                                    Categories = db.Categories.ToList(),
-                                                    Manufacturers = db.Manufacturers.ToList() });
-        }
-
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
@@ -257,7 +234,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Entry(product.ProductData).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Manage");
+                return RedirectToAction("Index", "Admin");
             }
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();

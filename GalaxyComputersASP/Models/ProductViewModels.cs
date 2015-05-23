@@ -19,13 +19,7 @@ namespace GalaxyComputersASP.Models
         public int ItemsPerPage { get; set; }
         public Nullable<int> CategoryID { get; set; }
     }
-    public class ProductManageViewModel
-    {
-        public IEnumerable<ApplicationUser> Users;
-        public IEnumerable<ProductOverview> Products;
-        public IEnumerable<Category> Categories;
-        public IEnumerable<Manufacturer> Manufacturers;
-    }
+   
     public class ProductDetailsViewModel
     {
         public Category Category { get; set; }

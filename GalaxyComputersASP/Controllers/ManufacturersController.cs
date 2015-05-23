@@ -78,7 +78,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Manufacturers.Add(manufacturer);
                 db.SaveChanges();
-                return RedirectToAction("Manage", "Products");
+                return RedirectToAction("Index", "Admin");
             }
 
             return View(manufacturer);
@@ -110,7 +110,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 db.Entry(manufacturer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Manage", "Products");
+                return RedirectToAction("Index", "Admin");
             }
             return View(manufacturer);
         }
@@ -140,7 +140,7 @@ namespace GalaxyComputersASP.Controllers
             // Remove all products of this manufacturer.
             db.Products.RemoveRange(db.Products.Where(i => i.ManufacturerID == id));
             db.SaveChanges();
-            return RedirectToAction("Manage", "Products");
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)

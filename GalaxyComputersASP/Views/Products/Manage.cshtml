@@ -47,8 +47,6 @@
                 </th>
                 <th>
                 </th>
-                <th>
-                </th>
             </tr>
         </thead>
         @foreach (var item in Model.Users)
@@ -61,9 +59,6 @@
                 
                 <td>
                     <a href=@Url.Action("Edit/" + item.Id, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
-                </td>
-                <td>
-                    <a href=@Url.Action("Delete/" + item.Id, "Products") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
                 </td>
             </tr>
         }
