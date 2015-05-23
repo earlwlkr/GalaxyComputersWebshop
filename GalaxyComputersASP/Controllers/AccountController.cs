@@ -159,6 +159,7 @@ namespace GalaxyComputersASP.Controllers
                     Email = model.Email, 
                     FirstName = model.FirstName,
                     LastName = model.LastName,
+                    Address = model.Address,
                     PhoneNumber = model.PhoneNumber,
                     Birthdate = model.Birthdate
                 };
