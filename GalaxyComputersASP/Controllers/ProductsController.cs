@@ -160,7 +160,7 @@ namespace GalaxyComputersASP.Controllers
                 product.ProductData.PublishDate = DateTime.Now;
                 db.Products.Add(product.ProductData);
                 db.SaveChanges();
-                return RedirectToAction("Manage");
+                return RedirectToAction("Index", "Admin");
             }
 
             this.ViewBag.CategoriesList = GetCategoriesList();
