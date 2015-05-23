@@ -118,6 +118,7 @@ namespace GalaxyComputersASP.Controllers
         }
 
         // GET: Products/Manage
+        [Authorize(Roles="Admin")]
         public ActionResult Manage()
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
