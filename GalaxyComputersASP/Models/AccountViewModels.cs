@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GalaxyComputersASP.Models
@@ -49,9 +50,8 @@ namespace GalaxyComputersASP.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Tên đăng nhập")]
+        public string AccountName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,8 +65,11 @@ namespace GalaxyComputersASP.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Tên đăng nhập")]
+        public string AccountName { get; set; }
+
+        [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
@@ -79,6 +82,19 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Nhập lại mật khẩu")]
         [Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Tên")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Họ")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Ngày sinh")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        public DateTime Birthdate { get; set; }
     }
 
     public class ResetPasswordViewModel
