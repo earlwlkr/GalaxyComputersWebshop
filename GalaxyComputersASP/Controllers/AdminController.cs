@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace GalaxyComputersASP.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private GalaxyComputersASPContext db = new GalaxyComputersASPContext();
