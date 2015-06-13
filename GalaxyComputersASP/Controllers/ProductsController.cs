@@ -134,7 +134,9 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
-
+            product.Views++;
+            db.Entry(product).State = EntityState.Modified;
+            db.SaveChanges();
             return View(new ProductDetailsViewModel { Product = product, Category = category });
         }
 

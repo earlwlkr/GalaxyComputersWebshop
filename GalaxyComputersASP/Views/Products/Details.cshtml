@@ -54,6 +54,9 @@
                                 <div class="product-inner-price">
                                     <ins>@Html.DisplayFor(model => model.Product.Price) VND</ins>
                                 </div>
+                                <div class="product-inner-price">
+                                    Số lượt xem: @Html.DisplayFor(model => model.Product.Views)
+                                </div>
 
                                 <form action="" class="cart">
                                     <div class="quantity">
