@@ -64,15 +64,15 @@ namespace GalaxyComputersASP.Models
 
     public class EditViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Bạn chưa nhập email!")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ!")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa nhập Họ!")]
         [Display(Name = "Họ")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa nhập Tên!")]
         [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
@@ -89,7 +89,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa nhập Ngày sinh!")]
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
@@ -98,15 +98,15 @@ namespace GalaxyComputersASP.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa chọn Tên đăng nhập!")]
         [Display(Name = "Tên đăng nhập")]
         public string AccountName { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Bạn chưa nhập Email!")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ!")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa nhập Mật khẩu!")]
         [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
@@ -117,15 +117,15 @@ namespace GalaxyComputersASP.Models
         [Compare("Password", ErrorMessage = "Mật khẩu không trùng khớp.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dữ liệu Họ không hợp lệ!")]
         [Display(Name = "Họ")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Dữ liệu Tên không hợp lệ!")]
         [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email không hợp lệ!")]
         [Display(Name = "Giới tính")]
         public string Gender { get; set; }
 
@@ -138,7 +138,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Bạn chưa nhập ngày sinh!")]
         [Display(Name = "Ngày sinh")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
