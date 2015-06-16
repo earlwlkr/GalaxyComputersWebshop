@@ -44,6 +44,7 @@ namespace GalaxyComputersASP.Controllers
                     Products = returnList, 
                     MinPrice = db.Products.Min(i => i.Price),
                     MaxPrice = db.Products.Max(i => i.Price),
+                    Manufacturers = db.Manufacturers.ToList(),
                     CurrentPage = 1,
                     CategoryID = CategoryID,
                     ItemsPerPage = 10,
@@ -54,6 +55,8 @@ namespace GalaxyComputersASP.Controllers
         // GET: Products
         [HttpPost]
         public ActionResult PartialIndex(int? CategoryID, int? Page, int? ItemsPerPage, string q,
+                                            double MinPrice, double MaxPrice, string Manu,
+                                            DateTime Start, DateTime End,
                                             FormCollection collection)
         {
             DbSet<Product> list = db.Products;
@@ -95,6 +98,12 @@ namespace GalaxyComputersASP.Controllers
             {
                 orderedList = orderedList.Where(i => i.Name.Contains(q));
             }
+            orderedList = orderedList.Where(i => i.Price >= MinPrice && i.Price <= MaxPrice);
+            if (Manu != null)
+            {
+                orderedList = orderedList.Where(i => i.Manufacturer.Name == Manu);
+            }
+            orderedList = orderedList.Where(i => i.PublishDate >= Start && i.PublishDate <= End);
 
             List<Product> returnList = new List<Product>();
             int start = (int)((Page - 1) * ItemsPerPage);
@@ -118,6 +127,7 @@ namespace GalaxyComputersASP.Controllers
                     Products = returnList,
                     MinPrice = db.Products.Min(i => i.Price),
                     MaxPrice = db.Products.Max(i => i.Price),
+                    Manufacturers = db.Manufacturers.ToList(),
                     CurrentPage = (int)Page, 
                     CategoryID = CategoryID,
                     ItemsPerPage = (int)ItemsPerPage,

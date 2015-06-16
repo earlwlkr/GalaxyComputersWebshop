@@ -52,10 +52,27 @@
     </div>
     <div class="form-inline" id="advancedSearch">
         <div class="form-group">
-            <label for="sortOrder">Tầm giá: </label>
+            <label for="priceRange">Tầm giá: </label>
             <input id="priceRange" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="100000" data-slider-value="[@Model.MinPrice,@Model.MaxPrice]" />
         </div>
-
+        <div class="form-group">
+            <label for="manufacturer">Nhà sản xuất: </label>
+            <select class="form-control" id="manufacturer" name="manufacturer">
+                <option selected value="">Chọn</option>
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    <option value="@manufacturer.Name">@manufacturer.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="startDate">Từ ngày: </label>
+            <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2000" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">Đến ngày: </label>
+            <input id="endDate" type="text" class="datepicker" value="" data-value="17/06/2015" />
+        </div>
     </div>
  
     <div class="spinner">
@@ -72,6 +89,7 @@
 </div>
 
 <script>
+    var startDate, endDate;
     $(document).ready(function () {
         $('.spinner').hide();
         $('#advancedSearch').hide();
@@ -84,6 +102,12 @@
                     + parseFloat(value[1]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
             }
         });
+        startDate = $('#startDate').pickadate({
+            formatSubmit: 'dd/mm/yyyy'
+        }).pickadate('picker');
+        endDate = $('#endDate').pickadate({
+            formatSubmit: 'dd/mm/yyyy'
+        }).pickadate('picker');
     })
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -93,13 +117,24 @@
     }
     
     $('#btnUpdate').click(function (e) {
+        var query = $('#searchQuery').val();
+        var start = startDate.get('select', 'mm dd yyyy');
+        var end = endDate.get('select', 'mm dd yyyy');
         $('#products-view').hide();
         $('.spinner').show();
         var catId = getParameterByName('CategoryID');
         var action = "PartialIndex";
         if (catId != null) {
-            action += "?CategoryID=" + catId + "&ItemsPerPage=" + $('#itemsPerPage').val();
+            action += "?CategoryID=" + catId + "&ItemsPerPage=" + $('#itemsPerPage').val() + "&q=" + query;
+        } else {
+            action += "?q=" + query;
         }
+        var prices = $('#priceRange').val().split(',');
+        action += "&MinPrice=" + prices[0] + "&MaxPrice=" + prices[1];
+        if ($('#manufacturer').val() != '') {
+            action += "&Manu=" + $('#manufacturer').val();
+        }
+        action += "&Start=" + start + "&End=" + end;
         $.ajax({
             url: '/Products/' + action,
             type: 'POST',
@@ -117,30 +152,36 @@
 
     $('#btnSearch').click(function (e) {
         var query = $('#searchQuery').val();
-        if (query != null) {
-            $('#products-view').hide();
-            $('.spinner').show();
-            var catId = getParameterByName('CategoryID');
-            var action = "PartialIndex";
-            if (catId != null) {
-                action += "?CategoryID=" + catId + "&ItemsPerPage=" + $('#itemsPerPage').val() + "&q=" + query;
-            } else {
-                action += "?q=" + query;
-            }
-            $.ajax({
-                url: '/Products/' + action,
-                type: 'POST',
-                data: {
-                    'sortItem': $('#sortItem').val(),
-                    'sortOrder': $('#sortOrder').val()
-                },
-                success: function (result) {
-                    $('#products-view').show();
-                    $('.spinner').hide();
-                    $('#products-view').html(result);
-                }
-            });
+        var start = startDate.get('select', 'mm dd yyyy');
+        var end = endDate.get('select', 'mm dd yyyy');
+        $('#products-view').hide();
+        $('.spinner').show();
+        var catId = getParameterByName('CategoryID');
+        var action = "PartialIndex";
+        if (catId != null) {
+            action += "?CategoryID=" + catId + "&ItemsPerPage=" + $('#itemsPerPage').val() + "&q=" + query;
+        } else {
+            action += "?q=" + query;
         }
+        var prices = $('#priceRange').val().split(',');
+        action += "&MinPrice=" + prices[0] + "&MaxPrice=" + prices[1];
+        if ($('#manufacturer').val() != '') {
+            action += "&Manu=" + $('#manufacturer').val();
+        }
+        action += "&Start=" + start + "&End=" + end;
+        $.ajax({
+            url: '/Products/' + action,
+            type: 'POST',
+            data: {
+                'sortItem': $('#sortItem').val(),
+                'sortOrder': $('#sortOrder').val()
+            },
+            success: function (result) {
+                $('#products-view').show();
+                $('.spinner').hide();
+                $('#products-view').html(result);
+            }
+        });
     });
 </script>
 

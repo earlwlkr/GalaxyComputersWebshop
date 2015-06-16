@@ -20,6 +20,7 @@ namespace GalaxyComputersASP.Models
         public Nullable<int> CategoryID { get; set; }
         public double MinPrice { get; set; }
         public double MaxPrice { get; set; }
+        public IEnumerable<Manufacturer> Manufacturers;
     }
    
     public class ProductDetailsViewModel

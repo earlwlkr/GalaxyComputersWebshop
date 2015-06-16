@@ -71,13 +71,24 @@
 <script>
     $('.pagination li a').click(function (e) {
         e.preventDefault();
+        var query = $('#searchQuery').val();
+        var start = startDate.get('select', 'mm dd yyyy');
+        var end = endDate.get('select', 'mm dd yyyy');
         $('#products-view').hide();
         $('.spinner').show();
         var catId = getParameterByName('CategoryID');
         var action = "PartialIndex";
         if (catId != null) {
             action += "?CategoryID=" + catId + "&ItemsPerPage=" + @Model.ItemsPerPage + "&Page=" + $(this).html();
+        } else {
+            action += "?q=" + query;
         }
+        var prices = $('#priceRange').val().split(',');
+        action += "&MinPrice=" + prices[0] + "&MaxPrice=" + prices[1];
+        if ($('#manufacturer').val() != '') {
+            action += "&Manu=" + $('#manufacturer').val();
+        }
+        action += "&Start=" + start + "&End=" + end;
         $.ajax({
             url: '/Products/' + action,
             type: 'POST',
@@ -90,6 +101,6 @@
                 $('.spinner').hide();
                 $('#products-view').html(result);
             }
-        })
+        });
     });
 </script>
