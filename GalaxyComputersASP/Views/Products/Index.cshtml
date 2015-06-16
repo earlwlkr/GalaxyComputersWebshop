@@ -40,7 +40,16 @@
                 <option value="1">Giảm dần</option>
             </select> |
         </div>
-        <button type="button" id="btnUpdate">Cập nhật</button>
+        <button type="button" id="btnUpdate">Cập nhật</button> |
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchQuery" placeholder="Từ khóa">
+            <span class="input-group-btn">
+                <button id="btnSearch" class="btn btn-default" type="button">Tìm</button>
+            </span>
+        </div>
+    </div>
+    <div class="form-inline">
+        
     </div>
  
     <div class="spinner">
@@ -87,7 +96,35 @@
                 $('.spinner').hide();
                 $('#products-view').html(result);
             }
-        })
+        });
+    });
+
+    $('#btnSearch').click(function (e) {
+        var query = $('#searchQuery').val();
+        if (query != null) {
+            $('#products-view').hide();
+            $('.spinner').show();
+            var catId = getParameterByName('CategoryID');
+            var action = "PartialIndex";
+            if (catId != null) {
+                action += "?CategoryID=" + catId + "&ItemsPerPage=" + $('#itemsPerPage').val() + "&q=" + query;
+            } else {
+                action += "?q=" + query;
+            }
+            $.ajax({
+                url: '/Products/' + action,
+                type: 'POST',
+                data: {
+                    'sortItem': $('#sortItem').val(),
+                    'sortOrder': $('#sortOrder').val()
+                },
+                success: function (result) {
+                    $('#products-view').show();
+                    $('.spinner').hide();
+                    $('#products-view').html(result);
+                }
+            });
+        }
     });
 </script>
 

@@ -51,7 +51,7 @@ namespace GalaxyComputersASP.Controllers
 
         // GET: Products
         [HttpPost]
-        public ActionResult PartialIndex(int? CategoryID, int? Page, int? ItemsPerPage,
+        public ActionResult PartialIndex(int? CategoryID, int? Page, int? ItemsPerPage, string q,
                                             FormCollection collection)
         {
             DbSet<Product> list = db.Products;
@@ -88,6 +88,10 @@ namespace GalaxyComputersASP.Controllers
             if (CategoryID.HasValue)
             {
                 orderedList = orderedList.Where(i => i.CategoryID == CategoryID);
+            }
+            if (q != null)
+            {
+                orderedList = orderedList.Where(i => i.Name.Contains(q));
             }
 
             List<Product> returnList = new List<Product>();
