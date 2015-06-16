@@ -18,6 +18,8 @@ namespace GalaxyComputersASP.Models
         public int TotalPages { get; set; }
         public int ItemsPerPage { get; set; }
         public Nullable<int> CategoryID { get; set; }
+        public double MinPrice { get; set; }
+        public double MaxPrice { get; set; }
     }
    
     public class ProductDetailsViewModel

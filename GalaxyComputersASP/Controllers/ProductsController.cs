@@ -42,6 +42,8 @@ namespace GalaxyComputersASP.Controllers
             return View(new PartialIndexViewModel
                 {
                     Products = returnList, 
+                    MinPrice = db.Products.Min(i => i.Price),
+                    MaxPrice = db.Products.Max(i => i.Price),
                     CurrentPage = 1,
                     CategoryID = CategoryID,
                     ItemsPerPage = 10,
@@ -113,7 +115,9 @@ namespace GalaxyComputersASP.Controllers
             int pages = (int)Math.Ceiling((double)(count / (double)ItemsPerPage));
             return PartialView(new PartialIndexViewModel 
                 { 
-                    Products = returnList, 
+                    Products = returnList,
+                    MinPrice = db.Products.Min(i => i.Price),
+                    MaxPrice = db.Products.Max(i => i.Price),
                     CurrentPage = (int)Page, 
                     CategoryID = CategoryID,
                     ItemsPerPage = (int)ItemsPerPage,

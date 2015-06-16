@@ -1439,3 +1439,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .table>thead>tr>th, table.dataTable thead .sorting:after {
     vertical-align: middle;
 }
+
+.slider {
+    margin: 10px;
+}
