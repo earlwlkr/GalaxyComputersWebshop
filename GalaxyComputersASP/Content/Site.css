@@ -1443,3 +1443,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .slider {
     margin: 10px;
 }
+
+div > div > div > div > div.picker__header > select {
+    height: 42px;
+}

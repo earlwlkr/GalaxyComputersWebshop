@@ -67,7 +67,7 @@
         </div>
         <div class="form-group">
             <label for="startDate">Từ ngày: </label>
-            <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2000" />
+            <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2010" />
         </div>
         <div class="form-group">
             <label for="endDate">Đến ngày: </label>
@@ -103,10 +103,12 @@
             }
         });
         startDate = $('#startDate').pickadate({
-            formatSubmit: 'dd/mm/yyyy'
+            formatSubmit: 'dd/mm/yyyy',
+            selectYears: true
         }).pickadate('picker');
         endDate = $('#endDate').pickadate({
-            formatSubmit: 'dd/mm/yyyy'
+            formatSubmit: 'dd/mm/yyyy',
+            selectYears: true
         }).pickadate('picker');
     })
     function getParameterByName(name) {
