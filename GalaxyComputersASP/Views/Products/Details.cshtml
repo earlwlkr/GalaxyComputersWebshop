@@ -156,26 +156,32 @@
     $('#submitComment').click(function (e) {
         var comment = escape($('#comment').val());
         if (comment != '') {
+            var name;
+            if ('@Request.IsAuthenticated' == 'True') {
+                name = '@this.User.Identity.Name';
+            } else {
+                name = 'Khách viếng thăm';
+            }
             $.ajax({
                 url: '@Url.Action("AddComment", "Products")',
-                type: 'POST',
-                data: {
-                    'Content': comment,
-                    'Product': @Model.Product.ID,
-                    'Submitter': '@this.User.Identity.Name'
-                },
-                success: function (result) {
-                    $('#commentSection').prepend('\
+            type: 'POST',
+            data: {
+                'Content': comment,
+                'Product': @Model.Product.ID,
+                'Submitter': name
+            },
+            success: function (result) {
+                $('#commentSection').prepend('\
                     <div class="panel panel-default">\
                         <div class="panel-heading">' + result.username + ' - ' + result.date + '</div>\
                         <div class="panel-body">'
-                                + $('<div/>').text(result.content).html() + '\
+                            + $('<div/>').text(result.content).html() + '\
                         </div>\
                     </div>\
                 ');
-                }
-            });
-        }
+            }
+        });
+    }
     });
 </script>
 

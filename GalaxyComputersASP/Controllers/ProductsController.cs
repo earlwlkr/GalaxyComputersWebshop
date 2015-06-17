@@ -144,11 +144,18 @@ namespace GalaxyComputersASP.Controllers
             string submitter = collection["Submitter"];
             Product commentProduct = db.Products.Find(product);
             UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            Comment comment;
+            if (submitter.CompareTo("Khách viếng thăm") == 0)
+            {
+                comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct };
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = "Khách viếng thăm" });
+            }
             ApplicationUser user = UserManager.FindByName(submitter);
-            Comment comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
+            comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
             db.Comments.Add(comment);
             db.SaveChanges();
-
             return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = user.UserName });
         }
 
@@ -175,7 +182,14 @@ namespace GalaxyComputersASP.Controllers
             foreach (Comment comment in comments)
             {
                 ApplicationUser user = UserManager.FindById(comment.UserID);
-                ViewBag.Users.Add(user.UserName);
+                if (user == null)
+                {
+                    ViewBag.Users.Add("Khách viếng thăm");
+                }
+                else
+                {
+                    ViewBag.Users.Add(user.UserName);
+                }
             }
 
             product.Views++;
