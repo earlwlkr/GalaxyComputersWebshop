@@ -17,61 +17,75 @@
 </div>
 
 <div class="container main-body">
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="sortItem">Số sản phẩm 1 trang: </label>
-            <select class="form-control" id="itemsPerPage" name="itemsPerPage">
-                <option value="5">5</option>
-                <option selected value="10">10</option>
-            </select>
-        </div> |
-        <div class="form-group">
-            <label for="sortItem">Sắp xếp theo: </label>
-            <select class="form-control" id="sortItem" name="sortItem">
-                <option value="-1">Chọn</option>
-                <option value="0">Tên</option>
-                <option value="1">Giá</option>
-            </select>
-        </div> |
-        <div class="form-group">
-            <label for="sortOrder">Thứ tự: </label>
-            <select class="form-control" id="sortOrder" name="sortOrder">
-                <option value="0">Tăng dần</option>
-                <option value="1">Giảm dần</option>
-            </select> |
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title"><strong>Sắp xếp</strong></h3>
         </div>
-        <button type="button" id="btnUpdate">Cập nhật</button>
+        <div class="panel-body">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="sortItem">Số sản phẩm 1 trang: </label>
+                    <select class="form-control" id="itemsPerPage" name="itemsPerPage">
+                        <option value="5">5</option>
+                        <option selected value="10">10</option>
+                    </select>
+                </div> |
+                <div class="form-group">
+                    <label for="sortItem">Sắp xếp theo: </label>
+                    <select class="form-control" id="sortItem" name="sortItem">
+                        <option value="-1">Chọn</option>
+                        <option value="0">Tên</option>
+                        <option value="1">Giá</option>
+                    </select>
+                </div> |
+                <div class="form-group">
+                    <label for="sortOrder">Thứ tự: </label>
+                    <select class="form-control" id="sortOrder" name="sortOrder">
+                        <option value="0">Tăng dần</option>
+                        <option value="1">Giảm dần</option>
+                    </select> |
+                </div>
+                <button type="button" id="btnUpdate">Cập nhật</button>
+            </div>
+        </div>
     </div>
-    <div class="form-inline">
-        <div class="form-group">
-            <label for="searchQuery">Từ khóa: </label>
-            <input type="text" class="form-control" id="searchQuery" placeholder="Từ khóa">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title"><strong>Tìm kiếm</strong></h3>
         </div>
-        <button type="button" id="btnSearch">Tìm</button>
-        <button type="button" id="btnShowAdvanced">Nâng cao</button>
-    </div>
-    <div class="form-inline" id="advancedSearch">
-        <div class="form-group">
-            <label for="priceRange">Tầm giá: </label>
-            <input id="priceRange" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="100000" data-slider-value="[@Model.MinPrice,@Model.MaxPrice]" />
-        </div>
-        <div class="form-group">
-            <label for="manufacturer">Nhà sản xuất: </label>
-            <select class="form-control" id="manufacturer" name="manufacturer">
-                <option selected value="">Chọn</option>
-                @foreach (var manufacturer in Model.Manufacturers)
-                {
-                    <option value="@manufacturer.Name">@manufacturer.Name</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="startDate">Từ ngày: </label>
-            <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2010" />
-        </div>
-        <div class="form-group">
-            <label for="endDate">Đến ngày: </label>
-            <input id="endDate" type="text" class="datepicker" value="" data-value="17/06/2015" />
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="searchQuery">Từ khóa: </label>
+                <input type="text" class="form-control" id="searchQuery" placeholder="Từ khóa">
+            </div>
+            <div class="form-inline" id="advancedSearch">
+                <div class="form-group">
+                    <label for="priceRange">Tầm giá: </label>
+                    <input id="priceRange" type="text" class="span2" value="" data-slider-min="@Model.MinPrice" data-slider-max="@Model.MaxPrice" data-slider-step="100000" data-slider-value="[@Model.MinPrice,@Model.MaxPrice]" />
+                </div> |
+                <div class="form-group">
+                    <label for="manufacturer">Nhà sản xuất: </label>
+                    <select class="form-control" id="manufacturer" name="manufacturer">
+                        <option selected value="">Chọn</option>
+                        @foreach (var manufacturer in Model.Manufacturers)
+                        {
+                            <option value="@manufacturer.Name">@manufacturer.Name</option>
+                        }
+                    </select>
+                </div> |
+                <div class="form-group">
+                    <label for="startDate">Từ ngày: </label>
+                    <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2010" />
+                </div> |
+                <div class="form-group">
+                    <label for="endDate">Đến ngày: </label>
+                    <input id="endDate" type="text" class="datepicker" value="" data-value="17/06/2015" />
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="btnSearch">Tìm</button>
+                <button type="button" id="btnShowAdvanced">Nâng cao</button>
+            </div>
         </div>
     </div>
  
