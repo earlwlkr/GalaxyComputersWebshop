@@ -155,6 +155,7 @@
 <script>
     $('#submitComment').click(function (e) {
         var comment = escape($('#comment').val());
+        $('#comment').val('');
         if (comment != '') {
             var name;
             if ('@Request.IsAuthenticated' == 'True') {
