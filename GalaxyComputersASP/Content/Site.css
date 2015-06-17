@@ -1038,6 +1038,7 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 .main-body {
     margin-top: 20px;
     min-height: 800px;
+    padding-bottom: 150px;
 }
 
 .table {
