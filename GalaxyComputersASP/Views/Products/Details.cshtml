@@ -17,7 +17,7 @@
 </div>
 
 
-<div class="single-product-area">
+<div class="single-product-area main-body">
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
@@ -75,23 +75,28 @@
                                             @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Product.Description))
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
-                                            <h2>Đánh giá</h2>
+                                            <h2>Bình luận</h2>
+                                            <div id="commentSection">
+                                                @{
+                                                    
+                                                    var i = 0;
+                                                    foreach (var comment in Model.Comments)
+                                                    {
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">@ViewBag.Users[i++] - @comment.PublishDate</div>
+                                                            <div class="panel-body">
+                                                                @comment.Content
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
                                             <div class="submit-review">
-                                                <p><label for="name">Tên</label> <input name="name" type="text"></p>
-                                                <p><label for="email">Email</label> <input name="email" type="email"></p>
-                                                <div class="rating-chooser">
-                                                    <p>Đánh giá của bạn</p>
-
-                                                    <div class="rating-wrap-post">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p><label for="review">Bình luận</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                <p><input type="submit" value="Gửi"></p>
+                                                <p>
+                                                    <label for="review">Bình luận</label> 
+                                                    <textarea name="review" id="comment" cols="30" rows="10"></textarea>
+                                                </p>
+                                                <p><button type="button" id="submitComment">Gửi</button></p>
                                             </div>
                                         </div>
                                     </div>
@@ -103,7 +108,7 @@
 
 
                     <div class="related-products-wrapper">
-                        <h2 class="related-products-title">Related Products</h2>
+                        <h2 class="related-products-title">Sản phẩm liên quan</h2>
                         <div class="related-products-carousel">
                             <div class="single-product">
                                 <div class="product-f-image">
@@ -147,5 +152,28 @@
     $('#nav-item-2').addClass('active');
 </script>
 
+<script>
+    $('#submitComment').click(function (e) {
+        $.ajax({
+            url: '@Url.Action("AddComment", "Products")',
+            type: 'POST',
+            data: {
+                'Content': $('#comment').val(),
+                'Product': @Model.Product.ID,
+                'Submitter': '@this.User.Identity.Name'
+            },
+            success: function (result) {
+                $('#commentSection').prepend('\
+                    <div class="panel panel-default">\
+                                                        <div class="panel-heading">' + result.username + ' - ' + result.date + '</div>\
+                                                        <div class="panel-body">'
+                                                           + result.content + '\
+                </div>\
+            </div>\
+                ');
+            }
+        });
+    });
+</script>
 
 

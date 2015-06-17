@@ -192,10 +192,23 @@
     <Compile Include="Migrations\201505230256512_Gender.Designer.cs">
       <DependentUpon>201505230256512_Gender.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506170148238_Comments.cs" />
+    <Compile Include="Migrations\201506170148238_Comments.Designer.cs">
+      <DependentUpon>201506170148238_Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506170308323_UpdateComments.cs" />
+    <Compile Include="Migrations\201506170308323_UpdateComments.Designer.cs">
+      <DependentUpon>201506170308323_UpdateComments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506170517036_UpdateComments2.cs" />
+    <Compile Include="Migrations\201506170517036_UpdateComments2.Designer.cs">
+      <DependentUpon>201506170517036_UpdateComments2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\GalaxyComputersASPContext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -210,14 +223,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\classic.css" />
     <Content Include="Content\classic.date.css" />
-    <Content Include="Content\classic.time.css" />
-    <Content Include="Content\default.css" />
-    <Content Include="Content\default.date.css" />
-    <Content Include="Content\default.time.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\owl.carousel.css" />
     <Content Include="Content\responsive.css" />
-    <Content Include="Content\rtl.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -525,6 +533,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505230256512_Gender.resx">
       <DependentUpon>201505230256512_Gender.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506170148238_Comments.resx">
+      <DependentUpon>201506170148238_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506170308323_UpdateComments.resx">
+      <DependentUpon>201506170308323_UpdateComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506170517036_UpdateComments2.resx">
+      <DependentUpon>201506170517036_UpdateComments2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

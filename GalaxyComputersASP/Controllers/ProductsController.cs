@@ -135,6 +135,22 @@ namespace GalaxyComputersASP.Controllers
                 });
         }
 
+        [HttpPost]
+        public ActionResult AddComment(FormCollection collection)
+        {
+            string content = collection["Content"];
+            int product = int.Parse(collection["Product"]);
+            string submitter = collection["Submitter"];
+            Product commentProduct = db.Products.Find(product);
+            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            ApplicationUser user = UserManager.FindByName(submitter);
+            Comment comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
+            db.Comments.Add(comment);
+            db.SaveChanges();
+
+            return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = user.UserName });
+        }
+
         // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
@@ -147,15 +163,24 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
-            Category category = db.Categories.Find(product.CategoryID);
+            Category category = product.Category;
             if (category == null)
             {
                 return HttpNotFound();
             }
+            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            List<Comment> comments = db.Comments.Where(i => i.Product.ID == id).OrderByDescending(i => i.PublishDate).ToList();
+            ViewBag.Users = new List<string>();
+            foreach (Comment comment in comments)
+            {
+                ApplicationUser user = UserManager.FindById(comment.UserID);
+                ViewBag.Users.Add(user.UserName);
+            }
+
             product.Views++;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
-            return View(new ProductDetailsViewModel { Product = product, Category = category });
+            return View(new ProductDetailsViewModel { Product = product, Category = category, Comments = comments });
         }
 
         // GET: Products/Create

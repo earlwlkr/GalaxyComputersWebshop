@@ -27,5 +27,6 @@ namespace GalaxyComputersASP.Models
     {
         public Category Category { get; set; }
         public Product Product { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }
