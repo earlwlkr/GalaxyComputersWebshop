@@ -139,6 +139,7 @@ namespace GalaxyComputersASP.Controllers
         public ActionResult AddComment(FormCollection collection)
         {
             string content = collection["Content"];
+            content = HttpUtility.UrlDecode(content);
             int product = int.Parse(collection["Product"]);
             string submitter = collection["Submitter"];
             Product commentProduct = db.Products.Find(product);
