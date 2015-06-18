@@ -230,6 +230,19 @@ namespace GalaxyComputersASP.Controllers
             return View(info);
         }
 
+        public ActionResult Orders()
+        {
+            GalaxyComputersASPContext db = new GalaxyComputersASPContext();
+            string userId = User.Identity.GetUserId();
+            List<Order> orders = db.Orders.Where(i => i.UserID == userId).ToList();
+            List<List<OrderItem>> orderItems = new List<List<OrderItem>>(); 
+            foreach (Order order in orders)
+            {
+                orderItems.Add(db.OrderItems.Where(i => i.OrderID == order.ID).ToList());
+            }
+            return View(new OrdersViewModel { Orders = orders, OrderItems = orderItems });
+        }
+
         public ActionResult Finish()
         {
             return View();

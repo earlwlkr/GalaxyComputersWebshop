@@ -29,4 +29,10 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
     }
+
+    public class OrdersViewModel
+    {
+        public List<Order> Orders { get; set; }
+        public List<List<OrderItem>> OrderItems { get; set; }
+    }
 }
