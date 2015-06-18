@@ -70,6 +70,70 @@ namespace GalaxyComputersASP.Controllers
             return Json(new { success = true, product_name = product.Name });
         }
 
+        [HttpPost]
+        public ActionResult SetItemQuantity()
+        {
+            int productToAdd = int.Parse(Request.Form["ProductID"]);
+            Product product = db.Products.Find(productToAdd);
+            if (product == null)
+            {
+                return Json(new { success = false });
+            }
+            int quantity = int.Parse(Request.Form["Quantity"]);
+            var cartId = getCartId(this.HttpContext);
+            if (quantity <= 0)
+            {
+                RemoveItemFromCart(productToAdd);
+                return Json(new { success = true, product_name = product.Name });
+            }
+            var cartItem = db.CartItems.SingleOrDefault(
+                c => c.UserID == cartId
+                && c.ProductID == productToAdd
+            );
+
+            if (cartItem == null)
+            {
+                cartItem = new CartItem
+                {
+                    ProductID = productToAdd,
+                    UserID = cartId,
+                    Quantity = quantity
+                };
+                db.CartItems.Add(cartItem);
+            }
+            else
+            {
+                cartItem.Quantity = quantity;
+            }
+            db.SaveChanges();
+            return Json(new { success = true, product_name = product.Name });
+        }
+
+        [HttpPost]
+        public ActionResult RemoveItemFromCart()
+        {
+            int productToAdd = int.Parse(Request.Form["ProductID"]);
+            Product product = db.Products.Find(productToAdd);
+            if (product == null)
+            {
+                return Json(new { success = false });
+            }
+            RemoveItemFromCart(productToAdd);
+            return Json(new { success = true, product_name = product.Name });
+        }
+
+        private bool RemoveItemFromCart(int productId)
+        {
+            var cartId = getCartId(this.HttpContext);
+            var cartItem = db.CartItems.SingleOrDefault(
+                c => c.UserID == cartId
+                && c.ProductID == productId
+            );
+            db.CartItems.Remove(cartItem);
+            db.SaveChanges();
+            return true;
+        }
+
         public ActionResult GetCartItemsCount()
         {
             var cartId = getCartId(this.HttpContext);
@@ -105,13 +169,14 @@ namespace GalaxyComputersASP.Controllers
                 foreach (var item in cartItems)
                 {
                     data.items.Add(new { 
+                        id = item.ProductID,
                         name = item.Product.Name, 
                         price = item.Product.Price, 
                         quantity = item.Quantity 
                     });
                 }
-                data.success = true;
             }
+            data.success = true;
             data = ((ExpandoObject)data).ToDictionary(x => x.Key, x => x.Value);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
