@@ -208,9 +208,7 @@
                 <h4 class="modal-title">Cập nhật quyền hạn</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal" id="resultUpdateRole">
-
-                </div>
+                <div class="form-horizontal" id="resultUpdateRole"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
                 </div>
@@ -249,7 +247,7 @@
         var roleValue = button.attr('role-value');
         if (roleValue == "Unset")
         {
-            $('#resultUpdateRole').html('Bạn chưa thay đổi quyền hạn!<br/>');
+            $('#resultUpdateRole').html('<p>Bạn chưa thay đổi quyền hạn!</p>');
             $('#modelUpdateRoleResult').modal();
             return;
         }
@@ -265,7 +263,7 @@
                     $('#resultUpdateRole').html(result.message);
                 } else {
                     button.attr('role-value', 'Unset');
-                    $('#resultUpdateRole').html('Cập nhật quyền hạn thành công!<br/>');
+                    $('#resultUpdateRole').html('<p>Cập nhật quyền hạn thành công!</p>');
                 }
                 $('#modelUpdateRoleResult').modal();
             }
