@@ -33,6 +33,7 @@ namespace GalaxyComputersASP.Models
     public class OrdersViewModel
     {
         public List<Order> Orders { get; set; }
+        public List<double> Prices { get; set; }
         public List<List<OrderItem>> OrderItems { get; set; }
     }
 }

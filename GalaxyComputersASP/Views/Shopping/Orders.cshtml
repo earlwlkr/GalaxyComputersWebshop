@@ -27,6 +27,9 @@
                     Địa chỉ
                 </th>
                 <th>
+                    Đơn giá
+                </th>
+                <th>
                     Trạng thái
                 </th>
             </tr>
@@ -54,6 +57,9 @@
                     <td>
                         @order.Address
                     </td>
+                    <td class="orderPrice">
+                        @Model.Prices.ElementAt(i - 1)
+                    </td>
                     @if (order.Status == 0)
                     {
                         <td class="danger">Chưa giao</td>
@@ -72,4 +78,12 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.orderPrice').each(function () {
+            $(this).html(formatPrice($(this).html()) + ' VNĐ');
+        });
+    });
+</script>
 

@@ -235,12 +235,15 @@ namespace GalaxyComputersASP.Controllers
             GalaxyComputersASPContext db = new GalaxyComputersASPContext();
             string userId = User.Identity.GetUserId();
             List<Order> orders = db.Orders.Where(i => i.UserID == userId).ToList();
+            List<double> prices = new List<double>();
             List<List<OrderItem>> orderItems = new List<List<OrderItem>>(); 
             foreach (Order order in orders)
             {
-                orderItems.Add(db.OrderItems.Where(i => i.OrderID == order.ID).ToList());
+                IQueryable<OrderItem> items = db.OrderItems.Where(i => i.OrderID == order.ID);
+                prices.Add(items.Sum(i => i.Product.Price * i.Quantity));
+                orderItems.Add(items.ToList());
             }
-            return View(new OrdersViewModel { Orders = orders, OrderItems = orderItems });
+            return View(new OrdersViewModel { Orders = orders, Prices = prices, OrderItems = orderItems });
         }
 
         public ActionResult Finish()
