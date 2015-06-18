@@ -60,9 +60,9 @@
 
                                 <form action="" class="cart">
                                     <div class="quantity">
-                                        <input type="number" size="4" class="input-text qty text" title="Số lượng" value="1" name="quantity" min="1" step="1">
+                                        <input type="number" id="quantity" size="4" class="input-text qty text" title="Số lượng" value="1" name="quantity" min="1" step="1">
                                     </div>
-                                    <button class="add_to_cart_button" type="submit">Thêm vào giỏ hàng</button>
+                                    <button class="add_to_cart_button" type="submit" product-id="@Model.Product.ID">Thêm vào giỏ hàng</button>
                                 </form>
 
                                 <div role="tabpanel">
@@ -233,6 +233,29 @@
                 }
             });
         }
+    });
+    $(document).on('click', '.add_to_cart_button', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/Shopping/AddToCart',
+            type: 'POST',
+            data: {
+                'ProductID': $(this).attr('product-id'),
+                'Quantity': $('#quantity').val()
+            },
+            success: function (result) {
+                $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+                    if (data.success) {
+                        $('#cartCount').html(data.count);
+                    }
+                });
+                $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+                    if (data.success) {
+                        $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    }
+                });
+            }
+        });
     });
 </script>
 
