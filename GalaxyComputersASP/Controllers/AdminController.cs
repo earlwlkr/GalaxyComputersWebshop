@@ -70,6 +70,18 @@ namespace GalaxyComputersASP.Controllers
                 Manufacturer manufacturer = db.Manufacturers.Find(product.ManufacturerID);
                 list.Add(new ProductOverview { ProductData = product, ProductCategory = category, ProductManufacturer = manufacturer });
             }
+
+            string userId = User.Identity.GetUserId();
+            List<Order> orders = db.Orders.ToList();
+            List<double> prices = new List<double>();
+            List<List<OrderItem>> orderItems = new List<List<OrderItem>>();
+            foreach (Order order in orders)
+            {
+                IQueryable<OrderItem> items = db.OrderItems.Where(i => i.OrderID == order.ID);
+                prices.Add(items.Sum(i => i.Product.Price * i.Quantity));
+                orderItems.Add(items.ToList());
+            }
+
             return View(new AdminViewModel
             {
                 Users = users.ToList(),
@@ -77,7 +89,10 @@ namespace GalaxyComputersASP.Controllers
                 Roles = roles,
                 Products = list.ToList(),
                 Categories = db.Categories.ToList(),
-                Manufacturers = db.Manufacturers.ToList()
+                Manufacturers = db.Manufacturers.ToList(),
+                Orders = orders,
+                Prices = prices,
+                OrderItems = orderItems
             });
         }
     }

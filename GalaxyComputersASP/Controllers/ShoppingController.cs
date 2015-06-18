@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -244,6 +245,33 @@ namespace GalaxyComputersASP.Controllers
                 orderItems.Add(items.ToList());
             }
             return View(new OrdersViewModel { Orders = orders, Prices = prices, OrderItems = orderItems });
+        }
+
+        [HttpPost]
+        public ActionResult ChangeStatus()
+        {
+            int orderId = int.Parse(Request.Form["OrderID"]);
+            int status = int.Parse(Request.Form["Status"]);
+            if (status > 2)
+            {
+                status = 2;
+            }
+            else if (status < 0)
+            {
+                status = 0;
+            }
+            try
+            {
+                Order order = db.Orders.Single(i => i.ID == orderId);
+                order.Status = status;
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (ArgumentNullException)
+            {
+                return Json(new { success = false });
+            }
+            return Json(new { success = true });
         }
 
         public ActionResult Finish()
