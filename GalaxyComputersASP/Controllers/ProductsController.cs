@@ -258,7 +258,7 @@ namespace GalaxyComputersASP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", "Admin");
             }
-
+        
             this.ViewBag.CategoriesList = GetCategoriesList();
             this.ViewBag.ManufacturersList = GetManufacturersList();
 

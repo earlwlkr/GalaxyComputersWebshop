@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -18,9 +19,10 @@ namespace GalaxyComputersASP.Controllers
         {
             if (context.Session[CART_SESSION_KEY] == null)
             {
-                if (!string.IsNullOrWhiteSpace(context.User.Identity.Name))
+                string userId = User.Identity.GetUserId();
+                if (!string.IsNullOrWhiteSpace(userId))
                 {
-                    context.Session[CART_SESSION_KEY] = context.User.Identity.Name;
+                    context.Session[CART_SESSION_KEY] = userId;
                 }
                 else
                 {
@@ -183,6 +185,52 @@ namespace GalaxyComputersASP.Controllers
 
         // GET: Shopping/Checkout
         public ActionResult Checkout()
+        {
+            return View();
+        }
+
+        // POST: Shopping/Checkout
+        [HttpPost, ValidateInput(false)]
+        [ValidateAntiForgeryToken]
+        public ActionResult Checkout(CheckoutViewModel info)
+        {
+            if (ModelState.IsValid)
+            {
+                string userId = User.Identity.GetUserId();
+                Order order = new Order
+                {
+                    UserID = userId,
+                    DateCreated = DateTime.Now,
+                    Email = info.Email,
+                    LastName = info.LastName,
+                    FirstName = info.FirstName,
+                    PhoneNumber = info.PhoneNumber,
+                    Address = info.Address,
+                    Status = 0
+                };
+                order.DateCreated = DateTime.Now;
+                db.Orders.Add(order);
+
+                List<CartItem> cartItems = db.CartItems.Where(i => i.UserID == userId).ToList();
+                foreach (CartItem item in cartItems)
+                {
+                    db.OrderItems.Add(new OrderItem
+                    {
+                        OrderID = order.ID,
+                        ProductID = item.ProductID,
+                        Quantity = item.Quantity
+                    });
+                    db.CartItems.Remove(item);
+                }
+
+                db.SaveChanges();
+                return RedirectToAction("Finish");
+            }
+
+            return View(info);
+        }
+
+        public ActionResult Finish()
         {
             return View();
         }
