@@ -92,7 +92,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Giỏ hàng - <span class="cart-amunt">$800</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="cart.html">Giỏ hàng - <span class="cart-amunt" id="cartPrice">$800</span> <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartCount">5</span></a>
                     </div>
                 </div>
             </div>
@@ -233,6 +233,21 @@
     ga('create', 'UA-64231411-1', 'auto');
     ga('send', 'pageview');
 
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+                if (data.success) {
+                    $('#cartCount').html(data.count);
+                }
+            });
+            $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+                if (data.success) {
+                    $('#cartPrice').html(data.price);
+                }
+            });
+        });
     </script>
 
     @RenderSection("Scripts", required: false)

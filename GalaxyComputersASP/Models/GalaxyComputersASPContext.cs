@@ -24,5 +24,6 @@ namespace GalaxyComputersASP.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }
