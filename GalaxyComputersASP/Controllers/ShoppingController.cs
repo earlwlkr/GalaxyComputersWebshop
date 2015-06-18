@@ -42,6 +42,10 @@ namespace GalaxyComputersASP.Controllers
                 return Json(new { success = false });
             }
             int quantity = int.Parse(Request.Form["Quantity"]);
+            if (quantity < 1)
+            {
+                quantity = 1;
+            }
             var cartId = getCartId(this.HttpContext);
             var cartItem = db.CartItems.SingleOrDefault(
                 c => c.UserID == cartId
@@ -59,7 +63,7 @@ namespace GalaxyComputersASP.Controllers
             }
             else
             {
-                cartItem.Quantity++;
+                cartItem.Quantity += quantity;
             }
             db.SaveChanges();
             return Json(new { success = true });
