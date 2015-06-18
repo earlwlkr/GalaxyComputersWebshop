@@ -20,7 +20,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.ProductData.PublishDate, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ProductData.PublishDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.ProductData.PublishDate, new { htmlAttributes = new { @class = "form-control pickadate" } })
                     @Html.ValidationMessageFor(model => model.ProductData.PublishDate, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -211,7 +211,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.ProductManufacturer.DateFounded, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.ProductManufacturer.DateFounded, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.ProductManufacturer.DateFounded, new { htmlAttributes = new { @class = "form-control pickadate", data_value = "01/01/2010" } })
                             @Html.ValidationMessageFor(model => model.ProductManufacturer.DateFounded, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -247,6 +247,11 @@
 
 <script src="/Scripts/tinymce/tinymce.min.js"></script>
 <script>
+    $('.pickadate').pickadate({
+        format: 'dd/mm/yyyy',
+        formatSubmit: 'dd/mm/yyyy',
+        selectYears: true
+    });
     $('#submitCreateCategory').data('loading-text', 'Đang thực hiện...');
     $('#btnCreateCategory').click(function () {
         $('#modalCreateCategory').modal();
