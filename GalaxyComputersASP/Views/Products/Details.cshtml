@@ -76,27 +76,21 @@
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Bình luận</h2>
-                                            <div id="commentSection">
-                                                @{
-                                                    
-                                                    var i = 0;
-                                                    foreach (var comment in Model.Comments)
-                                                    {
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">@ViewBag.Users[i++] - @comment.PublishDate</div>
-                                                            <div class="panel-body">
-                                                                @comment.Content
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                }
-                                            </div>
                                             <div class="submit-review">
                                                 <p>
-                                                    <label for="review">Bình luận</label> 
+                                                    <label for="review">Bình luận</label>
                                                     <textarea name="review" id="comment" cols="30" rows="10"></textarea>
                                                 </p>
                                                 <p><button type="button" id="submitComment">Gửi</button></p>
+                                            </div>
+                                            <div class="spinner">
+                                                <div class="rect1"></div>
+                                                <div class="rect2"></div>
+                                                <div class="rect3"></div>
+                                                <div class="rect4"></div>
+                                                <div class="rect5"></div>
+                                            </div>
+                                            <div id="commentSection">
                                             </div>
                                         </div>
                                     </div>
@@ -153,29 +147,92 @@
 </script>
 
 <script>
+    var readyToSubmitComment = false;
+    $(document).ready(function() {
+        $.ajax({
+            url: '/Products/GetComments?Id=' + @Model.Product.ID + '&CommentsPage=1',
+            type: 'GET',
+            success: function (result) {
+                $('.spinner').hide();
+                if (result.success) {
+                    for (var i = 0; i != result.count; i++) {
+                        $('#commentSection').append('\
+                            <div class="panel panel-default">\
+                                <div class="panel-heading">' + result.comments[i].username + ' - ' + result.comments[i].date + '</div>\
+                                <div class="panel-body">'
+                                        + $('<div/>').text(result.comments[i].content).html() + '\
+                                </div>\
+                            </div>\
+                        ');
+                    }
+                    $('#commentSection').append('<ul class="pagination" id="pages"></ul>');
+                    for (var i = 1; i <= result.num_pages; i++) {
+                        if (i == result.current_page) {
+                            $('#pages').append('<li class="active"><a href="#">' + i + '</a></li>');
+                        } else {
+                            $('#pages').append('<li><a href="#">' + i + '</a></li>');
+                        }
+                    }
+                    readyToSubmitComment = true;
+                }
+            }
+        });
+    });
+    $(document).on('click', '.pagination li a', function (e) {
+        e.preventDefault();
+        $('.spinner').show();
+        $('#commentSection').html('');
+        $.ajax({
+            url: '/Products/GetComments?Id=' + @Model.Product.ID + '&CommentsPage=' + $(this).html(),
+            type: 'GET',
+            success: function (result) {
+                $('.spinner').hide();
+                if (result.success) {
+                    for (var i = 0; i != result.count; i++) {
+                        $('#commentSection').append('\
+                            <div class="panel panel-default">\
+                                <div class="panel-heading">' + result.comments[i].username + ' - ' + result.comments[i].date + '</div>\
+                                <div class="panel-body">'
+                                        + $('<div/>').text(result.comments[i].content).html() + '\
+                                </div>\
+                            </div>\
+                        ');
+                    }
+                    $('#commentSection').append('<ul class="pagination" id="pages"></ul>');
+                    for (var i = 1; i <= result.num_pages; i++) {
+                        if (i == result.current_page) {
+                            $('#pages').append('<li class="active"><a href="#">' + i + '</a></li>');
+                        } else {
+                            $('#pages').append('<li><a href="#">' + i + '</a></li>');
+                        }
+                    }
+                }
+            }
+        });
+    });
     $('#submitComment').click(function (e) {
         var comment = escape($('#comment').val());
         $('#comment').val('');
-        if (comment != '') {
+        if (readyToSubmitComment && comment != '') {
             $.ajax({
                 url: '@Url.Action("AddComment", "Products")',
-            type: 'POST',
-            data: {
-                'Content': comment,
-                'Product': @Model.Product.ID
-            },
-            success: function (result) {
-                $('#commentSection').prepend('\
+                type: 'POST',
+                data: {
+                    'Content': comment,
+                    'Product': @Model.Product.ID
+                    },
+                success: function (result) {
+                    $('#commentSection').prepend('\
                     <div class="panel panel-default">\
                         <div class="panel-heading">' + result.username + ' - ' + result.date + '</div>\
                         <div class="panel-body">'
-                            + $('<div/>').text(result.content).html() + '\
+                                + $('<div/>').text(result.content).html() + '\
                         </div>\
                     </div>\
                 ');
-            }
-        });
-    }
+                }
+            });
+        }
     });
 </script>
 

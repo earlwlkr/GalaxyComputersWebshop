@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using GalaxyComputersASP.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
+using System.Dynamic;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -156,10 +157,57 @@ namespace GalaxyComputersASP.Controllers
                 comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
                 username = user.UserName;
             }
-            JsonResult result = Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = username });
             db.Comments.Add(comment);
             db.SaveChanges();
-            return result;
+            return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = username });
+        }
+
+        public ActionResult GetComments(int Id, int CommentsPage)
+        {
+            const int ITEMS_PER_PAGE = 5;
+            List<Comment> comments = db.Comments.Where(i => i.Product.ID == Id).OrderByDescending(i => i.PublishDate).ToList();
+            int pages = (int)Math.Ceiling((double)(comments.Count / (double)ITEMS_PER_PAGE));
+            dynamic data = new ExpandoObject();
+            if (pages > 0)
+            {
+                if (CommentsPage > pages)
+                {
+                    CommentsPage = pages;
+                }
+                int start = (CommentsPage - 1) * ITEMS_PER_PAGE;
+                int end = CommentsPage * ITEMS_PER_PAGE;
+                if (end > comments.Count)
+                {
+                    end = comments.Count;
+                }
+                data.current_page = CommentsPage;
+                data.count = end - start;
+                UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+                data.comments = new List<object>();
+                for (int i = start; i < end; i++)
+                {
+                    Comment comment = comments.ElementAt(i);
+                    ApplicationUser user = UserManager.FindById(comment.UserID);
+                    string name;
+                    if (user == null)
+                    {
+                        name = "Khách viếng thăm";
+                    }
+                    else
+                    {
+                        name = user.UserName;
+                    }
+                    data.comments.Add(new { content = comment.Content, date = comment.PublishDate.ToString(), username = name });
+                }
+                data.success = true;
+                data.num_pages = pages;
+            }
+            else
+            {
+                data.success = false;
+            }
+            data = ((ExpandoObject)data).ToDictionary(x => x.Key, x => x.Value);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Products/Details/5
@@ -179,26 +227,11 @@ namespace GalaxyComputersASP.Controllers
             {
                 return HttpNotFound();
             }
-            UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
-            List<Comment> comments = db.Comments.Where(i => i.Product.ID == id).OrderByDescending(i => i.PublishDate).ToList();
-            ViewBag.Users = new List<string>();
-            foreach (Comment comment in comments)
-            {
-                ApplicationUser user = UserManager.FindById(comment.UserID);
-                if (user == null)
-                {
-                    ViewBag.Users.Add("Khách viếng thăm");
-                }
-                else
-                {
-                    ViewBag.Users.Add(user.UserName);
-                }
-            }
 
             product.Views++;
             db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
-            return View(new ProductDetailsViewModel { Product = product, Category = category, Comments = comments });
+            return View(new ProductDetailsViewModel { Product = product, Category = category });
         }
 
         // GET: Products/Create
