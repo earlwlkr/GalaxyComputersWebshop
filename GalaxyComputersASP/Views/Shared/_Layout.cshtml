@@ -278,9 +278,6 @@
     </script>
 
     <script>
-        function formatPrice(value) {
-            return parseFloat(value).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-        }
         $(document).ready(function () {
             $.getJSON('/Shopping/GetCartItemsCount', function (data) {
                 if (data.success) {

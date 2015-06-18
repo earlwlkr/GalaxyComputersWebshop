@@ -174,4 +174,8 @@
     };
 })(jQuery);
 
+function formatPrice(value) {
+    return parseFloat(value).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+}
+
 
