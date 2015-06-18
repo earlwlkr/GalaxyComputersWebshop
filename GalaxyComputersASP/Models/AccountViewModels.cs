@@ -125,7 +125,7 @@ namespace GalaxyComputersASP.Models
         [Display(Name = "Tên")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Email không hợp lệ!")]
+        [Required]
         [Display(Name = "Giới tính")]
         public string Gender { get; set; }
 
