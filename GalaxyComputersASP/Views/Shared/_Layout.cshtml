@@ -44,10 +44,9 @@
                             @{
                                 if (Request.IsAuthenticated)
                                 {
-                                    <li><a href="@Url.Action("Edit", "Account")"><i class="fa fa-cog"></i> Sửa lý lịch</a></li>
+                                    <li><a href="@Url.Action("Edit", "Account")"><i class="glyphicon glyphicon-th-large"></i> Sửa lý lịch</a></li>
                                     <li><a href="@Url.Action("ChangePassword", "Manage")"><i class="fa fa-cog"></i> Đổi mật khẩu</a></li>
                                     <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                                    <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
                                     <li><a href="checkout.html"><i class="fa fa-dollar"></i> Thanh toán</a></li>
                                 }
                             }   
@@ -112,7 +111,6 @@
                                 @Html.Action("CategoriesMenu", "Categories")
                             </ul>
                         </li>
-                        <li id="nav-item-1">@Html.ActionLink("Giỏ hàng", "Index", "Home")</li>
                         <li id="nav-item-3">@Html.ActionLink("Thông tin", "About", "Home")</li>
                         @{
                             if (this.User.IsInRole("Admin"))
@@ -228,7 +226,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
                     <button type="button" id="btnUpdateCart">Cập nhật</button>
-                    <a href='@Url.Action("Checkout", "Shopping")' class="btn-main">Thanh toán</a>
+                    <a href='@Url.Action("Checkout", "Shopping")' class="btn-main btn-checkout">Thanh toán</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -338,6 +336,16 @@
                     success: function (result) {
                         setCartDetailsData();
                         $('#modalDetailsBody').html('');
+                        $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+                            if (data.success) {
+                                $('#cartCount').html(data.count);
+                            }
+                        });
+                        $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+                            if (data.success) {
+                                $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                            }
+                        });
                     }
                 });
             });
@@ -367,8 +375,11 @@
                 setCartDetailsData();
                 $('#modalDetailsBody').html('');
             });
-            $('#btnCheckout').click(function (e) {
-
+            $('.btn-checkout').click(function (e) {
+                if ('@Request.IsAuthenticated' != 'True') {
+                    e.preventDefault();
+                    alert('Bạn chưa đăng nhập nên chưa thể thanh toán!');
+                }
             });
         });
     </script>
