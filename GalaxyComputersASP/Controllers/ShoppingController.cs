@@ -18,20 +18,28 @@ namespace GalaxyComputersASP.Controllers
 
         private string getCartId(HttpContextBase context)
         {
+            string userId = User.Identity.GetUserId();
+            
+            if (userId == null)
+            {
+                userId = Guid.NewGuid().ToString();
+            }
+
             if (context.Session[CART_SESSION_KEY] == null)
             {
-                string userId = User.Identity.GetUserId();
-                if (!string.IsNullOrWhiteSpace(userId))
+                context.Session[CART_SESSION_KEY] = userId;
+            }
+            else if (context.Session[CART_SESSION_KEY].ToString() != userId)
+            {
+                string session = context.Session[CART_SESSION_KEY].ToString();
+                var items = db.CartItems.Where(i => i.UserID == session).ToList();
+                foreach (var item in items)
                 {
-                    context.Session[CART_SESSION_KEY] = userId;
+                    item.UserID = userId;
+                    db.Entry(item).State = EntityState.Modified;
                 }
-                else
-                {
-                    // Generate a new random GUID using System.Guid class
-                    Guid tempCartId = Guid.NewGuid();
-                    // Send tempCartId back to client as a cookie
-                    context.Session[CART_SESSION_KEY] = tempCartId.ToString();
-                }
+                db.SaveChanges();
+                context.Session[CART_SESSION_KEY] = userId;
             }
             return context.Session[CART_SESSION_KEY].ToString();
         }
@@ -121,19 +129,26 @@ namespace GalaxyComputersASP.Controllers
             {
                 return Json(new { success = false });
             }
-            RemoveItemFromCart(productToAdd);
-            return Json(new { success = true, product_name = product.Name });
+            return Json(new { success = RemoveItemFromCart(productToAdd), product_name = product.Name });
         }
 
         private bool RemoveItemFromCart(int productId)
         {
             var cartId = getCartId(this.HttpContext);
-            var cartItem = db.CartItems.SingleOrDefault(
-                c => c.UserID == cartId
-                && c.ProductID == productId
-            );
-            db.CartItems.Remove(cartItem);
-            db.SaveChanges();
+            try
+            {
+                var cartItem = db.CartItems.SingleOrDefault(
+                    c => c.UserID == cartId
+                    && c.ProductID == productId
+                );
+                db.CartItems.Remove(cartItem);
+                db.SaveChanges();
+            } 
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+            
             return true;
         }
 
