@@ -1,6 +1,7 @@
 ﻿using GalaxyComputersASP.Models;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -91,6 +92,28 @@ namespace GalaxyComputersASP.Controllers
                 price = cartItems.Sum(i => i.Quantity * i.Product.Price);
             }
             return Json(new { success = true, price = price }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetCartItems()
+        {
+            var cartId = getCartId(this.HttpContext);
+            List<CartItem> cartItems = db.CartItems.Where(i => i.UserID == cartId).ToList();
+            dynamic data = new ExpandoObject();
+            if (cartItems.Count() > 0)
+            {
+                data.items = new List<object>();
+                foreach (var item in cartItems)
+                {
+                    data.items.Add(new { 
+                        name = item.Product.Name, 
+                        price = item.Product.Price, 
+                        quantity = item.Quantity 
+                    });
+                }
+                data.success = true;
+            }
+            data = ((ExpandoObject)data).ToDictionary(x => x.Key, x => x.Value);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Shopping

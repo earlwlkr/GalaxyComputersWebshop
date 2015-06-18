@@ -92,7 +92,7 @@
 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Giỏ hàng - <span class="cart-amunt" id="cartPrice">0</span> VNĐ <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartCount">0</span></a>
+                        <a href="#" id="cartDetails">Giỏ hàng - <span class="cart-amunt" id="cartPrice">0</span> VNĐ <i class="fa fa-shopping-cart"></i> <span class="product-count" id="cartCount">0</span></a>
                     </div>
                 </div>
             </div>
@@ -207,15 +207,14 @@
         </div>
     </div> <!-- End footer bottom area -->
 
-    <div class="modal fade" id="modalCart">
+    <div class="modal fade" id="modalCartDetails">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close btn-blank" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Thông tin giỏ hàng</h4>
                 </div>
-                <div class="modal-body">
-                    <p>One fine body&hellip;</p>
+                <div class="modal-body" id="modalDetailsBody">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -229,7 +228,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close btn-blank" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Thêm sản phẩm</h4>
                 </div>
                 <div class="modal-body" id="modalResultBody">
@@ -271,6 +270,9 @@
     </script>
 
     <script>
+        function formatPrice(value) {
+            return parseFloat(value).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+        }
         $(document).ready(function () {
             $.getJSON('/Shopping/GetCartItemsCount', function (data) {
                 if (data.success) {
@@ -279,8 +281,26 @@
             });
             $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
                 if (data.success) {
-                    $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    $('#cartPrice').html(formatPrice(data.price));
                 }
+            });
+            $('#cartDetails').click(function (e) {
+                e.preventDefault();
+                $.getJSON('/Shopping/GetCartItems', function (data) {
+                    if (data.success) {
+                        var table = $('<table class="table table-bordered" id="tableDetails"><thead><th>STT</th><th>Tên sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th></thead></table>');
+                        $('#modalDetailsBody').html(table);
+                        var total = 0;
+                        for (var i = 0; i < data.items.length; i++) {
+                            var item = data.items[i];
+                            var price = item.price * item.quantity;
+                            total += price;
+                            table.append('<tr><td>' + (i + 1) + '</td><td>' + item.name + '</td><td>' + formatPrice(item.price) + ' VNĐ</td><td>' + item.quantity + '</td><td>' + formatPrice(item.price * item.quantity) + ' VNĐ</td>');
+                        }
+                        table.append('<tr><td colspan="4">Tổng:</td><td><b>' + formatPrice(total) + '</b> VNĐ</td></tr>')
+                        $('#modalCartDetails').modal();
+                    }
+                });
             });
         });
     </script>
