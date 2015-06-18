@@ -181,8 +181,8 @@ namespace GalaxyComputersASP.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Shopping
-        public ActionResult Index()
+        // GET: Shopping/Checkout
+        public ActionResult Checkout()
         {
             return View();
         }

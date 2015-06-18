@@ -228,7 +228,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
                     <button type="button" id="btnUpdateCart">Cập nhật</button>
-                    <button type="button" id="btnCheckout">Thanh toán</button>
+                    <a href='@Url.Action("Checkout", "Shopping")' class="btn-main">Thanh toán</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -366,6 +366,9 @@
                 });
                 setCartDetailsData();
                 $('#modalDetailsBody').html('');
+            });
+            $('#btnCheckout').click(function (e) {
+
             });
         });
     </script>
