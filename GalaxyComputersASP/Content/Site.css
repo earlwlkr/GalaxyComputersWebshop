@@ -1450,3 +1450,7 @@ div > div > div > div > div.picker__header > select {
 }
 
 .g-recaptcha div { margin: auto; }
+
+.view-order-details {
+    cursor: pointer;
+}

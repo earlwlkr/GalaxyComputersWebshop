@@ -39,7 +39,7 @@
             @{var i = 1;}
             @foreach (var order in Model.Orders)
             {
-                <tr>
+                <tr class="view-order-details" order-id="@order.ID">
                     <td>
                         @i
                     </td>
@@ -74,6 +74,33 @@
                         <td class="success">Hoàn thành</td>
                     }
                 </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="4">
+                        <div class="details" id="@order.ID">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Đơn giá</th>
+                                        <th>Số lượng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.OrderItems.ElementAt(i - 1))
+                                    {
+                                        <tr>
+                                            <td>@item.Product.Name</td>
+                                            <td class="orderPrice">@item.Product.Price</td>
+                                            <td><span class="badge">@item.Quantity</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
                 i++;
             }
         </tbody>
@@ -84,6 +111,11 @@
     $(document).ready(function () {
         $('.orderPrice').each(function () {
             $(this).html(formatPrice($(this).html()) + ' VNĐ');
+        });
+        $('.details').hide();
+        $('.view-order-details').click(function () {
+            var id = $(this).attr('order-id');
+            $('#' + id).slideToggle('slow');
         });
     });
 </script>
