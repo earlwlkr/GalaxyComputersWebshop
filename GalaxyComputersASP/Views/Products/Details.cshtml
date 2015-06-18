@@ -254,6 +254,8 @@
                         $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     }
                 });
+                $('#modalResultBody').html('<p>Thêm sản phẩm <b>' + result.product_name + '</b> vào giỏ hàng thành công.</p>')
+                $('#modalAddToCartResult').modal();
             }
         });
     });

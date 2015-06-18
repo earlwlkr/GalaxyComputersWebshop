@@ -66,7 +66,7 @@ namespace GalaxyComputersASP.Controllers
                 cartItem.Quantity += quantity;
             }
             db.SaveChanges();
-            return Json(new { success = true });
+            return Json(new { success = true, product_name = product.Name });
         }
 
         public ActionResult GetCartItemsCount()
