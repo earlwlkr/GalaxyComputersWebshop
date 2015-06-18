@@ -120,7 +120,7 @@
                 });
                 $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
                     if (data.success) {
-                        $('#cartPrice').html(data.price);
+                        $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                     }
                 });
             }
