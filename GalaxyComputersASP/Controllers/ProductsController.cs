@@ -159,7 +159,7 @@ namespace GalaxyComputersASP.Controllers
             }
             db.Comments.Add(comment);
             db.SaveChanges();
-            return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = username });
+            return Json(new { success = true, content = content, date = comment.PublishDate.ToString("g"), username = username });
         }
 
         public ActionResult GetComments(int Id, int CommentsPage)
@@ -197,7 +197,7 @@ namespace GalaxyComputersASP.Controllers
                     {
                         name = user.UserName;
                     }
-                    data.comments.Add(new { content = comment.Content, date = comment.PublishDate.ToString(), username = name });
+                    data.comments.Add(new { content = comment.Content, date = comment.PublishDate.ToString("g"), username = name });
                 }
                 data.success = true;
                 data.num_pages = pages;
