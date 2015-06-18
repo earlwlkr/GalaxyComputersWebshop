@@ -157,19 +157,12 @@
         var comment = escape($('#comment').val());
         $('#comment').val('');
         if (comment != '') {
-            var name;
-            if ('@Request.IsAuthenticated' == 'True') {
-                name = '@this.User.Identity.Name';
-            } else {
-                name = 'Khách viếng thăm';
-            }
             $.ajax({
                 url: '@Url.Action("AddComment", "Products")',
             type: 'POST',
             data: {
                 'Content': comment,
-                'Product': @Model.Product.ID,
-                'Submitter': name
+                'Product': @Model.Product.ID
             },
             success: function (result) {
                 $('#commentSection').prepend('\

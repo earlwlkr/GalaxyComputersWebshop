@@ -141,22 +141,25 @@ namespace GalaxyComputersASP.Controllers
             string content = collection["Content"];
             content = HttpUtility.UrlDecode(content);
             int product = int.Parse(collection["Product"]);
-            string submitter = collection["Submitter"];
             Product commentProduct = db.Products.Find(product);
             UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
             Comment comment;
-            if (submitter.CompareTo("Khách viếng thăm") == 0)
+            string username;
+            if (!Request.IsAuthenticated)
             {
                 comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct };
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = "Khách viếng thăm" });
+                username = "Khách viếng thăm";
             }
-            ApplicationUser user = UserManager.FindByName(submitter);
-            comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
+            else
+            {
+                ApplicationUser user = UserManager.FindByName(User.Identity.Name);
+                comment = new Comment { Content = content, PublishDate = DateTime.Now, Likes = 0, Product = commentProduct, UserID = user.Id };
+                username = user.UserName;
+            }
+            JsonResult result = Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = username });
             db.Comments.Add(comment);
             db.SaveChanges();
-            return Json(new { success = true, content = content, date = comment.PublishDate.ToString(), username = user.UserName });
+            return result;
         }
 
         // GET: Products/Details/5
