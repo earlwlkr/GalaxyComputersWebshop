@@ -35,7 +35,7 @@
                 <div class="product-content-right">
                     <div class="product-breadcroumb">
                         <a href="/">Trang chủ</a>
-                        <a href="">@Html.DisplayFor(model => model.Category.Name)</a>
+                        @Html.ActionLink(Model.Category.Name, "Index", "Products", new { CategoryID = Model.Category.ID }, null)
                         <a href="">@Html.DisplayFor(model => model.Product.Name)</a>
                     </div>
 
