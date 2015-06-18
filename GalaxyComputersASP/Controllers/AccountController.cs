@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GalaxyComputersASP.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Net.Http;
+using System.Collections.Generic;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -202,6 +204,23 @@ namespace GalaxyComputersASP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            using (var client = new HttpClient())
+            {
+                var values = new Dictionary<string, string>
+                {
+                   { "secret", "6Lf8hggTAAAAAD9bMIslBjNbE4IxZEfEmgrZBZ4O" },
+                   { "response", Request["g-recaptcha-response"]}
+                };
+
+                var content = new FormUrlEncodedContent(values);
+                var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                var responseString = await response.Content.ReadAsStringAsync();
+                dynamic data = System.Web.Helpers.Json.Decode(responseString);
+                if (!data.success)
+                {
+                    return View(model);
+                }
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { 

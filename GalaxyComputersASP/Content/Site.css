@@ -1448,3 +1448,5 @@ div.cart-collaterals ul.products li.product:hover .add_to_cart_button{background
 div > div > div > div > div.picker__header > select {
     height: 42px;
 }
+
+.g-recaptcha div { margin: auto; }
