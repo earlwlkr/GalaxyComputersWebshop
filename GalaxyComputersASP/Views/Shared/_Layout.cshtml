@@ -236,6 +236,23 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div class="modal fade" id="modalError">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close btn-blank" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Lỗi</h4>
+                </div>
+                <div class="modal-body" id="modalErrorBody">
+                    <p>Bạn phải @Html.ActionLink("Đăng nhập", "Login", "Account", new { ReturnUrl = "/Shopping/Checkout" }, null) trước khi thanh toán.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="modal fade" id="modalAddToCartResult">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -377,7 +394,7 @@
             $('.btn-checkout').click(function (e) {
                 if ('@Request.IsAuthenticated' != 'True') {
                     e.preventDefault();
-                    alert('Bạn chưa đăng nhập nên chưa thể thanh toán!');
+                    $('#modalError').modal();
                 }
             });
         });
