@@ -207,6 +207,12 @@ namespace GalaxyComputersASP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
+            string cartId = getCartId(HttpContext);
+            List<CartItem> cartItems = db.CartItems.Where(i => i.UserID == cartId).ToList();
+            if (cartItems.Count < 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             return View();
         }
 
