@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
+using System.Net;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -202,6 +203,10 @@ namespace GalaxyComputersASP.Controllers
         // GET: Shopping/Checkout
         public ActionResult Checkout()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             return View();
         }
 
@@ -210,6 +215,10 @@ namespace GalaxyComputersASP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Checkout(CheckoutViewModel info)
         {
+            if (!Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             if (ModelState.IsValid)
             {
                 string userId = User.Identity.GetUserId();
@@ -248,6 +257,10 @@ namespace GalaxyComputersASP.Controllers
 
         public ActionResult Orders()
         {
+            if (!Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
             GalaxyComputersASPContext db = new GalaxyComputersASPContext();
             string userId = User.Identity.GetUserId();
             List<Order> orders = db.Orders.Where(i => i.UserID == userId).ToList();
