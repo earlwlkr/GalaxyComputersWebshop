@@ -261,24 +261,28 @@ namespace GalaxyComputersASP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            UserManager<ApplicationUser> userManager =
-                new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
-            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
-
-            var body = "<p>Xin hãy xác nhận tài khoản <b>{0}</b> bằng cách nhấp vào link <a href='{1}'>này</a></p>";
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(user.Email));  // replace with valid value 
-            message.Subject = "Xác nhận tài khoản tại GalaxyComputersASP";
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            var body = "<p>Xin hãy xác nhận tài khoản <b>{0}</b> bằng cách nhấp vào link <a href='{1}'>này</a></p>.";
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            message.Body = string.Format(body, user.UserName, callbackUrl);
+
+            await sendEmail(user.Email, string.Format(body, user.UserName, callbackUrl));
+            
+            return View();
+        }
+
+        private async Task sendEmail(string email, string content)
+        {
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(email));  // replace with valid value 
+            message.Subject = "Xác nhận tài khoản tại GalaxyComputersASP";
+            message.Body = content;
             message.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())
             {
                 await smtp.SendMailAsync(message);
             }
-            return View();
         }
 
         //
@@ -320,10 +324,14 @@ namespace GalaxyComputersASP.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                
+                var body = "<p>Bạn có thể reset mật khẩu tài khoản <b>{0}</b> bằng cách nhấp vào link <a href='{1}'>này</a></p>.";
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                
+                await sendEmail(user.Email, string.Format(body, user.UserName, callbackUrl));
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
