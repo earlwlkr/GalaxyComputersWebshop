@@ -28,116 +28,133 @@
 </div>
 
 <div class="container main-body">
-    <h2>NGƯỜI DÙNG</h2>
-    <a class="btn-main" href=@Url.Action("Create", "Account")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered" id="manageTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).UserName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).PhoneNumber)
-                </th>
-                <th>
-                    Phân quyền
-                </th>
-            </tr>
-        </thead>
-        @{ var i = 0; }
-        @foreach (var item in Model.Users)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                
-                <td>@{
-                        List<SelectListItem> roleItems = new List<SelectListItem>();
-                        string role = Model.UserRoles.ElementAt(i++);
-                        foreach (SelectListItem roleItem in Model.Roles.Items)
-                        {
-                            var listItem = new SelectListItem { Text = roleItem.Text, Value = roleItem.Value };
-                            if (roleItem.Text == role)
-                            {
-                                listItem.Selected = true;
-                            }
-                            roleItems.Add(listItem);
-                        }
-                    }
-                    @Html.DropDownList("UserRole", roleItems, new { @class = "form-control user-role", item_id = item.Id })
-                    <button class="save-role" item-id="@item.Id" role-value="Unset">Lưu</button>
-                </td>
-            </tr>
-        }
-    </table>
+    <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="tabsManage">
+            <li role="presentation" class="active"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Người dùng</a></li>
+            <li role="presentation"><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab">Đơn hàng</a></li>
+            <li role="presentation"><a href="#products" aria-controls="products" role="tab" data-toggle="tab">Sản phẩm</a></li>
+            <li role="presentation"><a href="#categories" aria-controls="categories" role="tab" data-toggle="tab">Danh mục</a></li>
+            <li role="presentation"><a href="#manufacturers" aria-controls="manufacturers" role="tab" data-toggle="tab">Nhà sản xuất</a></li>
+        </ul>
 
-    <h2>ĐƠN HÀNG</h2>
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    STT
-                </th>
-                <th>
-                    Mã đơn hàng
-                </th>
-                <th>
-                    Tên người khởi tạo
-                </th>
-                <th>
-                    Ngày tạo
-                </th>
-                <th>
-                    Số điện thoại
-                </th>
-                <th>
-                    Địa chỉ
-                </th>
-                <th>
-                    Đơn giá
-                </th>
-                <th>
-                    Trạng thái
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @{i = 1;}
-            @foreach (var order in Model.Orders)
-            {
-                <tr>
-                    <td>
-                        @i
-                    </td>
-                    <td>
-                        @order.ID
-                    </td>
-                    <td>
-                        @order.LastName @order.FirstName
-                    </td>
-                    <td>
-                        @order.DateCreated
-                    </td>
-                    <td>
-                        @order.PhoneNumber
-                    </td>
-                    <td>
-                        @order.Address
-                    </td>
-                    <td class="orderPrice">
-                        @Model.Prices.ElementAt(i - 1)
-                    </td>
-                    <td>
-                        @{
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade container main-body in active container main-body" id="users">
+                <div class="">
+                    <h2>NGƯỜI DÙNG</h2>
+                    <a class="btn-main" href=@Url.Action("Create", "Account")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
+                    <table class="table table-bordered" id="manageTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).UserName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).Address)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Users.ElementAt(0).PhoneNumber)
+                                </th>
+                                <th>
+                                    Phân quyền
+                                </th>
+                            </tr>
+                        </thead>
+                        @{ var i = 0; }
+                        @foreach (var item in Model.Users)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+
+                                <td>
+                                    @{
+                            List<SelectListItem> roleItems = new List<SelectListItem>();
+                            string role = Model.UserRoles.ElementAt(i++);
+                            foreach (SelectListItem roleItem in Model.Roles.Items)
+                            {
+                                var listItem = new SelectListItem { Text = roleItem.Text, Value = roleItem.Value };
+                                if (roleItem.Text == role)
+                                {
+                                    listItem.Selected = true;
+                                }
+                                roleItems.Add(listItem);
+                            }
+                                    }
+                                    @Html.DropDownList("UserRole", roleItems, new { @class = "form-control user-role", item_id = item.Id })
+                                    <button class="save-role" item-id="@item.Id" role-value="Unset">Lưu</button>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade container main-body" id="orders">
+                <h2>ĐƠN HÀNG</h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                STT
+                            </th>
+                            <th>
+                                Mã đơn hàng
+                            </th>
+                            <th>
+                                Tên người khởi tạo
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Địa chỉ
+                            </th>
+                            <th>
+                                Đơn giá
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{i = 1;}
+                        @foreach (var order in Model.Orders)
+                        {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td>
+                                    @order.ID
+                                </td>
+                                <td>
+                                    @order.LastName @order.FirstName
+                                </td>
+                                <td>
+                                    @order.DateCreated
+                                </td>
+                                <td>
+                                    @order.PhoneNumber
+                                </td>
+                                <td>
+                                    @order.Address
+                                </td>
+                                <td class="orderPrice">
+                                    @Model.Prices.ElementAt(i - 1)
+                                </td>
+                                <td>
+                                    @{
                             List<SelectListItem> statuses = new List<SelectListItem>();
                             int status = order.Status;
                             var listItem = new SelectListItem { Text = "Chưa giao", Value = "0" };
@@ -158,167 +175,174 @@
                                 listItem.Selected = true;
                             }
                             statuses.Add(listItem);
-                        }
-                        @Html.DropDownList("OrderStatus", statuses, new { @class = "form-control order-status", order_id = @order.ID })
-                    </td>
-                    <td class="view-order-details" order-id="@order.ID">
-                        Xem thêm
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2"></td>
-                    <td colspan="4">
-                        <div class="details" id="@order.ID">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Đơn giá</th>
-                                        <th>Số lượng</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.OrderItems.ElementAt(i - 1))
-                                    {
-                                        <tr>
-                                            <td>@item.Product.Name</td>
-                                            <td class="orderPrice">@item.Product.Price</td>
-                                            <td><span class="badge">@item.Quantity</span></td>
-                                        </tr>
                                     }
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
-                    <td colspan="2"></td>
-                </tr>
-                                    i++;
-            }
-        </tbody>
-    </table>
+                                    @Html.DropDownList("OrderStatus", statuses, new { @class = "form-control order-status", order_id = @order.ID })
+                                </td>
+                                <td class="view-order-details" order-id="@order.ID">
+                                    Xem thêm
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="4">
+                                    <div class="details" id="@order.ID">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Số lượng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.OrderItems.ElementAt(i - 1))
+                                                {
+                                                    <tr>
+                                                        <td>@item.Product.Name</td>
+                                                        <td class="orderPrice">@item.Product.Price</td>
+                                                        <td><span class="badge">@item.Quantity</span></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                                                i++;
+                        }
+                    </tbody>
+                </table>
 
-    <h2>SẢN PHẨM</h2>
-    <a class="btn-main" href=@Url.Action("Create", "Products")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered" id="manageTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ImagePath)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductCategory.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductManufacturer.Name)
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.Products)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.ProductData.ID)</td>
-                <td><a href="@Url.Action("Details/" + item.ProductData.ID, "Products")">@Html.DisplayFor(modelItem => item.ProductData.Name)</a></td>
-                <td><img src="@Url.Content(item.ProductData.ImagePath)" class="image-preview" alt="Image" /></td>
-                <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
-                <td><a href="@Url.Action("Details/" + item.ProductCategory.ID, "Categories")">@Html.DisplayFor(modelItem => item.ProductCategory.Name)</a></td>
-                <td><a href="@Url.Action("Details/" + item.ProductManufacturer.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.ProductManufacturer.Name)</a></td>
-                <td>
-                    <a href=@Url.Action("Edit/" + item.ProductData.ID, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
-                </td>
-                <td>
-                    <a href=@Url.Action("Delete/" + item.ProductData.ID, "Products") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
-                </td>
-            </tr>
-        }
-    </table>
-
-    <h2>DANH MỤC</h2>
-    <a class="btn-main" href=@Url.Action("Create", "Categories")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered" id="manageTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Categories.ElementAt(0).ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Categories.ElementAt(0).Name)
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.Categories)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                <td><a href="@Url.Action("Details/" + item.ID, "Categories")">@Html.DisplayFor(modelItem => item.Name)</a></td>
-                <td>
-                    <a href=@Url.Action("Edit/" + item.ID, "Categories") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
-                </td>
-                <td>
-                    <a href=@Url.Action("Delete/" + item.ID, "Categories") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
-                </td>
-            </tr>
-        }
-    </table>
-
-    <h2>NHÀ SẢN XUẤT</h2>
-    <a class="btn-main" href=@Url.Action("Create", "Manufacturers")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
-    <table class="table table-bordered" id="manageTable">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).ImagePath)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).Country)
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        @foreach (var item in Model.Manufacturers)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                <td><a href="@Url.Action("Details/" + item.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.Name)</a></td>
-                <td><img src="@Url.Content(item.ImagePath)" class="image-preview" alt="Image" /></td>
-                <td>@Html.DisplayFor(modelItem => item.Country)</td>
-                <td>
-                    <a href=@Url.Action("Edit/" + item.ID, "Manufacturers") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
-                </td>
-                <td>
-                    <a href=@Url.Action("Delete/" + item.ID, "Manufacturers") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
-                </td>
-            </tr>
-        }
-    </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade container main-body" id="products">
+                <h2>SẢN PHẨM</h2>
+                <a class="btn-main" href=@Url.Action("Create", "Products")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
+                <table class="table table-bordered" id="manageTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.ImagePath)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductData.Price)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductCategory.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Products.ElementAt(0).ProductManufacturer.Name)
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ProductData.ID)</td>
+                            <td><a href="@Url.Action("Details/" + item.ProductData.ID, "Products")">@Html.DisplayFor(modelItem => item.ProductData.Name)</a></td>
+                            <td><img src="@Url.Content(item.ProductData.ImagePath)" class="image-preview" alt="Image" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.ProductData.Price)</td>
+                            <td><a href="@Url.Action("Details/" + item.ProductCategory.ID, "Categories")">@Html.DisplayFor(modelItem => item.ProductCategory.Name)</a></td>
+                            <td><a href="@Url.Action("Details/" + item.ProductManufacturer.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.ProductManufacturer.Name)</a></td>
+                            <td>
+                                <a href=@Url.Action("Edit/" + item.ProductData.ID, "Products") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                            </td>
+                            <td>
+                                <a href=@Url.Action("Delete/" + item.ProductData.ID, "Products") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade container main-body" id="categories">
+                <h2>DANH MỤC</h2>
+                <a class="btn-main" href=@Url.Action("Create", "Categories")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
+                <table class="table table-bordered" id="manageTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Categories.ElementAt(0).ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Categories.ElementAt(0).Name)
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.Categories)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                            <td><a href="@Url.Action("Details/" + item.ID, "Categories")">@Html.DisplayFor(modelItem => item.Name)</a></td>
+                            <td>
+                                <a href=@Url.Action("Edit/" + item.ID, "Categories") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                            </td>
+                            <td>
+                                <a href=@Url.Action("Delete/" + item.ID, "Categories") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane fade container main-body" id="manufacturers">
+                <h2>NHÀ SẢN XUẤT</h2>
+                <a class="btn-main" href=@Url.Action("Create", "Manufacturers")><i class="fa fa-plus-circle fa-1x"></i> Thêm</a>
+                <table class="table table-bordered" id="manageTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).ID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).ImagePath)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Manufacturers.ElementAt(0).Country)
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.Manufacturers)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                            <td><a href="@Url.Action("Details/" + item.ID, "Manufacturers")">@Html.DisplayFor(modelItem => item.Name)</a></td>
+                            <td><img src="@Url.Content(item.ImagePath)" class="image-preview" alt="Image" /></td>
+                            <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                            <td>
+                                <a href=@Url.Action("Edit/" + item.ID, "Manufacturers") class="view-details-link"><i class="fa fa-pencil-square-o"></i> Sửa</a>
+                            </td>
+                            <td>
+                                <a href=@Url.Action("Delete/" + item.ID, "Manufacturers") class="view-details-link"><i class="fa fa-times"></i> Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="modal fade" id="modelUpdateRoleResult">
+<div class="modal fade container main-body" id="modelUpdateRoleResult">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -388,6 +412,10 @@
         });
     });
     $(document).ready(function () {
+        $('#tabsManage a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        })
         $('.orderPrice').each(function () {
             $(this).html(formatPrice($(this).html()) + ' VNĐ');
         });
