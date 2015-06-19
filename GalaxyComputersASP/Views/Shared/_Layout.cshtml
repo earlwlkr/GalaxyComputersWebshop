@@ -51,9 +51,9 @@
                                     <li><a href="@Url.Action("ChangePassword", "Manage")"><i class="fa fa-cog"></i> Đổi mật khẩu</a></li>
                                     <li><a href="@Url.Action("Orders", "Shopping")"><i class="glyphicon glyphicon-th-list"></i> Lịch sử đặt hàng</a></li>
                                     <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
-                                    <li><a href="checkout.html"><i class="fa fa-dollar"></i> Thanh toán</a></li>
+                                    <li><a href="@Url.Action("Checkout", "Shopping")"><i class="fa fa-dollar"></i> Thanh toán</a></li>
                                 }
-                            }   
+                            }
                         </ul>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                                 if (Request.IsAuthenticated)
                                 {
                                     @:Xin chào, @this.User.Identity.Name
-                                    <li>
+                                       <li>
                                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                         {
                                             @Html.AntiForgeryToken()
