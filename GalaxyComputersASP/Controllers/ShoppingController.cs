@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using System.Net;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -207,13 +208,23 @@ namespace GalaxyComputersASP.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
             }
-            string cartId = getCartId(HttpContext);
-            List<CartItem> cartItems = db.CartItems.Where(i => i.UserID == cartId).ToList();
+            string userId = getCartId(HttpContext);
+            List<CartItem> cartItems = db.CartItems.Where(i => i.UserID == userId).ToList();
             if (cartItems.Count < 1)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View();
+            UserManager<ApplicationUser> userManager = 
+                new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            ApplicationUser user = userManager.FindById(userId);
+
+            return View(new CheckoutViewModel { 
+                Address = user.Address,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber
+            });
         }
 
         // POST: Shopping/Checkout
