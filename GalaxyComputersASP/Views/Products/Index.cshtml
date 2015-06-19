@@ -75,11 +75,11 @@
                 </div> |
                 <div class="form-group">
                     <label for="startDate">Từ ngày: </label>
-                    <input id="startDate" type="text" class="datepicker" value="" data-value="01/01/2010" />
+                    <input id="startDate" type="text" class="form-control datepicker" data-value="01/01/2010" />
                 </div> |
                 <div class="form-group">
                     <label for="endDate">Đến ngày: </label>
-                    <input id="endDate" type="text" class="datepicker" value="" data-value="17/06/2015" />
+                    <input id="endDate" type="text" class="form-control datepicker" data-value="17/06/2015" />
                 </div>
             </div>
             <div class="form-group">
@@ -104,6 +104,14 @@
 
 <script>
     var startDate, endDate;
+    startDate = $('#startDate').pickadate({
+        formatSubmit: 'dd/mm/yyyy',
+        selectYears: true
+    }).pickadate('picker');
+    endDate = $('#endDate').pickadate({
+        formatSubmit: 'dd/mm/yyyy',
+        selectYears: true
+    }).pickadate('picker');
     $(document).ready(function () {
         $('.spinner').hide();
         $('#advancedSearch').hide();
@@ -116,14 +124,6 @@
                     + parseFloat(value[1]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
             }
         });
-        startDate = $('#startDate').pickadate({
-            formatSubmit: 'dd/mm/yyyy',
-            selectYears: true
-        }).pickadate('picker');
-        endDate = $('#endDate').pickadate({
-            formatSubmit: 'dd/mm/yyyy',
-            selectYears: true
-        }).pickadate('picker');
     })
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
