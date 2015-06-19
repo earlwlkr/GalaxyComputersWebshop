@@ -243,9 +243,7 @@
                     <button type="button" class="close btn-blank" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Lỗi</h4>
                 </div>
-                <div class="modal-body" id="modalErrorBody">
-                    <p>Bạn phải @Html.ActionLink("Đăng nhập", "Login", "Account", new { ReturnUrl = "/Shopping/Checkout" }, null) trước khi thanh toán.</p>
-                </div>
+                <div class="modal-body" id="modalErrorBody"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn-blank" data-dismiss="modal">Đóng</button>
                 </div>
@@ -297,7 +295,87 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
+        $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+            if (data.success) {
+                $('#cartCount').html(data.count);
+            }
+        });
+        $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+            if (data.success) {
+                $('#cartPrice').html(formatPrice(data.price));
+            }
+        });
+        function setCartDetailsData() {
+            $.getJSON('/Shopping/GetCartItems', function (data) {
+                $('#tableSpinner').hide();
+                if (data.success) {
+                    if (data.items == null) {
+                        $('#modalDetailsBody').html('<p>Chưa có sản phẩm nào trong giỏ hàng.</p>');
+                    } else {
+                        var table = $('<table class="table table-bordered" id="tableDetails"><thead><th>STT</th><th>Tên sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th><th></th></thead></table>');
+                        $('#modalDetailsBody').html(table);
+                        var total = 0;
+                        for (var i = 0; i < data.items.length; i++) {
+                            var item = data.items[i];
+                            var price = item.price * item.quantity;
+                            total += price;
+                            table.append('<tr><td>' + (i + 1) + '</td><td>' + item.name + '</td><td>'
+                                + formatPrice(item.price)
+                                + ' VNĐ</td><td class="col-md-2"><input type="number" product-id="' + item.id + '" class="form-control input-quantity" value="' + item.quantity
+                                + '"/></td><td>'
+                                + formatPrice(item.price * item.quantity) + ' VNĐ</td><td><a href="" class="removeItem" product-id="' + item.id + '"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
+                        }
+                        table.append('<tr><td colspan="4">Tổng:</td><td><b>' + formatPrice(total) + '</b> VNĐ</td></tr>');
+                    }
+                }
+            });
+        }
+        $('#cartDetails').click(function (e) {
+            e.preventDefault();
+            $('#tableSpinner').show();
+            $('#modalDetailsBody').html('');
+            $('#modalCartDetails').modal();
+            setCartDetailsData();
+        });
+        $(document).on('click', '.removeItem', function (e) {
+            e.preventDefault();
+            $('#tableSpinner').show();
+            $.ajax({
+                url: '/Shopping/RemoveItemFromCart',
+                type: 'POST',
+                data: {
+                    'ProductID': $(this).attr('product-id')
+                },
+                success: function (result) {
+                    setCartDetailsData();
+                    $('#modalDetailsBody').html('');
+                    $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+                        if (data.success) {
+                            $('#cartCount').html(data.count);
+                        }
+                    });
+                    $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+                        if (data.success) {
+                            $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                        }
+                    });
+                }
+            });
+        });
+        $('#btnUpdateCart').click(function (e) {
+            $('#tableSpinner').show();
+            $('.input-quantity').each(function () {
+                $.ajax({
+                    url: '/Shopping/SetItemQuantity',
+                    type: 'POST',
+                    data: {
+                        'ProductID': $(this).attr('product-id'),
+                        'Quantity': $(this).val()
+                    },
+                    async: false
+                });
+            });
             $.getJSON('/Shopping/GetCartItemsCount', function (data) {
                 if (data.success) {
                     $('#cartCount').html(data.count);
@@ -305,99 +383,24 @@
             });
             $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
                 if (data.success) {
-                    $('#cartPrice').html(formatPrice(data.price));
+                    $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
                 }
             });
-            function setCartDetailsData() {
-                $.getJSON('/Shopping/GetCartItems', function (data) {
-                    $('#tableSpinner').hide();
-                    if (data.success) {
-                        if (data.items == null) {
-                            $('#modalDetailsBody').html('<p>Chưa có sản phẩm nào trong giỏ hàng.</p>');
-                        } else {
-                            var table = $('<table class="table table-bordered" id="tableDetails"><thead><th>STT</th><th>Tên sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th><th></th></thead></table>');
-                            $('#modalDetailsBody').html(table);
-                            var total = 0;
-                            for (var i = 0; i < data.items.length; i++) {
-                                var item = data.items[i];
-                                var price = item.price * item.quantity;
-                                total += price;
-                                table.append('<tr><td>' + (i + 1) + '</td><td>' + item.name + '</td><td>'
-                                    + formatPrice(item.price)
-                                    + ' VNĐ</td><td class="col-md-2"><input type="number" product-id="' + item.id + '" class="form-control input-quantity" value="' + item.quantity
-                                    + '"/></td><td>'
-                                    + formatPrice(item.price * item.quantity) + ' VNĐ</td><td><a href="" class="removeItem" product-id="' + item.id + '"><span class="glyphicon glyphicon-remove"></span></a></td></tr>');
-                            }
-                            table.append('<tr><td colspan="4">Tổng:</td><td><b>' + formatPrice(total) + '</b> VNĐ</td></tr>');
-                        }
-                    }
-                });
-            }
-            $('#cartDetails').click(function (e) {
-                e.preventDefault();
-                $('#tableSpinner').show();
-                $('#modalDetailsBody').html('');
-                $('#modalCartDetails').modal();
-                setCartDetailsData();
-            });
-            $(document).on('click', '.removeItem', function (e) {
-                e.preventDefault();
-                $('#tableSpinner').show();
-                $.ajax({
-                    url: '/Shopping/RemoveItemFromCart',
-                    type: 'POST',
-                    data: {
-                        'ProductID': $(this).attr('product-id')
-                    },
-                    success: function (result) {
-                        setCartDetailsData();
-                        $('#modalDetailsBody').html('');
-                        $.getJSON('/Shopping/GetCartItemsCount', function (data) {
-                            if (data.success) {
-                                $('#cartCount').html(data.count);
-                            }
-                        });
-                        $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
-                            if (data.success) {
-                                $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-                            }
-                        });
-                    }
-                });
-            });
-            $('#btnUpdateCart').click(function (e) {
-                $('#tableSpinner').show();
-                $('.input-quantity').each(function () {
-                    $.ajax({
-                        url: '/Shopping/SetItemQuantity',
-                        type: 'POST',
-                        data: {
-                            'ProductID': $(this).attr('product-id'),
-                            'Quantity': $(this).val()
-                        },
-                        async: false
-                    });
-                });
-                $.getJSON('/Shopping/GetCartItemsCount', function (data) {
-                    if (data.success) {
-                        $('#cartCount').html(data.count);
-                    }
-                });
-                $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
-                    if (data.success) {
-                        $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-                    }
-                });
-                setCartDetailsData();
-                $('#modalDetailsBody').html('');
-            });
-            $('.btn-checkout').click(function (e) {
-                if ('@Request.IsAuthenticated' != 'True') {
-                    e.preventDefault();
-                    $('#modalError').modal();
-                }
-            });
+            setCartDetailsData();
+            $('#modalDetailsBody').html('');
         });
+        $('.btn-checkout').click(function (e) {
+            if ('@Request.IsAuthenticated' != 'True') {
+                e.preventDefault();
+                $('#modalErrorBody').html('<p>Bạn phải @Html.ActionLink("Đăng nhập", "Login", "Account", new { ReturnUrl = "/Shopping/Checkout" }, null) trước khi thanh toán.</p>');
+                $('#modalError').modal();
+            } else if ($('#cartCount').html() == '0') {
+                e.preventDefault();
+                $('#modalErrorBody').html('<p>Bạn chưa thêm hàng vào giỏ.</p>');
+                $('#modalError').modal();
+            }
+        });
+    });
     </script>
 
     @RenderSection("Scripts", required: false)
