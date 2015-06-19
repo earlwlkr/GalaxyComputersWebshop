@@ -12,6 +12,8 @@ using GalaxyComputersASP.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Net.Http;
 using System.Collections.Generic;
+using System.Net.Mail;
+using System.Net;
 
 namespace GalaxyComputersASP.Controllers
 {
@@ -238,20 +240,45 @@ namespace GalaxyComputersASP.Controllers
                 {
                     UserManager.AddToRole(user.Id, "Customer");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("SendConfirmationEmail", "Account");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public async Task<ActionResult> SendConfirmationEmail()
+        {
+            if (!Request.IsAuthenticated)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
+            }
+            UserManager<ApplicationUser> userManager =
+                new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(ApplicationDbContext.Create()));
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+
+            var body = "<p>Xin hãy xác nhận tài khoản <b>{0}</b> bằng cách nhấp vào link <a href='{1}'>này</a></p>";
+            var message = new MailMessage();
+            message.To.Add(new MailAddress(user.Email));  // replace with valid value 
+            message.Subject = "Xác nhận tài khoản tại GalaxyComputersASP";
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            message.Body = string.Format(body, user.UserName, callbackUrl);
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                await smtp.SendMailAsync(message);
+            }
+            return View();
         }
 
         //
