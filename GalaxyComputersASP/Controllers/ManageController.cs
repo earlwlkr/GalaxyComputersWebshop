@@ -227,7 +227,7 @@ namespace GalaxyComputersASP.Controllers
                 {
                     await SignInAsync(user, isPersistent: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "Home");
             }
             AddErrors(result);
             return View(model);
