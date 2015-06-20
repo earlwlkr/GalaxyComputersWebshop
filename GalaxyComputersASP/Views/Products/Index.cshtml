@@ -113,7 +113,7 @@
         var catId = getParameterByName('CategoryID');
         var action = "PartialIndex";
         if (catId != null) {
-            action += "?CategoryID=" + catId + "&ItemsPerPage=" + @Model.ItemsPerPage + "&Page=" + $(this).html();
+            action += "?CategoryID=" + catId + "&ItemsPerPage=" + itemsPerPage + "&Page=" + $(this).html();
         } else {
             action += "?q=" + query;
         }
