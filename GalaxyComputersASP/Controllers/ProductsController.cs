@@ -368,7 +368,7 @@ namespace GalaxyComputersASP.Controllers
             List<OrderItem> orderItems = db.OrderItems.Where(i => i.ProductID == id).ToList();
             db.OrderItems.RemoveRange(orderItems);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Admin");
         }
 
         protected override void Dispose(bool disposing)
