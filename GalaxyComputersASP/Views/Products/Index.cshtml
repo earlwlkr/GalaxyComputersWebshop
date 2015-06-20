@@ -103,6 +103,68 @@
 </div>
 
 <script>
+    $(document).on('click', '.pagination li a', function (e) {
+        e.preventDefault();
+        var query = $('#searchQuery').val();
+        var start = startDate.get('select', 'mm dd yyyy');
+        var end = endDate.get('select', 'mm dd yyyy');
+        $('#products-view').hide();
+        $('.spinner').show();
+        var catId = getParameterByName('CategoryID');
+        var action = "PartialIndex";
+        if (catId != null) {
+            action += "?CategoryID=" + catId + "&ItemsPerPage=" + @Model.ItemsPerPage + "&Page=" + $(this).html();
+        } else {
+            action += "?q=" + query;
+        }
+        var prices = $('#priceRange').val().split(',');
+        action += "&MinPrice=" + prices[0] + "&MaxPrice=" + prices[1];
+        if ($('#manufacturer').val() != '') {
+            action += "&Manu=" + $('#manufacturer').val();
+        }
+        action += "&Start=" + start + "&End=" + end;
+        $.ajax({
+            url: '/Products/' + action,
+            type: 'POST',
+            data: {
+                'sortItem': $('#sortItem').val(),
+                'sortOrder': $('#sortOrder').val()
+            },
+            success: function (result) {
+                $('#products-view').show();
+                $('.spinner').hide();
+                $('#products-view').html(result);
+            }
+        });
+    });
+    $(document).on('click', '.add-to-cart-link', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: '/Shopping/AddToCart',
+            type: 'POST',
+            data: {
+                'ProductID': $(this).attr('product-id'),
+                'Quantity': 1
+            },
+            success: function (result) {
+                $.getJSON('/Shopping/GetCartItemsCount', function (data) {
+                    if (data.success) {
+                        $('#cartCount').html(data.count);
+                    }
+                });
+                $.getJSON('/Shopping/GetCartItemsPrice', function (data) {
+                    if (data.success) {
+                        $('#cartPrice').html(parseFloat(data.price).toFixed(1).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    }
+                });
+                $('#modalResultBody').html('<p>Thêm sản phẩm <b>' + result.product_name + '</b> vào giỏ hàng thành công.</p>')
+                $('#modalAddToCartResult').modal();
+            }
+        });
+    });
+</script>
+
+<script>
     var startDate, endDate;
     startDate = $('#startDate').pickadate({
         formatSubmit: 'dd/mm/yyyy',
