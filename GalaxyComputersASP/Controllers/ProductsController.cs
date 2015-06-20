@@ -361,6 +361,12 @@ namespace GalaxyComputersASP.Controllers
         {
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
+            List<Comment> comments = db.Comments.Where(i => i.Product.ID == id).ToList();
+            db.Comments.RemoveRange(comments);
+            List<CartItem> cartItems = db.CartItems.Where(i => i.ProductID == id).ToList();
+            db.CartItems.RemoveRange(cartItems);
+            List<OrderItem> orderItems = db.OrderItems.Where(i => i.ProductID == id).ToList();
+            db.OrderItems.RemoveRange(orderItems);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
