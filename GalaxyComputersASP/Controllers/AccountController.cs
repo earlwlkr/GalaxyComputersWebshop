@@ -266,12 +266,12 @@ namespace GalaxyComputersASP.Controllers
             string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
 
-            await sendEmail(user.Email, string.Format(body, user.UserName, callbackUrl));
+            await sendEmail(user.Email, "Xác nhận tài khoản tại GalaxyComputersASP", string.Format(body, user.UserName, callbackUrl));
             
             return View();
         }
 
-        private async Task sendEmail(string email, string content)
+        private async Task sendEmail(string email, string subject, string content)
         {
             var message = new MailMessage();
             message.To.Add(new MailAddress(email));  // replace with valid value 
@@ -315,7 +315,7 @@ namespace GalaxyComputersASP.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByEmailAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -330,7 +330,7 @@ namespace GalaxyComputersASP.Controllers
                 var body = "<p>Bạn có thể reset mật khẩu tài khoản <b>{0}</b> bằng cách nhấp vào link <a href='{1}'>này</a></p>.";
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
                 
-                await sendEmail(user.Email, string.Format(body, user.UserName, callbackUrl));
+                await sendEmail(user.Email, "Reset mật khẩu tài khoản tại GalaxyComputersASP", string.Format(body, user.UserName, callbackUrl));
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -365,7 +365,7 @@ namespace GalaxyComputersASP.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
