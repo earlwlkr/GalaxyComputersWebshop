@@ -213,6 +213,10 @@
     <Compile Include="Migrations\201506181101522_AddOrder.Designer.cs">
       <DependentUpon>201506181101522_AddOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506210813391_UpdateRelations.cs" />
+    <Compile Include="Migrations\201506210813391_UpdateRelations.Designer.cs">
+      <DependentUpon>201506210813391_UpdateRelations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
@@ -565,6 +569,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506181101522_AddOrder.resx">
       <DependentUpon>201506181101522_AddOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506210813391_UpdateRelations.resx">
+      <DependentUpon>201506210813391_UpdateRelations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

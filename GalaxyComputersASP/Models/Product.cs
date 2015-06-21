@@ -23,8 +23,8 @@ namespace GalaxyComputersASP.Models
         [ForeignKey("Category")]
         [Display(Name = "Danh mục")]
         public int CategoryID { get; set; }
-        [Display(Name = "Nhà sản xuất")]
         [ForeignKey("Manufacturer")]
+        [Display(Name = "Nhà sản xuất")]
         public int ManufacturerID { get; set; }
         [Display(Name = "Hình đại diện")]
         public string ImagePath { get; set; }
