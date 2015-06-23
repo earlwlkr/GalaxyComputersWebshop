@@ -11,11 +11,9 @@ namespace GalaxyComputersASP.Models
         public int ID { get; set; }
         [ForeignKey("Product")]
         public int ProductID { get; set; }
-        [ForeignKey("User")]
         public string UserID { get; set; }
         public int Quantity { get; set; }
 
         public virtual Product Product { get; set; }
-        public virtual ApplicationUser User { get; set; }
     }
 }
